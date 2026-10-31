@@ -1,0 +1,131 @@
+# ranks 1-130 — the absolute core (≈ 56% of all words in the Quran)
+1|من|مِنْ||from; of; (some) of|-den/-dan; -den biri|von, aus||مِنْ (min) = from; مَنْ (man) = who
+2|الله|اللّٰه||Allah, God|Allah|Allah, Gott|Allah, inşallah, maşallah, Abdullah|
+3|في|فِي||in, inside; about|içinde, -de/-da|in|fi sebilillah|
+4|لا|لَا||no; not; do not (+ jussive)|hayır; değil; -me (yasak)|nein; nicht; kein|la ilahe illallah|لَا + present = negation; لَا + jussive = prohibition
+5|ان|إِنَّ||indeed, truly (emphasis)|şüphesiz, muhakkak|wahrlich, gewiss||The noun after إِنَّ takes -a: إِنَّ اللّٰهَ
+6|قال|قَالَ|يَقُولُ|to say|demek, söylemek|sagen|kavil, kavl, makale, mukavele, akval|قُلْ = Say! (command)
+7|الذي|الَّذِي||who, which, the one who (relative)|ki o, olan kimse|der/die/das (welcher)||Forms: الَّذِي m. · الَّتِي f. · الَّذِينَ m. pl.
+8|علي|عَلَى||on, upon; against; over|üzerine, üstünde; aleyhine|auf, über; gegen|aleyh, aleyhte, aleyhisselam|عَلَيْهِ = on him
+9|ما|مَا||what; that which|ne; -diği şey|was; das, was||مَا as a noun: "what" (question or relative)
+10|كان|كَانَ|يَكُونُ|to be; was|olmak; idi|sein; war|kâinat, mekân, tekvin, kevn|كَانَ اللّٰهُ غَفُورًا = Allah is ever Forgiving
+11|PRON:3MS|هُوَ|ـهُ / ـهِ|he, it; him, his|o; onu, onun|er, es; ihn, sein||Detached هُوَ, attached ـهُ (ـهِ after i or y)
+12|رب|رَبّ|أَرْبَاب|Lord, Sustainer|Rab|Herr|Rab, Rabbani, rububiyet|رَبِّ = my Lord (short for رَبِّي)
+13|PRON:3MP|هُمْ|ـهُمْ / ـهِمْ|they (m.); them, their|onlar; onları, onların|sie; sie, ihr||
+14|من|مَنْ||who; whoever|kim; kim ki|wer; wer auch immer||مَنْ (man) = who; مِنْ (min) = from
+15|ما|مَا||not (negation)|değil; -medi|nicht||مَا + past tense = "did not": وَمَا ظَلَمْنَاهُمْ
+16|الي|إِلَى||to, toward; until|-e/-a doğru; -e kadar|zu, nach; bis|ilâ (from … ilâ …)|إِلَيْهِ = to Him
+17|ان|إِنْ||if; (sometimes) not|eğer; değil|wenn, falls; nicht||إِنْ كُنْتُمْ = if you are
+18|الا|إِلَّا||except; only, but|-den başka, ancak|außer; nur|illa, illallah|لَا إِلٰهَ إِلَّا اللّٰهُ
+19|ان|أَنْ||that; to (+ verb)|-mek, ki|dass; zu||Makes the next verb subjunctive: أَنْ تَقُولُوا
+20|امن|آمَنَ|يُؤْمِنُ|to believe, have faith|iman etmek, inanmak|glauben|iman, mümin, emin, emanet, emniyet, âmin|Form IV of أ م ن (safety): "to make oneself safe"
+21|PRON:2MP|أَنْتُمْ|ـكُمْ|you (pl.); your (pl.)|siz; sizi, sizin|ihr; euch, euer|aleyküm (selamün aleyküm)|
+22|DEM:far:MS|ذٰلِكَ||that (m.)|şu, o; işte bu|jener, das (dort)||كَذٰلِكَ = likewise, thus
+23|يوم|يَوْم|أَيَّام|day|gün|Tag|yevmiye, yevmî|يَوْمَئِذٍ = on that Day
+24|عن|عَنْ||from, away from; about|-den; hakkında|von … weg; über|radıyallahu anh|رَضِيَ اللّٰهُ عَنْهُ
+25|ارض|أَرْض||earth, land|yer, yeryüzü|Erde, Land|arz, arazi, arzî|
+26|قد|قَدْ||indeed, already (+ past); may (+ present)|muhakkak, gerçekten|bereits, gewiss; vielleicht||لَقَدْ = indeed (stronger)
+27|اذا|إِذَا||when (future), whenever|-dığı zaman, olunca|wenn||إِذَا جَاءَ نَصْرُ اللّٰهِ
+28|قوم|قَوْم|أَقْوَام|people, nation|kavim, toplum|Volk, Leute|kavim, akvam|يَا قَوْمِ = O my people
+29|ايه|آيَة|آيَات|sign; verse|ayet, işaret|Zeichen; Vers|ayet|
+30|علم|عَلِمَ|يَعْلَمُ|to know|bilmek|wissen|ilim, âlim, malum, muallim, malumat, alâmet, ulema|
+31|ان|أَنَّ||that (+ noun)|ki, -diği|dass||أَنَّ اللّٰهَ = that Allah (noun after it takes -a)
+32|كل|كُلّ||every, all, each|her, bütün|jeder, alle|kül, külli, külliye, külliyat|كُلُّ نَفْسٍ = every soul
+33|لم|لَمْ||did not (+ jussive)|-medi|nicht (Vergangenheit)||لَمْ يَلِدْ وَلَمْ يُولَدْ
+34|جعل|جَعَلَ|يَجْعَلُ|to make, place, appoint|kılmak, yapmak|machen, setzen||
+35|ثم|ثُمَّ||then, afterwards|sonra|dann, danach||
+36|رسول|رَسُول|رُسُل|messenger|resul, elçi|Gesandter|resul, risale, mürsel, irsal|
+37|عذاب|عَذَاب||punishment, torment|azap|Strafe, Qual|azap|عَذَابٌ أَلِيمٌ = a painful punishment
+38|سماء|سَمَاء|سَمٰوَات|sky, heaven|gök, sema|Himmel|sema, semavi|
+39|نفس|نَفْس|أَنْفُس|soul, self; person|nefis, can, kendi|Seele, Selbst|nefis, nefes, nefsani|أَنْفُسَهُمْ = themselves
+40|كفر|كَفَرَ|يَكْفُرُ|to disbelieve; be ungrateful|inkâr etmek; nankörlük etmek|ungläubig sein, leugnen|küfür, kâfir, kefaret, tekfir|Root meaning: "to cover (the truth)"
+41|شيء|شَيْء|أَشْيَاء|thing|şey|Ding, Sache|şey, eşya|
+42|او|أَوْ||or|veya, yahut|oder||
+43|جاء|جَاءَ|يَجِيءُ|to come|gelmek|kommen||جَاءَ بِـ = to bring
+44|عمل|عَمِلَ|يَعْمَلُ|to do, work, act|yapmak, amel etmek|tun, handeln|amel, amele, ameliyat, muamele, imal|
+45|اتي|آتَى|يُؤْتِي|to give|vermek|geben||Form IV of أ ت ي; آتُوا الزَّكَاةَ = give zakah
+46|راي|رَأَى|يَرَى|to see|görmek|sehen|rey, rüya, riya|أَلَمْ تَرَ = have you not seen?
+47|بين|بَيْنَ||between, among|arasında|zwischen|beynelmilel|بَيْنَ يَدَيْهِ = before him
+48|اتي|أَتَى|يَأْتِي|to come; (with بِـ) to bring|gelmek; getirmek|kommen; bringen|âti (gelecek)|
+49|كتاب|كِتَاب|كُتُب|book, scripture; decree|kitap|Buch, Schrift|kitap, kâtip, mektup, mektep, kütüphane|
+50|حق|حَقّ||truth, right; true|hak, gerçek|Wahrheit, Recht|hak, hakikat, hukuk, tahkik, muhakkak|
+51|قبل|قَبْلَ||before|önce|vor, zuvor|kabul, kıble, istikbal, mukabil|مِنْ قَبْلُ = before (that)
+52|ناس|نَاس||people, mankind|insanlar|Menschen|nas, insan|قُلْ أَعُوذُ بِرَبِّ النَّاسِ
+53|اذ|إِذْ||when (past); (remember) when|hani, o zaman ki|als; (gedenke) als||وَإِذْ قَالَ رَبُّكَ = and when your Lord said
+54|شاء|شَاءَ|يَشَاءُ|to will, wish|dilemek|wollen|inşallah, maşallah, meşiyet|إِنْ شَاءَ اللّٰهُ
+55|DEM:near:MS|هٰذَا||this (m.)|bu|dieser, das (hier)||
+56|اي|أَيّ||which?; any; (يَا أَيُّهَا) O|hangi; ey|welcher; o (Anrede)||يَا أَيُّهَا الَّذِينَ آمَنُوا = O you who believe
+57|DEM:far:P|أُولٰئِكَ||those|onlar, işte onlar|jene||
+58|مؤمن|مُؤْمِن|مُؤْمِنُونَ|believer|mümin|Gläubiger|mümin, iman|
+59|لو|لَوْ||if (unreal, hypothetical)|eğer (olsaydı), keşke|wenn (irreal)||لَوْ شَاءَ اللّٰهُ = had Allah willed
+60|بعد|بَعْدَ||after|sonra|nach|badema, ebat|مِنْ بَعْدِ = after
+61|عند|عِنْدَ||at, with, near (in the presence of)|yanında, katında|bei|indî, indinde|عِنْدَ اللّٰهِ = with Allah
+62|PRON:3FS|هِيَ|ـهَا|she, it; her, its|o; onu, onun|sie, es; ihr||Also used for non-human plurals ("they, it")
+63|خلق|خَلَقَ|يَخْلُقُ|to create|yaratmak|erschaffen|halk, mahluk, hilkat, ahlak, Halik|
+64|انزل|أَنْزَلَ|يُنْزِلُ|to send down, reveal|indirmek|herabsenden|nüzul, nazil, inzal, menzil, tenzilat|Form IV of ن ز ل (to descend)
+65|خير|خَيْر||good; better|hayır, iyilik; daha iyi|Gutes; besser|hayır, hayırlı|
+66|سبيل|سَبِيل|سُبُل|way, path|yol|Weg|sebil (çeşme)|فِي سَبِيلِ اللّٰهِ = in the way of Allah
+67|كذب|كَذَّبَ|يُكَذِّبُ|to deny, call a liar|yalanlamak|für Lüge erklären|tekzip, kizb|Form II of ك ذ ب (to lie)
+68|PRON:1P|نَحْنُ|ـنَا|we; us, our|biz; bizi, bizim|wir; uns, unser||Allah often speaks with the majestic "We"
+69|دعا|دَعَا|يَدْعُو|to call, invoke, pray|çağırmak, dua etmek|rufen, anrufen|dua, davet, dava, iddia, müddei|
+70|امر|أَمْر|أُمُور|command; matter, affair|emir; iş|Befehl; Angelegenheit|emir, umur, amir, memur|
+71|اتقي|اتَّقَى|يَتَّقِي|to be mindful of God, guard oneself|sakınmak, takva sahibi olmak|gottesfürchtig sein|takva, muttaki, ittika|Form VIII of و ق ي (to protect); اتَّقُوا اللّٰهَ
+72|مع|مَعَ||with|ile, beraber|mit|maalesef (مع الأسف)|إِنَّ اللّٰهَ مَعَ الصَّابِرِينَ
+73|عليم|عَلِيم||All-Knowing|her şeyi bilen, Alîm|allwissend|Alîm, ilim|
+74|PRON:2MS|أَنْتَ|ـكَ|you (m. sg.); your|sen; seni, senin|du; dich, dein||
+75|بعض|بَعْض||some, part of|bazı, kimi|einige, ein Teil|bazı, bazen|
+76|ذو|ذُو|ذِي · ذَا · أُولُو|possessor of, having|sahip, -li|Besitzer von, mit|zat, zati, zevat|ذُو الْفَضْلِ = possessor of bounty
+77|كافر|كَافِر|كَافِرُونَ|disbeliever|kâfir, inkârcı|Ungläubiger|kâfir|
+78|اخر|آخِر|الْآخِرَة|last; the Hereafter|son; ahiret|letzter; Jenseits|ahiret, ahir, ahir zaman|الْيَوْمِ الْآخِرِ = the Last Day
+79|لما|لَمَّا||when (past); not yet (+ jussive)|-ince; henüz -medi|als; noch nicht||فَلَمَّا = so when
+80|اله|إِلٰه|آلِهَة|god, deity|ilah|Gott, Gottheit|ilah, ilahi, ilahiyat|لَا إِلٰهَ إِلَّا اللّٰهُ
+81|جنه|جَنَّة|جَنَّات|garden; Paradise|bahçe; cennet|Garten; Paradies|cennet, cin, cenin, mecnun|Same root as جِنّ (jinn): "hidden"
+82|غير|غَيْر||other than; without; not|başka, gayri, -siz|anders als; ohne|gayri, gayrimenkul, gayrimüslim|غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ
+83|PRON:1S|أَنَا|ـي / ـنِي|I; me, my|ben; beni, benim|ich; mich, mein||
+84|نار|نَار||fire|ateş, nâr|Feuer|nâr|
+85|دون|دُونَ||besides, other than; below|-den başka; aşağı|außer; unterhalb|dûn, mâdûn|مِنْ دُونِ اللّٰهِ = besides Allah
+86|هدي|هَدَى|يَهْدِي|to guide|hidayet etmek, doğru yola iletmek|rechtleiten|hidayet, hediye, hüda, mühtedi, Hâdi|اهْدِنَا = guide us
+87|حتي|حَتَّى||until; even|-e kadar; hatta|bis; sogar|hatta|
+88|اراد|أَرَادَ|يُرِيدُ|to want, intend|istemek, irade etmek|wollen, beabsichtigen|irade, murat, mürit|Form IV of ر و د
+89|ام|أَمْ||or (in questions); or rather|yoksa|oder (in Fragen)||
+90|موسي|مُوسَى||Moses (Musa)|Musa|Mose|Musa|The prophet mentioned most in the Quran
+91|اتبع|اتَّبَعَ|يَتَّبِعُ|to follow|uymak, tabi olmak|folgen|tabi, tebaa, ittiba|Form VIII of ت ب ع
+92|قلب|قَلْب|قُلُوب|heart|kalp, gönül|Herz|kalp, inkılap, kalıp|Root meaning: "to turn" — the heart turns
+93|عبد|عَبْد|عِبَاد|servant, slave (of God)|kul|Diener, Knecht|abd, Abdullah, ibadet, mabet, abide|
+94|ارسل|أَرْسَلَ|يُرْسِلُ|to send|göndermek|senden|irsal, resul, mürsel, risale|
+95|ظالم|ظَالِم|ظَالِمُونَ|wrongdoer, unjust|zalim|Ungerechter, Frevler|zalim, zulüm, mazlum|
+96|لعل|لَعَلَّ||perhaps, so that (hopefully)|belki, umulur ki|vielleicht, damit||لَعَلَّكُمْ تَتَّقُونَ = so that you may be mindful
+97|اهل|أَهْل||people (of), family|ehil, aile, halk|Leute, Familie|ehil, ehliyet, ehl-i beyt, ehlisünnet|أَهْلُ الْكِتَابِ = People of the Book
+98|بل|بَلْ||rather, nay, but|bilakis, hayır|vielmehr, nein||
+99|اخذ|أَخَذَ|يَأْخُذُ|to take, seize|almak, yakalamak|nehmen, ergreifen|ahz, muahaze, me'haz|
+100|اتخذ|اتَّخَذَ|يَتَّخِذُ|to take (for oneself), adopt|edinmek|sich nehmen, annehmen|ittihaz|Form VIII of أ خ ذ
+101|عبد|عَبَدَ|يَعْبُدُ|to worship, serve|ibadet etmek, kulluk etmek|anbeten, dienen|ibadet, mabut, mabet|إِيَّاكَ نَعْبُدُ
+102|يد|يَد|أَيْدِي|hand|el|Hand|yed (yed-i tûlâ)|بَيْنَ يَدَيْهِ = before him (lit. between his hands)
+103|مبين|مُبِين||clear, manifest|apaçık|deutlich, klar|mübin, beyan|
+104|رحيم|رَحِيم||the Merciful|merhametli, Rahîm|barmherzig|Rahim, rahmet|
+105|دنيا|دُنْيَا||this world, worldly life|dünya|Diesseits|dünya, dünyevi|Literally "the nearer (life)"
+106|رحمه|رَحْمَة||mercy|rahmet, merhamet|Barmherzigkeit|rahmet, merhamet, merhum|
+107|ظلم|ظَلَمَ|يَظْلِمُ|to wrong, oppress|zulmetmek|Unrecht tun|zulüm, zalim, mazlum|ظَلَمُوا أَنْفُسَهُمْ = they wronged themselves
+108|عظيم|عَظِيم||great, mighty|büyük, azim|gewaltig|azim, azamet, muazzam, tazim|
+109|سال|سَأَلَ|يَسْأَلُ|to ask|sormak, istemek|fragen, bitten|sual, mesele, mesul, sail|
+110|وجد|وَجَدَ|يَجِدُ|to find|bulmak|finden|vücut, mevcut, vicdan, icat, vecd|vücut = وُجُود (existence)
+111|اجر|أَجْر|أُجُور|reward, wage|ecir, mükâfat|Lohn|ecir, ücret, icar|
+112|علم|عِلْم||knowledge|ilim, bilgi|Wissen|ilim, ilmî|
+113|لن|لَنْ||will never (+ subjunctive)|asla -meyecek|wird niemals||لَنْ تَرَانِي = you will never see Me
+114|عزيز|عَزِيز||Mighty, Honored|güçlü, aziz|mächtig|aziz, izzet, muazzez|
+115|اخرج|أَخْرَجَ|يُخْرِجُ|to bring out, expel|çıkarmak|herausbringen|ihraç, ihracat, mahreç|Form IV of خ ر ج
+116|حكيم|حَكِيم||Wise|hikmet sahibi, Hakîm|weise|hakîm, hikmet, hekim|
+117|هل|هَلْ||(yes/no question) is …?, does …?|mi?|(Fragepartikel)||هَلْ أَتَاكَ = has there come to you?
+118|اكل|أَكَلَ|يَأْكُلُ|to eat|yemek|essen|me'kûlat|كُلُوا = eat! (pl.)
+119|دين|دِين||religion; judgment, recompense|din; ceza (hesap) günü|Religion; Gericht|din, dindar, diyanet|يَوْمِ الدِّينِ = the Day of Judgment
+120|قول|قَوْل||saying, word, speech|söz|Wort, Rede|kavil, kavl|
+121|غفور|غَفُور||Forgiving|çok bağışlayan, Gafur|vergebend|Gafur, mağfiret|
+122|ليس|لَيْسَ||is not|değil|ist nicht||لَيْسَ كَمِثْلِهِ شَيْءٌ = there is nothing like Him
+123|شيطان|شَيْطَان|شَيَاطِين|Satan, devil|şeytan|Satan, Teufel|şeytan|
+124|مثل|مَثَل|أَمْثَال|example, parable|misal, örnek, mesel|Gleichnis|mesel, misal, temsil, emsal, darb-ı mesel|ضَرَبَ مَثَلًا = set forth a parable
+125|ملك|مَلَك|مَلَائِكَة|angel|melek|Engel|melek, melaike|
+126|فعل|فَعَلَ|يَفْعَلُ|to do|yapmak, işlemek|tun|fiil, fail, faal, faaliyet, meful, infial|The model of every Arabic pattern: فَعَلَ
+127|نظر|نَظَرَ|يَنْظُرُ|to look, consider; wait|bakmak; beklemek|schauen; warten|nazar, nazır, manzara, nezaret, intizar|
+128|مال|مَال|أَمْوَال|wealth, property|mal, servet|Vermögen, Besitz|mal, emval|
+129|ولي|وَلِيّ|أَوْلِيَاء|protector, ally, friend|veli, dost|Schutzherr, Freund|veli, evliya, velayet, vilayet, vali, mevla|
+130|هدي|هُدًى||guidance|hidayet|Rechtleitung|hidayet, hüda|هُدًى لِلْمُتَّقِينَ

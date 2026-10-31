@@ -1,0 +1,11 @@
+{
+  "name": "lisan-quranic-arabic",
+  "private": true,
+  "description": "Lisan — a Quranic Arabic course: frequency-first vocabulary, grammar, spaced repetition and the whole Quran word by word.",
+  "scripts": {
+    "start": "python3 -m http.server 8000 -d app",
+    "data": "python3 tools/fetch_sources.py && python3 tools/build_data.py",
+    "test": "node tests/smoke.mjs http://localhost:8000/ && node tests/flow.mjs http://localhost:8000/",
+    "artifact": "python3 tools/build_artifact.py build/artifact"
+  }
+}

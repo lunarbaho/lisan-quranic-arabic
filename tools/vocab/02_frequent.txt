@@ -1,0 +1,171 @@
+# ranks 131-300
+131|فضل|فَضْل||bounty, favor, grace|lütuf, fazl, ihsan|Huld, Gunst|fazilet, fazla, fazıl|
+132|ليل|لَيْل||night|gece|Nacht|leyl, Leyla, Leyletü'l-Kadr|
+133|ذكر|ذَكَرَ|يَذْكُرُ|to remember, mention|anmak, hatırlamak, zikretmek|gedenken, erwähnen|zikir, tezkere, müzakere, mezkûr, zakir|
+134|صلاه|صَلَاة|صَلَوَات|prayer (ṣalāh)|namaz, salat|Gebet|salat, salavat, musalla|أَقِيمُوا الصَّلَاةَ = establish the prayer
+135|كيف|كَيْفَ||how?|nasıl?|wie?|keyif, keyfiyet|Turkish "keyif" (state, mood) comes from كَيْفَ
+136|خاف|خَافَ|يَخَافُ|to fear|korkmak|fürchten|havf, mahuf|
+137|قتل|قَتَلَ|يَقْتُلُ|to kill|öldürmek|töten|katil, katliam, maktul|
+138|اول|أَوَّل|أَوَّلُونَ|first; the ancients|ilk, evvel; öncekiler|erster; die Früheren|evvel, evvela, evveliyat|
+139|اكثر|أَكْثَر||most, more|çoğu, daha çok|die meisten, mehr|ekseri, ekseriyet, ekseriya|أَكْثَرُ النَّاسِ = most people
+140|بني|بَنُو|بَنِي|sons, children (of)|oğullar, çocuklar|Söhne, Kinder|Beni İsrail, ibn|بَنِي إِسْرَائِيلَ = Children of Israel; يَا بُنَيَّ = O my son
+141|رجع|رَجَعَ|يَرْجِعُ|to return|dönmek|zurückkehren|rücu, merci, müracaat, irtica|إِنَّا لِلّٰهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ
+142|اصحاب|أَصْحَاب||companions, people (of), owners|arkadaşlar, ashab, sahipler|Gefährten, Bewohner|ashab, sahabe, sahip, sohbet|أَصْحَابُ الْجَنَّةِ = the people of Paradise
+143|تولي|تَوَلَّى|يَتَوَلَّى|to turn away; take as ally|yüz çevirmek; dost edinmek|sich abwenden; zum Freund nehmen|tevliyet, mütevelli|Form V of و ل ي
+144|سمع|سَمِعَ|يَسْمَعُ|to hear|işitmek, duymak|hören|sema (Mevlevî), semi, istima, müstemi|
+145|جهنم|جَهَنَّم||Hell (Jahannam)|cehennem|Hölle|cehennem|
+146|امر|أَمَرَ|يَأْمُرُ|to command, order|emretmek|befehlen|emir, amir, memur|
+147|حياه|حَيَاة||life|hayat|Leben|hayat, hayati, hayvan, ihya|الْحَيَاةُ الدُّنْيَا = the worldly life
+148|ذكر|ذِكْر||remembrance, mention; the Reminder (Quran)|zikir, anma; öğüt|Gedenken, Ermahnung|zikir, tezkere|
+149|زوج|زَوْج|أَزْوَاج|spouse; pair, kind|eş, zevç; çift|Gatte; Paar|zevç, zevce, izdivaç|
+150|دخل|دَخَلَ|يَدْخُلُ|to enter|girmek|eintreten|dahil, duhul, müdahale, medhal|
+151|اخ|أَخ|إِخْوَة · إِخْوَان|brother|kardeş|Bruder|ahi, Ahilik, uhuvvet, ihvan|
+152|مثل|مِثْل||like, similar|gibi, misil|gleich, wie|misil, misli, emsal, misal|
+153|نبي|نَبِيّ|أَنْبِيَاء · نَبِيُّونَ|prophet|peygamber, nebi|Prophet|nebi, enbiya, nübüvvet|
+154|لولا|لَوْلَا||if not for; why not?|olmasaydı; -meli değil miydi?|wenn nicht; warum nicht?||
+155|احد|أَحَد||one, anyone; (the) One|bir, kimse; Ehad|einer, jemand|Ehad, ehadiyet|قُلْ هُوَ اللّٰهُ أَحَدٌ
+156|خالد|خَالِد|خَالِدُونَ|abiding forever|ebedî kalan|ewig verweilend|Halit, hulud, muhalled|خَالِدِينَ فِيهَا = abiding therein forever
+157|صالح|صَالِح|صَالِحُونَ|righteous, good|salih, iyi|rechtschaffen|salih, sulh, ıslah|
+158|فرعون|فِرْعَوْن||Pharaoh|Firavun|Pharao|Firavun|
+159|عالم|عَالَم|عَالَمُونَ|world; (العَالَمِين) all beings|âlem|Welt|âlem, âlemler|رَبِّ الْعَالَمِينَ = Lord of the worlds
+160|جزي|جَزَى|يَجْزِي|to recompense, reward|karşılık vermek, cezalandırmak|vergelten|ceza, mücazat|
+161|اليم|أَلِيم||painful|acı, elem verici|schmerzhaft|elem, elim|
+162|وجه|وَجْه|وُجُوه|face; countenance|yüz, vech|Gesicht, Angesicht|vech, teveccüh, cihet, vecih|وَجْهُ اللّٰهِ = the Face (countenance) of Allah
+163|اطاع|أَطَاعَ|يُطِيعُ|to obey|itaat etmek|gehorchen|itaat, tâat, mutî|أَطِيعُوا اللّٰهَ وَالرَّسُولَ
+164|اوحي|أَوْحَى|يُوحِي|to reveal, inspire|vahyetmek|offenbaren, eingeben|vahiy|
+165|انسان|إِنْسَان||human being|insan|Mensch|insan, insanî, insaniyet|
+166|بينه|بَيِّنَة|بَيِّنَات|clear proof|apaçık delil, beyyine|klarer Beweis|beyyine, beyan|
+167|عمل|عَمَل|أَعْمَال|deed, work|amel, iş|Tat, Werk|amel, amel defteri, muamele|
+168|اشرك|أَشْرَكَ|يُشْرِكُ|to associate partners (with God)|şirk koşmak|beigesellen|şirk, müşrik, şirket, iştirak, müşterek|Same root as Turkish "şirket" (company, partnership)
+169|القي|أَلْقَى|يُلْقِي|to throw, cast|atmak, bırakmak|werfen|ilka, telakki, mülakat|
+170|اخر|آخَر|أُخْرَى · آخَرُونَ|other, another|başka, diğer|anderer|âhar|
+171|قليل|قَلِيل||little, few|az|wenig|kıllet, ekalliyet|قَلِيلًا مَا تَشْكُرُونَ = little do you give thanks
+172|قران|قُرْآن||the Quran; recitation|Kur'an|Koran; Lesung|Kur'an, kıraat, kari|
+173|قيامه|قِيَامَة||Resurrection|kıyamet|Auferstehung|kıyamet, kıyam|يَوْمُ الْقِيَامَةِ
+174|وعد|وَعَدَ|يَعِدُ|to promise|vaat etmek|versprechen|vaat, vaad, mev'ud, miad|
+175|ابراهيم|إِبْرَاهِيم||Abraham (Ibrahim)|İbrahim|Abraham|İbrahim, Halil İbrahim|
+176|انفق|أَنْفَقَ|يُنْفِقُ|to spend (in charity)|infak etmek, harcamak|ausgeben, spenden|infak, nafaka, münafık, nifak|
+177|بيت|بَيْت|بُيُوت|house|ev, beyt|Haus|beyt, Beytullah, ehl-i beyt, beyit|
+178|يمين|يَمِين|أَيْمَان|right hand; oath|sağ el; yemin|rechte Hand; Eid|yemin, yümn, meymenet, Yemen|
+179|لكن|لٰكِنْ||but|fakat, lakin|aber|lakin|لٰكِنْ is followed by a verb or a sentence
+180|لكن|لٰكِنَّ||but (+ noun)|fakat, lakin|aber|lakin|وَلٰكِنَّ أَكْثَرَ النَّاسِ لَا يَعْلَمُونَ
+181|غفر|غَفَرَ|يَغْفِرُ|to forgive|bağışlamak|vergeben|mağfiret, gufran, istiğfar, Gafur|
+182|اباء|آبَاء||fathers, forefathers|babalar, atalar|Väter, Vorfahren|ebeveyn|Plural of أَب
+183|امه|أُمَّة|أُمَم|nation, community|ümmet, topluluk|Gemeinschaft|ümmet, ümmî|
+184|احبب|أَحَبَّ|يُحِبُّ|to love|sevmek|lieben|muhabbet, habip, mahbup, muhip|إِنَّ اللّٰهَ يُحِبُّ الْمُحْسِنِينَ
+185|اصاب|أَصَابَ|يُصِيبُ|to befall, strike, hit|isabet etmek, başına gelmek|treffen, widerfahren|isabet, musibet, savab|
+186|اضل|أَضَلَّ|يُضِلُّ|to lead astray|saptırmak|irreführen|dalalet, idlal|
+187|ابن|ابْن|أَبْنَاء|son|oğul|Sohn|ibn (İbn Sina)|ابْنُ مَرْيَمَ = son of Maryam
+188|كثير|كَثِير||many, much|çok|viel|kesret, teksir, ekseriyet|
+189|ماء|مَاء||water|su|Wasser|mavi (mâî: "water-colored")|
+190|تاب|تَابَ|يَتُوبُ|to repent; (God) accepts repentance|tövbe etmek|bereuen; (Gott) wendet sich zu|tövbe, tâib, Tevvab|
+191|صالحه|صَالِحَة|صَالِحَات|good deed|salih amel|gute Tat|salih, salihat|آمَنُوا وَعَمِلُوا الصَّالِحَاتِ
+192|كسب|كَسَبَ|يَكْسِبُ|to earn|kazanmak|erwerben|kesb, iktisap|
+193|نزل|نَزَّلَ|يُنَزِّلُ|to send down (gradually)|indirmek|herabsenden|tenzil, nüzul|Form II of ن ز ل
+194|تلي|تَلَا|يَتْلُو|to recite; follow|okumak, tilavet etmek; izlemek|vortragen; folgen|tilavet, tâli|
+195|رزق|رَزَقَ|يَرْزُقُ|to provide|rızık vermek|versorgen|rızık, Rezzak, merzuk|
+196|صادق|صَادِق|صَادِقُونَ|truthful|doğru sözlü, sadık|wahrhaftig|sadık, sıdk, sadakat|
+197|نساء|نِسَاء||women|kadınlar|Frauen|Nisa (sure), nisvan|Plural of امْرَأَة
+198|قضي|قَضَى|يَقْضِي|to decree, judge; fulfill, finish|hükmetmek; bitirmek|bestimmen, richten; erfüllen|kaza, kadı, kazai, mukteza, iktiza|
+199|نصر|نَصَرَ|يَنْصُرُ|to help, give victory|yardım etmek|helfen|nusret, ensar, Mansur|
+200|سيئه|سَيِّئَة|سَيِّئَات|bad deed, evil|kötülük, günah|Übeltat|seyyie, seyyiat|
+201|نذير|نَذِير||warner|uyarıcı|Warner|inzar, münzir|
+202|صبر|صَبَرَ|يَصْبِرُ|to be patient|sabretmek|geduldig sein|sabır, sabur|
+203|رحمن|رَحْمٰن||the Most Gracious (ar-Raḥmān)|Rahman|der Allerbarmer|Rahman|
+204|عين|عَيْن|أَعْيُن · عُيُون|eye; spring|göz; pınar|Auge; Quelle|aynı, aynen, muayene, tayin, ayan|Turkish "aynı" (same) comes from عَيْن (the thing itself)
+205|قريه|قَرْيَة|قُرَى|town|kasaba, şehir, karye|Stadt, Ort|karye|
+206|نهار|نَهَار||day(time)|gündüz|Tag (Tageslicht)||اللَّيْلِ وَالنَّهَارِ = the night and the day
+207|جري|جَرَى|يَجْرِي|to flow, run|akmak|fließen|cereyan, icra, mecra, cari|تَجْرِي مِنْ تَحْتِهَا الْأَنْهَارُ
+208|شديد|شَدِيد||severe, strong|şiddetli|streng, heftig|şiddet, şedit|
+209|شهيد|شَهِيد|شُهَدَاء|witness; martyr|şahit; şehit|Zeuge; Märtyrer|şehit, şahit, şehadet|
+210|ولد|وَلَد|أَوْلَاد|child, offspring|çocuk, evlat|Kind|evlat, veled, Mevlid, valide, viladet|
+211|مس|مَسَّ|يَمَسُّ|to touch|dokunmak|berühren|temas, mümas|
+212|رزق|رِزْق||provision, sustenance|rızık|Versorgung|rızık|
+213|اما|أَمَّا||as for|-e gelince|was … betrifft||أَمَّا … فَـ … = as for …, (then) …
+214|ضرب|ضَرَبَ|يَضْرِبُ|to strike; set forth (an example); travel|vurmak; (misal) vermek; yolculuk etmek|schlagen; (Gleichnis) anführen|darbe, darp, darb-ı mesel, ıztırap|ضَرَبَ اللّٰهُ مَثَلًا = darb-ı mesel
+215|نهر|نَهَر|أَنْهَار|river|ırmak, nehir|Fluss|nehir|
+216|اقام|أَقَامَ|يُقِيمُ|to establish, perform; stay|dosdoğru kılmak, ikame etmek|verrichten, aufrichten|ikamet, ikame, mukim|أَقِيمُوا الصَّلَاةَ
+217|قاتل|قَاتَلَ|يُقَاتِلُ|to fight|savaşmak|kämpfen|mukatele, kıtal|Form III of ق ت ل
+218|جميع|جَمِيع||all, together|hep, bütün|alle, gesamt|cemi, cemiyet|جَمِيعًا = all together
+219|خرج|خَرَجَ|يَخْرُجُ|to go out|çıkmak|hinausgehen|huruç, hariç, harici, harç|
+220|ضل|ضَلَّ|يَضِلُّ|to go astray|sapmak|irregehen|dalalet, dâll|
+221|اجل|أَجَل||term, appointed time|ecel, belirli süre|Frist, Termin|ecel, müeccel, tecil|
+222|خلق|خَلْق||creation|yaratma, yaratılış|Schöpfung|halk, hilkat, mahlukat|
+223|مجرم|مُجْرِم|مُجْرِمُونَ|criminal, sinner|suçlu, mücrim|Verbrecher|cürüm, mücrim, cereme|
+224|بعث|بَعَثَ|يَبْعَثُ|to raise (the dead), send|diriltmek, göndermek|auferwecken, entsenden|bais, mebus, bi'set, ba's|
+225|بصير|بَصِير||All-Seeing|her şeyi gören, Basîr|allsehend|basiret, Basir|
+226|تحت|تَحْتَ||under, beneath|altında|unter|tahtelbahir|تَحْتِهَا = beneath it
+227|احيا|أَحْيَا|يُحْيِي|to give life, revive|diriltmek, hayat vermek|lebendig machen|ihya, Muhyi|
+228|اهلك|أَهْلَكَ|يُهْلِكُ|to destroy|helak etmek|vernichten|helak, tehlike, istihlak|
+229|تذكر|تَذَكَّرَ|يَتَذَكَّرُ|to take heed, remember|öğüt almak, düşünmek|sich ermahnen lassen|tezekkür|Form V of ذ ك ر
+230|سوء|سُوء||evil, harm|kötülük|Böses, Übel|sû-i (suiistimal, suikast, suizan)|
+231|عدو|عَدُوّ|أَعْدَاء|enemy|düşman|Feind|adavet, a'da|
+232|موت|مَوْت||death|ölüm|Tod|mevt, memat, mevta|
+233|نعمه|نِعْمَة||blessing, favor|nimet|Gnade, Wohltat|nimet, Naim|
+234|افتري|افْتَرَى|يَفْتَرِي|to invent (a lie)|iftira etmek, uydurmak|erdichten|iftira, müfteri|Form VIII of ف ر ي
+235|اعلم|أَعْلَم||knows best, most knowing|en iyi bilen|weiß am besten|vallahu a'lem|وَاللّٰهُ أَعْلَمُ
+236|غيب|غَيْب||the unseen|gayb, görünmeyen|das Verborgene|gayb, gaip, gıyabi, gaybubet|
+237|متقي|مُتَّقِي|مُتَّقُونَ|the God-conscious|takva sahipleri, muttakiler|Gottesfürchtige|muttaki, takva|
+238|وعد|وَعْد||promise|vaat, söz|Versprechen|vaat, vaad|
+239|زاد|زَادَ|يَزِيدُ|to increase|artırmak, artmak|vermehren, zunehmen|ziyade, müzayede, mezid|
+240|عقل|عَقَلَ|يَعْقِلُ|to understand, reason|akletmek, aklını kullanmak|begreifen|akıl, makul, ukala|أَفَلَا تَعْقِلُونَ = will you not use reason?
+241|كتب|كَتَبَ|يَكْتُبُ|to write; prescribe|yazmak; farz kılmak|schreiben; vorschreiben|kitap, kâtip, mektup, mektep|كُتِبَ عَلَيْكُمُ الصِّيَامُ = fasting is prescribed for you
+242|DEM:near:P|هٰؤُلَاءِ||these|bunlar|diese||
+243|بصر|بَصَر|أَبْصَار|sight, vision|görme, göz|Sehvermögen, Blick|basar, basiret|
+244|دار|دَار|دِيَار|home, abode|yurt, diyar|Wohnstätte|dâr, diyar, daire, devir, idare, müdür|Root د و ر: "to go round"
+245|ساعه|سَاعَة||the Hour; hour|kıyamet saati; saat|die Stunde|saat|
+246|ملك|مُلْك||dominion, kingdom|mülk, hükümranlık|Herrschaft|mülk, memleket, melik|
+247|DEM:near:FS|هٰذِهِ||this (f.)|bu|diese||
+248|سميع|سَمِيع||All-Hearing|her şeyi işiten, Semî|allhörend|Semi|
+249|ظن|ظَنَّ|يَظُنُّ|to think, assume|sanmak, zannetmek|meinen, vermuten|zan, zanlı, suizan, hüsnüzan|
+250|اب|أَب|آبَاء|father|baba|Vater|ebeveyn, Ebu Bekir|أَبُو = father of
+251|شكر|شَكَرَ|يَشْكُرُ|to thank, be grateful|şükretmek|danken|şükür, teşekkür, şükran, müteşekkir|
+252|نبا|نَبَّأَ|يُنَبِّئُ|to inform|haber vermek|kundtun|nebe', inba, nebi|Form II of ن ب أ (news)
+253|ايمان|إِيمَان||faith, belief|iman|Glaube|iman|
+254|خبير|خَبِير||All-Aware|her şeyden haberdar, Habîr|allkundig|haber, muhabir, ihbar, muhabere|
+255|صراط|صِرَاط||path, way|yol|Weg|Sırat (köprüsü)|الصِّرَاطَ الْمُسْتَقِيمَ
+256|قدير|قَدِير||All-Powerful|her şeye gücü yeten, Kadîr|allmächtig|Kadir, kudret|عَلَى كُلِّ شَيْءٍ قَدِيرٌ
+257|حكم|حَكَمَ|يَحْكُمُ|to judge, rule|hükmetmek|richten, urteilen|hüküm, hâkim, mahkeme, mahkum, hükümet|
+258|يذر|وَذَرَ|يَذَرُ|to leave, let alone|bırakmak|lassen||Only يَذَرُ (present) and ذَرْ (leave!) are used
+259|صدر|صَدْر|صُدُور|chest, breast|göğüs, sadr|Brust|sadr, sadrazam, masdar|
+260|مشرك|مُشْرِك|مُشْرِكُونَ|polytheist|müşrik|Götzendiener|müşrik, şirk|
+261|انذر|أَنْذَرَ|يُنْذِرُ|to warn|uyarmak, inzar etmek|warnen|inzar, münzir, nezir|
+262|حسب|حَسِبَ|يَحْسَبُ|to think, reckon|sanmak|meinen, glauben|hesap, hasbelkader|أَحَسِبَ النَّاسُ = do people think…?
+263|شهد|شَهِدَ|يَشْهَدُ|to witness, testify|şahit olmak, şehadet etmek|bezeugen|şahadet, şehadet, müşahede, meşhut|
+264|ملكت|مَلَكَ|يَمْلِكُ|to own, possess, control|malik olmak|besitzen|mülk, malik, emlak, temellük|مَا مَلَكَتْ أَيْمَانُكُمْ
+265|نادي|نَادَى|يُنَادِي|to call (out)|seslenmek, nida etmek|rufen|nida, münadi|
+266|DEM:far:FS|تِلْكَ||that (f.); those (things)|şu, o|jene||تِلْكَ آيَاتُ الْكِتَابِ
+267|اسرائيل|إِسْرَائِيل||Israel (Jacob)|İsrail|Israel|İsrail|بَنِي إِسْرَائِيلَ
+268|حمد|حَمْد||praise|hamd, övgü|Lob|hamd, hamdolsun, Muhammed, Ahmet, Mahmut|الْحَمْدُ لِلّٰهِ
+269|نوح|نُوح||Noah (Nuh)|Nuh|Noah|Nuh|
+270|نور|نُور||light|nur, ışık|Licht|nur, münevver, tenvir, nurani|
+271|جزاء|جَزَاء||recompense, reward|karşılık, ceza, mükâfat|Lohn, Vergeltung|ceza|
+272|سلام|سَلَام||peace|selam, esenlik|Frieden|selam, selamet|
+273|كلمه|كَلِمَة|كَلِمَات|word|kelime, söz|Wort|kelime, kelam|
+274|سوف|سَوْفَ||will (future)|-ecek|werden (Zukunft)||سَوْفَ تَعْلَمُونَ = you will know
+275|ادخل|أَدْخَلَ|يُدْخِلُ|to admit, make enter|sokmak, dahil etmek|hineinführen|ithal, ithalat, dahil|Form IV of د خ ل — ithal = إِدْخَال
+276|استطاع|اسْتَطَاعَ|يَسْتَطِيعُ|to be able|güç yetirmek, -ebilmek|können, vermögen|istitaat|Form X of ط و ع
+277|سبح|سَبَّحَ|يُسَبِّحُ|to glorify (God)|tesbih etmek|lobpreisen|tesbih, Sübhanallah|
+278|بحر|بَحْر|بِحَار|sea|deniz|Meer|bahr, bahriye, bahriyeli|
+279|سبحان|سُبْحَانَ||glory be (to)|münezzehtir, sübhan|gepriesen sei|Sübhanallah|سُبْحَانَ اللّٰهِ
+280|فوق|فَوْقَ||above, over|üstünde|über|fevkalade, tefevvuk|"fevkalade" = فَوْقَ الْعَادَة (above the usual)
+281|حمل|حَمَلَ|يَحْمِلُ|to carry, bear|taşımak, yüklenmek|tragen|hamal, hamile, tahammül, ihtimal, muhtemel|
+282|عذب|عَذَّبَ|يُعَذِّبُ|to punish|azap etmek|strafen|azap, tazip|Form II of ع ذ ب
+283|علم|عَلَّمَ|يُعَلِّمُ|to teach|öğretmek|lehren|talim, talimat, muallim|Form II of ع ل م
+284|شريك|شَرِيك|شُرَكَاء|partner|ortak, şerik|Teilhaber|şerik, şirket|لَا شَرِيكَ لَهُ
+285|كبير|كَبِير||great, big|büyük|groß|kebir, kibar, kibir|
+286|ويل|وَيْل||woe|vay haline, yazıklar olsun|wehe||وَيْلٌ لِلْمُطَفِّفِينَ
+287|اذا|إِذَا||behold, suddenly (surprise)|bir de bakarsın ki|siehe da, plötzlich||فَإِذَا هِيَ حَيَّةٌ = and behold, it was a snake
+288|اري|أَرَى|يُرِي|to show|göstermek|zeigen|irae|Form IV of ر أ ي
+289|استغفر|اسْتَغْفَرَ|يَسْتَغْفِرُ|to ask forgiveness|bağışlanma dilemek, istiğfar etmek|um Vergebung bitten|istiğfar, estağfirullah|Form X: "to seek" forgiveness
+290|استكبر|اسْتَكْبَرَ|يَسْتَكْبِرُ|to be arrogant|büyüklenmek|hochmütig sein|kibir, istikbar, mütekebbir|Form X of ك ب ر
+291|اهتدي|اهْتَدَى|يَهْتَدِي|to be guided|doğru yolu bulmak|rechtgeleitet sein|ihtida, mühtedi|Form VIII of ه د ي
+292|بلغ|بَلَغَ|يَبْلُغُ|to reach|ulaşmak, erişmek|erreichen|tebliğ, mübalağa, belagat, meblağ, baliğ|
+293|بئس|بِئْسَ||how wretched!|ne kötü!|wie schlimm!||وَبِئْسَ الْمَصِيرُ = what a wretched destination
+294|ترك|تَرَكَ|يَتْرُكُ|to leave, abandon|bırakmak, terk etmek|verlassen|terk, metruk, tereke|
+295|توكل|تَوَكَّلَ|يَتَوَكَّلُ|to rely, put trust (in)|tevekkül etmek, güvenmek|vertrauen|tevekkül, vekil, vekalet|Form V of و ك ل
+296|خشي|خَشِيَ|يَخْشَى|to fear (with awe)|korkmak, haşyet duymak|fürchten|haşyet|
+297|اذن|إِذْن||permission|izin|Erlaubnis|izin, ezan, mezun|بِإِذْنِ اللّٰهِ = by Allah's permission
+298|اسم|اسْم|أَسْمَاء|name|isim, ad|Name|isim, esma, müsemma, esami|بِسْمِ اللّٰهِ
+299|جبل|جَبَل|جِبَال|mountain|dağ|Berg|Cebelitarık (جَبَلُ طَارِق)|
+300|حساب|حِسَاب||reckoning, account|hesap|Abrechnung|hesap, muhasebe|يَوْمَ الْحِسَابِ

@@ -1,0 +1,170 @@
+# ranks 481-650
+481|شهر|شَهْر|أَشْهُر|month|ay|Monat|şehr (şehr-i Ramazan)|شَهْرُ رَمَضَانَ
+482|ظن|ظَنّ||assumption, conjecture|zan, sanı|Vermutung|zan|إِنَّ الظَّنَّ لَا يُغْنِي مِنَ الْحَقِّ شَيْئًا
+483|كم|كَمْ||how many!; how many?|ne kadar!; kaç?|wie viele|kemiyet|
+484|مسمي|مُسَمًّى||named, appointed (term)|belirli, adı konmuş|bestimmt, festgesetzt|müsemma|إِلَى أَجَلٍ مُسَمًّى = for an appointed term
+485|مفسد|مُفْسِد|مُفْسِدُونَ|corrupter, mischief-maker|bozguncu, müfsit|Unheilstifter|müfsit, fesat|
+486|مكذب|مُكَذِّب|مُكَذِّبُونَ|denier|yalanlayan|Leugner|mükezzip|وَيْلٌ يَوْمَئِذٍ لِلْمُكَذِّبِينَ
+487|نصيب|نَصِيب||share, portion|pay, nasip|Anteil|nasip, münasip, münasebet|
+488|احسن|أَحْسَنَ|يُحْسِنُ|to do good, do excellently|iyilik etmek, güzel yapmak|Gutes tun|ihsan, muhsin|
+489|امات|أَمَاتَ|يُمِيتُ|to cause to die|öldürmek|sterben lassen|Mümit|يُحْيِي وَيُمِيتُ = He gives life and causes death
+490|استهزئ|اسْتَهْزَأَ|يَسْتَهْزِئُ|to mock|alay etmek|verspotten|istihza|
+491|اشتري|اشْتَرَى|يَشْتَرِي|to buy, exchange|satın almak, değişmek|kaufen, eintauschen|müşteri, iştira|
+492|كتم|كَتَمَ|يَكْتُمُ|to conceal|gizlemek|verheimlichen|ketum, kitman|
+493|مش|مَشَى|يَمْشِي|to walk|yürümek|gehen||
+494|وضع|وَضَعَ|يَضَعُ|to put, place; give birth|koymak; doğurmak|legen; gebären|vaziyet, mevzu, tevazu, mütevazı, vazgeçmek|
+495|حميم|حَمِيم||boiling water; close friend|kaynar su; yakın dost|siedendes Wasser; enger Freund||
+496|حزب|حِزْب|أَحْزَاب|party, faction|grup, hizip|Partei|hizip, hizb|
+497|حكمه|حِكْمَة||wisdom|hikmet|Weisheit|hikmet|الْكِتَابَ وَالْحِكْمَةَ = the Book and the wisdom
+498|صابر|صَابِر|صَابِرُونَ|patient|sabreden|geduldig|Sabri|إِنَّ اللّٰهَ مَعَ الصَّابِرِينَ
+499|ظلم|ظُلْم||injustice, wrongdoing|zulüm|Unrecht|zulüm|
+500|عقاب|عِقَاب||penalty, punishment|ceza, ıkap|Strafe|ıkap|شَدِيدُ الْعِقَابِ = severe in penalty
+501|مره|مَرَّة||time, once|kere, defa|Mal|mürur|
+502|هارون|هَارُون||Aaron (Harun)|Harun|Aaron|Harun|
+503|احل|أَحَلَّ|يُحِلُّ|to make lawful|helal kılmak|erlauben|helal|
+504|اعد|أَعَدَّ|يُعِدُّ|to prepare|hazırlamak|bereiten|istidat|أَعَدَّ اللّٰهُ لَهُمْ = Allah has prepared for them
+505|اقسم|أَقْسَمَ|يُقْسِمُ|to swear|yemin etmek|schwören|kasem|لَا أُقْسِمُ بِيَوْمِ الْقِيَامَةِ
+506|امن|أَمِنَ|يَأْمَنُ|to feel safe; trust|güvende olmak|sicher sein|emin, emniyet, emanet|
+507|انشا|أَنْشَأَ|يُنْشِئُ|to produce, bring into being|inşa etmek, var etmek|hervorbringen|inşa, inşaat, neşet|
+508|بلو|بَلَا|يَبْلُو|to test, try|denemek|prüfen|bela, müptela, iptila|لِيَبْلُوَكُمْ = to test you
+509|حق|حَقَّ|يَحِقُّ|to come true, be due|gerçekleşmek, hak olmak|sich bewahrheiten|tahakkuk|
+510|سبق|سَبَقَ|يَسْبِقُ|to precede, outstrip|geçmek, önce gelmek|vorausgehen|sabık, sabıka, müsabaka|
+511|سعي|سَعَى|يَسْعَى|to strive, hasten|koşmak, çalışmak|eilen, sich bemühen|sa'y, mesai|
+512|عرف|عَرَفَ|يَعْرِفُ|to know, recognize|tanımak, bilmek|kennen, erkennen|irfan, örf, marifet, tarif, maruf|
+513|قص|قَصَّ|يَقُصُّ|to narrate, relate|anlatmak|erzählen|kıssa, kısas|
+514|كلم|كَلَّمَ|يُكَلِّمُ|to speak to|konuşmak|sprechen zu|kelam, kelime, mükâleme|وَكَلَّمَ اللّٰهُ مُوسَى تَكْلِيمًا
+515|اقرب|أَقْرَب||nearer, closest|daha yakın|näher|akraba, kurb|وَنَحْنُ أَقْرَبُ إِلَيْهِ مِنْ حَبْلِ الْوَرِيدِ
+516|اين|أَيْنَ||where?|nerede?|wo?||فَأَيْنَ تَذْهَبُونَ = so where are you going?
+517|زينه|زِينَة||adornment, finery|süs, ziynet|Schmuck|ziynet|
+518|شجره|شَجَرَة||tree|ağaç|Baum|şecere|
+519|ضر|ضُرّ||harm, adversity|zarar, sıkıntı|Schaden, Not|zarar|
+520|طير|طَيْر||birds|kuşlar|Vögel|tayyare|
+521|فوز|فَوْز||success, triumph|kurtuluş, başarı|Erfolg, Triumph|fevz, Fevzi|ذٰلِكَ الْفَوْزُ الْعَظِيمُ
+522|مكر|مَكْر||plotting, scheme|hile, tuzak|List|mekr|
+523|مصدق|مُصَدِّق||confirming|doğrulayıcı|bestätigend|tasdik, musaddak|
+524|معرض|مُعْرِض|مُعْرِضُونَ|one who turns away|yüz çeviren|sich abwendend|muarız|
+525|استعجل|اسْتَعْجَلَ|يَسْتَعْجِلُ|to seek to hasten|acele istemek|beschleunigen wollen|acele, acil, istical|
+526|نفخ|نَفَخَ|يَنْفُخُ|to blow|üflemek|blasen||وَنُفِخَ فِي الصُّورِ = and the Horn will be blown
+527|يضر|ضَرَّ|يَضُرُّ|to harm|zarar vermek|schaden|zarar, zaruri, muzır|
+528|يفقه|فَقِهَ|يَفْقَهُ|to understand deeply|anlamak, kavramak|verstehen|fıkıh, fakih|
+529|اذن|أُذُن|آذَان|ear|kulak|Ohr||
+530|انس|إِنْس||humans, mankind|insanlar|Menschen|ins, insan|الْجِنِّ وَالْإِنْسِ
+531|توراه|تَوْرَاة||the Torah|Tevrat|die Thora|Tevrat|
+532|دابه|دَابَّة||creature, animal|canlı, hayvan|Lebewesen|dâbbe|
+533|درجه|دَرَجَة|دَرَجَات|degree, rank|derece|Rang, Stufe|derece, tedrici|
+534|دبر|دُبُر|أَدْبَار|back|arka, sırt|Rücken|tedbir, idbar|
+535|ذكر|ذَكَر||male|erkek|männlich|müzekker|الذَّكَرَ وَالْأُنْثَى
+536|راس|رَأْس|رُءُوس|head|baş|Kopf|reis, riyaset|
+537|ريب|رَيْب||doubt|şüphe|Zweifel||لَا رَيْبَ فِيهِ = no doubt in it
+538|عالم|عَالِم||knower|bilen|Wissender|âlim|عَالِمُ الْغَيْبِ = Knower of the unseen
+539|لدن|لَدُن||from (the presence of)|katından|von (bei)|ledün, ilm-i ledün|مِنْ لَدُنْكَ = from Yourself
+540|مولي|مَوْلَى||protector, master|mevla, dost|Schutzherr|Mevla, Mevlana|نِعْمَ الْمَوْلَى = an excellent Protector
+541|منكر|مُنْكَر||wrong, evil (what is rejected)|kötülük, münker|Verwerfliches|münker, inkâr|
+542|اسر|أَسَرَّ|يُسِرُّ|to conceal, confide|gizlemek|geheimhalten|sır, esrar|
+543|امسك|أَمْسَكَ|يُمْسِكُ|to hold, withhold|tutmak, alıkoymak|festhalten|imsak, imsakiye, mümsik|
+544|اوفي|أَوْفَى|يُوفِي|to fulfill, give in full|yerine getirmek, tam vermek|erfüllen|vefa, ifa|أَوْفُوا بِالْعُقُودِ = fulfill the contracts
+545|اخفي|أَخْفَى|يُخْفِي|to hide|gizlemek|verbergen|hafi, hafiye, ihfa|
+546|اعيد|أَعَادَ|يُعِيدُ|to bring back, repeat|iade etmek|wiederholen|iade|يُبْدِئُ وَيُعِيدُ = He originates and repeats
+547|تبين|تَبَيَّنَ|يَتَبَيَّنُ|to become clear|açıkça belli olmak|klar werden|tebeyyün|
+548|ذكر|ذَكَّرَ|يُذَكِّرُ|to remind|hatırlatmak, öğüt vermek|ermahnen|tezkir, tezkere|فَذَكِّرْ = so remind!
+549|عاد|عَادَ|يَعُودُ|to return|dönmek|zurückkehren|avdet, âdet, iade, mutat|
+550|متع|مَتَّعَ|يُمَتِّعُ|to give enjoyment|faydalandırmak|genießen lassen|meta, temettü|
+551|نعم|نِعْمَ||how excellent!|ne güzel!|wie trefflich!||نِعْمَ الْمَوْلَى وَنِعْمَ النَّصِيرُ
+552|وفي|وَفَّى|يُوَفِّي|to pay in full|tam olarak ödemek|voll entlohnen|vefa|
+553|اهواء|أَهْوَاء||desires, whims|arzular, hevesler|Neigungen, Gelüste|heva, hava|Plural of هَوًى
+554|اسحاق|إِسْحَاق||Isaac (Ishaq)|İshak|Isaak|İshak|
+555|بطن|بَطْن|بُطُون|belly, womb; inside|karın; iç|Bauch; Innere|batın, batıni|
+556|بنت|بِنْت|بَنَات|daughter|kız|Tochter|bint|
+557|تاويل|تَأْوِيل||interpretation; outcome|tevil, yorum|Deutung|tevil|
+558|تقوي|تَقْوَى||God-consciousness, piety|takva|Gottesfurcht|takva|
+559|تراب|تُرَاب||dust, soil|toprak|Staub, Erde|türap, türbe|
+560|ثمره|ثَمَرَة|ثَمَرَات|fruit|meyve|Frucht|semere, istismar|
+561|حميد|حَمِيد||Praiseworthy|övülmeye layık, Hamîd|lobenswert|Hamit, hamd|
+562|حول|حَوْلَ||around|etrafında|um … herum|havali, hâl, havale|
+563|حسني|حُسْنَى||the best, most beautiful|en güzel|das Schönste|Esmaü'l-Hüsna|الْأَسْمَاءُ الْحُسْنَى = the most beautiful names
+564|سليمان|سُلَيْمَان||Solomon (Sulayman)|Süleyman|Salomo|Süleyman|
+565|فاحشه|فَاحِشَة||immorality, indecency|hayasızlık, fuhuş|Schändlichkeit|fuhuş, fahiş|
+566|قائم|قَائِم||standing, upright|ayakta duran, kaim|stehend|kaim, kaymakam|kaymakam = قَائِم مَقَام (standing in place of)
+567|مهتدي|مُهْتَدِي|مُهْتَدُونَ|rightly guided|doğru yolda olan|rechtgeleitet|mühtedi|
+568|نعيم|نَعِيم||bliss, delight|nimet, mutluluk|Wonne|Naim, nimet|جَنَّاتِ النَّعِيمِ = gardens of bliss
+569|احاط|أَحَاطَ|يُحِيطُ|to encompass|kuşatmak, ihata etmek|umfassen|ihata, muhit, ihtiyat|
+570|ادري|أَدْرَى|يُدْرِي|to make (someone) know|bildirmek|wissen lassen|dirayet|وَمَا أَدْرَاكَ مَا … = and what will make you know what … is?
+571|انعم|أَنْعَمَ|يُنْعِمُ|to bestow favor|nimet vermek|Gnade erweisen|nimet|صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ
+572|اغرق|أَغْرَقَ|يُغْرِقُ|to drown|boğmak|ertränken|gark, müstağrak|
+573|انقلب|انْقَلَبَ|يَنْقَلِبُ|to turn back, return|dönmek|umkehren|inkılap|Form VII of ق ل ب
+574|فصل|فَصَّلَ|يُفَصِّلُ|to explain in detail|ayrıntılı açıklamak|im Einzelnen darlegen|tafsilat, mufassal, fasıl|
+575|فضل|فَضَّلَ|يُفَضِّلُ|to prefer, favor|üstün kılmak|bevorzugen|fazilet, tafdil|
+576|كره|كَرِهَ|يَكْرَهُ|to dislike, hate|hoşlanmamak|verabscheuen|mekruh, kerih, kerhen|
+577|ود|وَدَّ|يَوَدُّ|to wish, love|arzu etmek, sevmek|wünschen|meveddet, Vedud|
+578|يتفكر|تَفَكَّرَ|يَتَفَكَّرُ|to reflect, think|düşünmek, tefekkür etmek|nachdenken|tefekkür, fikir, mütefekkir|لِقَوْمٍ يَتَفَكَّرُونَ = for people who reflect
+579|PRON:3D|هُمَا|ـهُمَا|they two; them (dual)|o ikisi|die beiden||
+580|امن|آمِن|آمِنُونَ|safe, secure|güvenli, emin|sicher|emin, emniyet|
+581|اظلم|أَظْلَم||more unjust|daha zalim|ungerechter||وَمَنْ أَظْلَمُ مِمَّنِ افْتَرَى = who is more unjust than one who invents…
+582|الباب|أَلْبَاب||minds, intellects|akıllar|Verstand|lebib, lübb|أُولُو الْأَلْبَابِ = people of understanding
+583|داود|دَاوُود||David (Dawud)|Davud|David|Davut|
+584|سعير|سَعِير||blaze, blazing fire|alevli ateş|Feuerglut||
+585|سنه|سُنَّة||way, practice, law|sünnet, yol, kanun|Brauch, Gesetz|sünnet, Sünni|سُنَّةَ اللّٰهِ = the way of Allah
+586|طيب|طَيِّب||good, pure|temiz, güzel|gut, rein|Tayyip, tayyib|
+587|فؤاد|فُؤَاد|أَفْئِدَة|heart|gönül, kalp|Herz|Fuat|
+588|قربي|قُرْبَى||kinship, relatives|akrabalık, yakınlık|Verwandtschaft|akraba, kurbiyet|ذِي الْقُرْبَى = relatives
+589|مرجع|مَرْجِع||return|dönüş|Rückkehr|merci|إِلَيْهِ مَرْجِعُكُمْ = to Him is your return
+590|ميزان|مِيزَان|مَوَازِين|scale, balance|terazi, mizan|Waage|mizan, vezin, vezne, veznedar, muvazene|
+591|يعقوب|يَعْقُوب||Jacob (Yaʿqub)|Yakup|Jakob|Yakup|
+592|اتم|أَتَمَّ|يُتِمُّ|to complete|tamamlamak|vollenden|tamam, itmam|Turkish "tamam" (OK, complete) is the same root
+593|انبت|أَنْبَتَ|يُنْبِتُ|to cause to grow|bitirmek, yetiştirmek|wachsen lassen|nebat, nebati|
+594|افك|أُفِكَ|يُؤْفَكُ|to be turned away (deluded)|çevrilmek, döndürülmek|abgewendet werden|ifk|فَأَنَّى يُؤْفَكُونَ = so how are they deluded?
+595|استمع|اسْتَمَعَ|يَسْتَمِعُ|to listen|dinlemek|zuhören|istima, müstemi|
+596|انتهي|انْتَهَى|يَنْتَهِي|to desist, stop|vazgeçmek, son vermek|aufhören|intiha, nihayet, münteha|
+597|بسط|بَسَطَ|يَبْسُطُ|to extend, spread|yaymak, genişletmek|ausbreiten|basit, inbisat, mebsut|
+598|خسر|خَسِرَ|يَخْسَرُ|to lose|kaybetmek, ziyana uğramak|verlieren|hüsran, hasar|
+599|سار|سَارَ|يَسِيرُ|to travel, journey|yürümek, gezmek|reisen|seyir, seyretmek, seyyar, siyer|
+600|فتح|فَتَحَ|يَفْتَحُ|to open; grant victory|açmak; fethetmek|öffnen|fetih, Fatih, Fatiha, miftah|
+601|فرح|فَرِحَ|يَفْرَحُ|to rejoice|sevinmek|sich freuen|ferah|
+602|قدر|قَدَّرَ|يُقَدِّرُ|to determine, measure out|takdir etmek|bemessen|takdir, kader|
+603|قرا|قَرَأَ|يَقْرَأُ|to read, recite|okumak|lesen, vortragen|Kur'an, kıraat, kıraathane|اقْرَأْ بِاسْمِ رَبِّكَ
+604|من|مَنَّ|يَمُنُّ|to bestow favor; remind of favors|lütufta bulunmak; başa kakmak|Huld erweisen|minnet, minnettar|
+605|هاجر|هَاجَرَ|يُهَاجِرُ|to emigrate|hicret etmek|auswandern|hicret, muhacir, hicri, hicran|
+606|وقي|وَقَى|يَقِي|to protect, guard|korumak|schützen|vikaye, takva|وَقِنَا عَذَابَ النَّارِ = and protect us from the punishment of the Fire
+607|بلاغ|بَلَاغ||conveyance (of the message)|tebliğ|Übermittlung|tebliğ, belagat|
+608|بشري|بُشْرَى||glad tidings|müjde|frohe Botschaft|Büşra, beşaret|
+609|تنزيل|تَنْزِيل||revelation, sending down|indirme, tenzil|Herabsendung|tenzil|
+610|حرج|حَرَج||hardship, difficulty|sıkıntı, darlık|Bedrängnis||
+611|حليم|حَلِيم||Forbearing|yumuşak huylu, Halîm|nachsichtig|Halim, hilm|
+612|رجل|رِجْل|أَرْجُل|foot, leg|ayak|Fuß||
+613|شك|شَكّ||doubt|şüphe, şek|Zweifel|şek|
+614|صبر|صَبْر||patience|sabır|Geduld|sabır|
+615|ظهر|ظَهْر|ظُهُور|back|sırt|Rücken|zahir, zuhur, mazhar, izhar|
+616|قسط|قِسْط||justice, equity|adalet, denge|Gerechtigkeit|taksit, kıst|Turkish "taksit" (installment) = a fair share
+617|كلما|كُلَّمَا||whenever, every time|her ne zaman|jedes Mal wenn||
+618|ملك|مَلِك||king|kral, melik|König|melik|مَلِكِ النَّاسِ = King of mankind
+619|مسرف|مُسْرِف|مُسْرِفُونَ|extravagant, transgressor|israf eden, haddi aşan|Maßloser|müsrif, israf|
+620|منذر|مُنْذِر||warner|uyarıcı|Warner|münzir|
+621|مله|مِلَّة||religion, creed|din, millet|Glaubensrichtung|millet, milli|مِلَّةَ إِبْرَاهِيمَ = the creed of Ibrahim
+622|نصراني|نَصَارَى||Christians|Hıristiyanlar|Christen|Nasrani|
+623|يسير|يَسِير||easy|kolay|leicht|müyesser, teysir|
+624|اتبع|أَتْبَعَ|يُتْبِعُ|to make follow, pursue|arkasından göndermek|folgen lassen|tabi|
+625|اخر|أَخَّرَ|يُؤَخِّرُ|to delay, postpone|ertelemek|aufschieben|tehir|
+627|افسد|أَفْسَدَ|يُفْسِدُ|to corrupt, cause mischief|bozmak, fesat çıkarmak|Unheil stiften|ifsat, fesat|
+628|اوذي|آذَى|يُؤْذِي|to harm, hurt|eziyet etmek|kränken, schaden|eza, eziyet|
+629|اعتدي|اعْتَدَى|يَعْتَدِي|to transgress|haddi aşmak, saldırmak|übertreten||
+630|سكن|سَكَنَ|يَسْكُنُ|to dwell; be still|oturmak; sükûn bulmak|wohnen; ruhen|sakin, mesken, sükûn|
+631|شرب|شَرِبَ|يَشْرَبُ|to drink|içmek|trinken|şerbet, şurup, meşrubat, meşrep|
+632|صدق|صَدَقَ|يَصْدُقُ|to be truthful|doğru söylemek|wahrhaftig sein|sadakat, sıdk, sadaka|
+633|صنع|صَنَعَ|يَصْنَعُ|to make, do|yapmak|herstellen, tun|sanat, sanayi, sanatkâr|
+634|غر|غَرَّ|يَغُرُّ|to deceive, delude|aldatmak|betören|gurur, mağrur|Turkish "gurur" (pride) originally meant self-deception
+635|غلب|غَلَبَ|يَغْلِبُ|to overcome, defeat|yenmek, galip gelmek|besiegen|galip, galibiyet, mağlup|
+636|وعظ|وَعَظَ|يَعِظُ|to admonish, exhort|öğüt vermek|ermahnen|vaaz, vaiz, mev'ize|
+637|يبدي|أَبْدَى|يُبْدِي|to show, disclose|açığa vurmak|offenlegen|bedevi|
+638|اثر|أَثَر|آثَار|trace, track|iz, eser|Spur|eser, asar, tesir, müessir|
+639|الف|أَلْف||thousand|bin|tausend|elf (Elf Leyle)|أَلْفِ شَهْرٍ = a thousand months
+640|امين|أَمِين||trustworthy|güvenilir, emin|vertrauenswürdig|emin, Emine, emanet|
+641|اخت|أُخْت||sister|kız kardeş|Schwester|uht|
+642|ابتغاء|ابْتِغَاء||seeking|arayış, isteme|Streben||ابْتِغَاءَ وَجْهِ اللّٰهِ = seeking the countenance of Allah
+643|بلد|بَلَد||land, town|memleket, şehir, belde|Land, Stadt|belde, belediye|
+644|حدود|حُدُود||limits, bounds|sınırlar, hudut|Grenzen|hudut, had, tahdit|تِلْكَ حُدُودُ اللّٰهِ = these are the limits of Allah
+645|خاشع|خَاشِع|خَاشِعُونَ|humble, reverent|huşu duyan|demütig|huşu|
+646|شاكر|شَاكِر|شَاكِرُونَ|grateful|şükreden|dankbar|Şakir|
+647|صدق|صِدْق||truth, truthfulness|doğruluk, sıdk|Wahrhaftigkeit|sıdk, sadakat|
+648|ضال|ضَالّ|ضَالُّونَ|astray|sapkın, dalalette olan|irregehend|dâll|وَلَا الضَّالِّينَ = nor those who go astray
+649|ظل|ظِلّ|ظِلَال|shade, shadow|gölge|Schatten||
+650|عدل|عَدْل||justice|adalet|Gerechtigkeit|adalet, adil, itidal, muadil, tadil|

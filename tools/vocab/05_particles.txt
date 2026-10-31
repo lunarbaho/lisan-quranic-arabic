@@ -1,0 +1,13 @@
+# Prefix particles and rare pronouns (never the core of a word, but everywhere)
+4795|و|وَ||and; (in oaths) by|ve; (yeminde) andolsun|und; (Schwur) bei|ve|Turkish "ve" is this very word
+4796|ال|الـ||the (definite article)|belirlilik takısı (el-)|der/die/das|el- (Elhamdülillah)|Before "sun letters" the ل is assimilated: الشَّمْس = ash-shams
+4797|ل|لِـ||for, to; belongs to; so that|için; -e ait|für, zu; damit|lillah (li-llah)|With pronouns it becomes لَـ: لَهُ، لَكُمْ
+4798|ف|فَـ||so, then, and so|o halde, böylece|so, dann||
+4799|ب|بِـ||with, by, in|ile, -de|mit, durch, in|bismillah, bilhassa, bizzat, bilakis|
+4803|ك|كَـ||like, as|gibi|wie||كَمِثْلِهِ = like Him
+4805|س|سَـ||will (near future)|-ecek|werden (bald)||سَيَقُولُ = he will say
+4800|ا|أَ||(question) is …?, did …?|mi?|(Frage) etwa?||أَلَمْ تَرَ = have you not seen?
+4802|ي|يَا||O! (calling someone)|ey!, ya!|o!|ya (Ya Rabbi)|يَا أَيُّهَا النَّاسُ = O mankind
+944|PRON:2D|أَنْتُمَا|ـكُمَا|you two; your (dual)|siz ikiniz|ihr beide||فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ
+2100|PRON:2FS|أَنْتِ|ـكِ|you (f. sg.); your|sen (kadın)|du (f.); dein||
+4806|PRON:2FP|أَنْتُنَّ|ـكُنَّ|you (f. pl.); your|siz (kadınlar)|ihr (f.); euer||

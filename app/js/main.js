@@ -1,0 +1,154 @@
+// Lisan — app bootstrap, navigation and routing.
+import { h, clear } from './util.js';
+import { icon, logo } from './icons.js';
+import { loadCore, loadLemmas } from './data.js';
+import { S, onChange, dueKeys, connectRemote } from './store.js';
+import { closeSheet, stopAudio, env } from './ui.js';
+import { initTeacher } from './teacher.js';
+
+const NAV = [
+  { id: 'home', label: 'Home', icon: 'home' },
+  { id: 'learn', label: 'Course', icon: 'path' },
+  { id: 'review', label: 'Review', icon: 'cards', badge: true },
+  { id: 'quran', label: 'Quran', icon: 'quran' },
+  { id: 'practice', label: 'Practice', icon: 'practice', rail: true },
+  { id: 'vocab', label: 'My words', icon: 'words', rail: true },
+  { id: 'roots', label: 'Roots', icon: 'roots', rail: true },
+  { id: 'grammar', label: 'Grammar', icon: 'grammar', rail: true },
+  { id: 'teacher', label: 'Teacher', icon: 'teacher', rail: true, needsTeacher: true },
+  { id: 'prefs', label: 'Preferences', icon: 'prefs', rail: true },
+  { id: 'about', label: 'About', icon: 'info', rail: true },
+  { id: 'more', label: 'More', icon: 'more', tab: true },
+];
+
+const VIEWS = {
+  home: () => import('./views/home.js'),
+  learn: () => import('./views/learn.js'),
+  lesson: () => import('./views/lesson.js'),
+  review: () => import('./views/review.js'),
+  words: () => import('./views/words.js'),
+  vocab: () => import('./views/vocab.js'),
+  practice: () => import('./views/practice.js'),
+  quran: () => import('./views/quran.js'),
+  surah: () => import('./views/reader.js'),
+  roots: () => import('./views/roots.js'),
+  root: () => import('./views/roots.js'),
+  grammar: () => import('./views/grammar.js'),
+  teacher: () => import('./views/teacher.js'),
+  prefs: () => import('./views/prefs.js'),
+  about: () => import('./views/about.js'),
+  more: () => import('./views/more.js'),
+};
+// which nav item is highlighted for a route
+const SECTION = { lesson: 'learn', words: 'home', surah: 'quran', root: 'roots' };
+
+let main, rail, tabbar, cleanup = null, renderSeq = 0;
+
+function applyTheme() {
+  // "auto" leaves data-theme alone, so a host page (claude.ai) or the OS decides
+  const t = S.settings.theme;
+  const el = document.documentElement;
+  if (t === 'light' || t === 'dark') { el.setAttribute('data-theme', t); el.dataset.lisanThemeSet = '1'; }
+  else if (el.dataset.lisanThemeSet) { el.removeAttribute('data-theme'); delete el.dataset.lisanThemeSet; }
+  el.style.setProperty('--ar-scale', S.settings.arScale || 1);
+}
+
+function navItems(filter) {
+  return NAV.filter(filter).filter((n) => !n.needsTeacher || env.teacher);
+}
+
+function buildShell(root) {
+  rail = h('nav', { class: 'rail', 'aria-label': 'Main' },
+    h('a', { class: 'brand', href: '#home', html: `${logo(34)}<span class="brand-name">Lisan</span><span class="brand-ar" lang="ar">لِسَان</span>` }));
+  tabbar = h('nav', { class: 'tabbar', 'aria-label': 'Main' });
+  main = h('main', { class: 'main', id: 'main', tabindex: '-1' });
+  clear(root).append(h('div', { class: 'shell' }, rail, main), tabbar);
+  paintNav();
+}
+
+function paintNav() {
+  const route = currentRoute();
+  const section = SECTION[route.name] || route.name;
+  const due = dueKeys().length;
+  rail.querySelectorAll('a.nav, .rail-foot').forEach((x) => x.remove());
+  for (const n of navItems((x) => !x.tab)) {
+    const a = h('a', { class: 'nav', href: `#${n.id}`, 'aria-current': section === n.id ? 'page' : null, html: `${icon(n.icon)}<span>${n.label}</span>` });
+    if (n.badge && due) a.appendChild(h('span', { class: 'count tnum' }, String(due)));
+    rail.appendChild(a);
+  }
+  rail.appendChild(h('div', { class: 'rail-foot' }, h('span', { lang: 'ar', dir: 'rtl', class: 'q-text' }, 'بِلِسَانٍ عَرَبِيٍّ مُبِينٍ'), h('span', {}, 'In a clear Arabic tongue — 26:195')));
+  clear(tabbar);
+  const tabIds = ['home', 'learn', 'review', 'quran', 'more'];
+  const moreSections = NAV.filter((n) => n.rail).map((n) => n.id);
+  for (const id of tabIds) {
+    const n = NAV.find((x) => x.id === id);
+    const active = section === id || (id === 'more' && (moreSections.includes(section) || section === 'more'));
+    const a = h('a', { class: 'tab', href: `#${id}`, 'aria-current': active ? 'page' : null, html: `${icon(n.icon)}<span>${n.label}</span>` });
+    if (n.badge && due) a.appendChild(h('span', { class: 'dot tnum' }, due > 99 ? '99+' : String(due)));
+    tabbar.appendChild(a);
+  }
+}
+
+export function currentRoute() {
+  const raw = decodeURIComponent((location.hash || '#home').slice(1)) || 'home';
+  const m = raw.match(/^([a-z]+)(?:-(.*))?$/);
+  if (!m || !VIEWS[m[1]]) return { name: 'home', arg: '' };
+  return { name: m[1], arg: m[2] || '' };
+}
+
+async function render() {
+  const seq = ++renderSeq;
+  const route = currentRoute();
+  closeSheet();
+  stopAudio();
+  if (cleanup) { try { cleanup(); } catch { /* view already gone */ } cleanup = null; }
+  paintNav();
+  try {
+    const mod = await VIEWS[route.name]();
+    if (seq !== renderSeq) return;
+    clear(main);
+    const ret = await mod.render(main, route.arg, route.name);
+    if (seq !== renderSeq) { if (typeof ret === 'function') ret(); return; }
+    cleanup = typeof ret === 'function' ? ret : null;
+  } catch (e) {
+    console.error(e);
+    if (seq !== renderSeq) return;
+    clear(main).appendChild(h('div', { class: 'view' }, h('div', { class: 'card stack' },
+      h('h2', {}, 'This page could not be opened'),
+      h('p', { class: 'muted' }, String(e.message || e)),
+      h('p', {}, 'Check your connection, then reload. Your progress is saved.'),
+      h('a', { class: 'btn', href: '#home' }, 'Go to Home'))));
+  }
+  if (!['lesson', 'review', 'words'].includes(route.name)) window.scrollTo({ top: 0 });
+  main.focus({ preventScroll: true });
+}
+
+export function rerender() { render(); }
+
+async function boot() {
+  const root = document.getElementById('app');
+  applyTheme();
+  root.innerHTML = '<div class="loading" style="min-height:90vh"><div class="spinner"></div><span>Opening Lisan…</span></div>';
+  try {
+    await loadCore();
+  } catch (e) {
+    root.innerHTML = '';
+    root.appendChild(h('div', { class: 'loading', style: { minHeight: '90vh' } },
+      h('h2', {}, 'Lisan could not load its word list'),
+      h('p', { class: 'muted' }, 'Serve the app folder over http(s) — opening index.html directly from disk blocks the data files.'),
+      h('code', {}, 'python3 -m http.server -d app 8000')));
+    return;
+  }
+  buildShell(root);
+  onChange(() => { applyTheme(); paintNav(); });
+  window.addEventListener('hashchange', render);
+  await render();
+  loadLemmas().then(() => { if (currentRoute().name === 'home') paintNav(); }).catch(() => {});
+  // optional claude.ai runtime: synced progress + AI teacher
+  if (env.artifact) {
+    connectRemote().then((ok) => { if (ok && ['home', 'learn', 'vocab'].includes(currentRoute().name)) render(); });
+    initTeacher().then((ok) => { if (ok) { paintNav(); if (['home', 'more'].includes(currentRoute().name)) render(); } });
+  }
+}
+
+boot();
