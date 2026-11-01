@@ -65,7 +65,7 @@ export async function render(root) {
   function details(r) {
     const box = h('div', { class: 'stack' });
     if (r.v) box.appendChild(wordCard(r.v));
-    else box.appendChild(h('div', { class: 'card stack', style: { textAlign: 'center' } }, h('div', { class: 'ar-big q-text', lang: 'ar' }, r.ar), h('div', {}, r.g)));
+    else box.appendChild(h('div', { class: 'card stack', style: { textAlign: 'center' } }, h('div', { class: 'ar-big q-text q-solo', lang: 'ar', dir: 'rtl' }, r.ar), h('div', {}, r.g)));
     const actions = h('div', { class: 'row' });
     if (!card(r.key)) actions.appendChild(h('button', { class: 'btn small', onclick: () => { introduce([r.key]); paint(); openSheetAgain(); } }, 'Add to my deck'));
     else actions.appendChild(h('button', { class: 'btn ghost small', onclick: () => inlineConfirm(box, 'Remove this word and its review history?', 'Remove', () => { removeCard(r.key); paint(); openSheetAgain(); }) }, 'Remove from deck'));

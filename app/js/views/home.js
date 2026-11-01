@@ -3,7 +3,7 @@ import { icon, logo } from '../icons.js';
 import { D, gloss } from '../data.js';
 import { S, streak, dueKeys, coverage, newWordsLeftToday, nextNewVocab, today, setSetting, lessonDone, wordStatus, unseenKeys } from '../store.js';
 import { LESSONS } from '../content/lessons.js';
-import { env } from '../ui.js';
+import { env, quranWords } from '../ui.js';
 
 const MILESTONES = [0.25, 0.5, 0.7, 0.8, 0.85];
 
@@ -44,7 +44,9 @@ function coverageCard() {
   const next = MILESTONES.find((m) => m > cov.known);
   const bar = h('div', { class: 'cov-bar', role: 'img', 'aria-label': `${pct(cov.known)} of the Quran's words known` },
     h('span', { style: { width: `${Math.min(100, cov.known * 100)}%` } }), ...MILESTONES.map((m) => h('i', { style: { left: `${m * 100}%` } })));
-  const scale = h('div', { class: 'cov-scale' }, ...MILESTONES.map((m) => h('span', { style: { left: `${m * 100}%` } }, `${m * 100}%`)));
+  // label a milestone only when the next one is not too close to fit both labels (80% / 85%)
+  const labelled = MILESTONES.filter((m, i) => i === MILESTONES.length - 1 || MILESTONES[i + 1] - m >= 0.07);
+  const scale = h('div', { class: 'cov-scale', 'aria-hidden': 'true' }, ...labelled.map((m) => h('span', { style: { left: `${m * 100}%` } }, `${m * 100}%`)));
   return h('section', { class: 'card coverage', 'aria-label': 'Quran coverage' },
     h('div', { class: 'row spread' }, h('h3', {}, 'How much of the Quran you can recognize'), h('span', { class: 'chip turq tnum' }, pct(cov.known, 1))),
     bar, scale,
@@ -67,10 +69,8 @@ function verseOfDay() {
   const pool = scored.slice(0, Math.max(12, Math.floor(scored.length * 0.05)));
   const seed = [...dayKey()].reduce((s, c) => s + c.charCodeAt(0), 0);
   const { ex, ratio } = pool[seed % pool.length];
-  const words = h('div', { class: 'verse-words show-known' }, ex.ar.map((w, i) => {
-    const st = wordStatus(ex.l[i]);
-    return h('span', { class: `qw ${st === 'known' ? 'known' : st === 'learning' ? 'learning' : ''}`, lang: 'ar', style: { cursor: 'default' } }, w);
-  }));
+  const words = quranWords(ex.ar, { cls: (i) => ({ known: 'known', learning: 'learning' }[wordStatus(ex.l[i])] || '') });
+  words.classList.add('show-known');
   return h('section', { class: 'card stack', 'aria-label': 'Verse of the day' },
     h('div', { class: 'row spread' }, h('span', { class: 'label' }, 'Verse of the day'), h('span', { class: 'chip leaf tnum' }, `${Math.round(ratio * 100)}% known`)),
     words, h('p', { class: 'verse-tr' }, ex[S.settings.lang] || ex.en),

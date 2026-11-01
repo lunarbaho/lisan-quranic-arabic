@@ -30,6 +30,8 @@
   --font-quran: "Amiri Quran", "Amiri", "Scheherazade New", "Noto Naskh Arabic", "Geeza Pro", serif;
   --font-ar: "Scheherazade New", "Amiri", "Noto Naskh Arabic", "Geeza Pro", serif;
   --ar-scale: 1;
+  --q-lh: 2.1;       /* Quran word metrics, see .q-solo */
+  --q-pad: .55em;
 
   --r-s: 8px;
   --r-m: 14px;
@@ -83,14 +85,25 @@ button { font: inherit; color: inherit; }
 .small { font-size: .9rem; }
 .tiny { font-size: .8rem; }
 .label { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: var(--muted); }
-.ar { font-family: var(--font-ar); direction: rtl; unicode-bidi: isolate; font-size: calc(1.3em * var(--ar-scale)); line-height: 1.6; }
+/* Arabic inside Latin text. Scheherazade's harakat and descenders reach beyond
+   a tight line box, so lines that hold Arabic get extra leading. */
+.ar { font-family: var(--font-ar); direction: rtl; unicode-bidi: isolate; font-size: calc(1.3em * var(--ar-scale)); line-height: 1.9;
+  letter-spacing: normal; text-transform: none; font-style: normal; }
 .q-text, .qw { font-family: var(--font-quran); }
-.ar-big { font-size: calc(2.6rem * var(--ar-scale)); line-height: 1.5; }
+/* Quran text in Amiri Quran. The font's line box (1.815em above the baseline,
+   0.634em below) is smaller than its ink: harakat stack to 1.5em above, waqf
+   signs to 1.82em, and kasra or tanwīn over the small low mīm (ۭ) reach 0.96em
+   below. --q-lh and --q-pad give every Quran word 1.64em above and 1.0em below
+   its baseline, so marks never touch the meaning under a word or the line
+   below. tests/layout.mjs measures this on every screen. */
+.q-solo { font-family: var(--font-quran); line-height: var(--q-lh); padding-bottom: var(--q-pad); }
+.ar-big { font-size: calc(2.6rem * var(--ar-scale)); }
 .ltr { direction: ltr; unicode-bidi: isolate; }
 
 /* ---------- shell ---------- */
 .shell { min-height: 100vh; }
 .rail { display: none; }
+.main:focus { outline: none; }
 .main {
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
@@ -112,6 +125,8 @@ button { font: inherit; color: inherit; }
 }
 .topbar h1 { font-size: 1.25rem; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .topbar .sub { font-size: .85rem; color: var(--muted); }
+.topbar .sub .ar { font-size: 1.2em; line-height: 2; }
+.topbar .root-letters { font-size: 1.35rem; line-height: 1.9; }
 .brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: inherit; }
 .brand-name { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; letter-spacing: .01em; }
 .brand-ar { font-family: var(--font-quran); font-size: 1.3rem; color: var(--turq); }
@@ -152,7 +167,7 @@ button { font: inherit; color: inherit; }
   .rail a.nav[aria-current="page"] svg { color: var(--cobalt); }
   .rail .nav .count { margin-left: auto; font-size: .78rem; background: var(--coral); color: #fff; border-radius: 1rem; padding: 0 .45rem; }
   .rail .rail-foot { margin-top: auto; padding: .75rem .7rem 0; font-size: .82rem; color: var(--muted); display: grid; gap: .2rem; }
-  .rail .rail-foot .q-text { font-size: 1.2rem; line-height: 2; color: var(--turq); }
+  .rail .rail-foot .q-text { font-size: 1.2rem; line-height: var(--q-lh); padding-bottom: .25em; color: var(--turq); }
   .tabbar { display: none; }
   .main { padding-block: 1.5rem 3rem; }
   .topbar { margin-top: -1.5rem; }
@@ -203,13 +218,19 @@ button { font: inherit; color: inherit; }
 .chip.coral { background: var(--coral-soft); color: var(--coral); }
 button.chip { border: 0; cursor: pointer; }
 button.chip[aria-pressed="true"] { background: var(--cobalt); color: var(--cobalt-ink); }
-.seg { display: inline-flex; background: var(--sunk); border-radius: 999px; padding: 3px; gap: 2px; flex-wrap: wrap; }
-.seg button { border: 0; background: transparent; padding: .4rem .85rem; border-radius: 999px; cursor: pointer; font-weight: 700; color: var(--muted); }
+.seg { display: inline-flex; background: var(--sunk); border-radius: 999px; padding: 3px; gap: 2px; max-width: 100%;
+  overflow-x: auto; scrollbar-width: none; justify-self: start; }
+.seg::-webkit-scrollbar { display: none; }
+.seg button { border: 0; background: transparent; padding: .4rem .85rem; border-radius: 999px; cursor: pointer; font-weight: 700; color: var(--muted);
+  flex: none; white-space: nowrap; }
+.seg button:focus-visible { outline-offset: -3px; }
+@media (max-width: 440px) { .seg button { padding: .4rem .62rem; font-size: .95rem; } }
+@media (max-width: 360px) { .seg button { padding: .38rem .5rem; font-size: .9rem; } }
 .seg button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 3px rgb(0 0 0 / .12); }
 
 /* ---------- home ---------- */
 .hero { display: grid; gap: .3rem; }
-.hero .greet-ar { font-family: var(--font-quran); font-size: 1.6rem; color: var(--turq); line-height: 1.6; justify-self: start; }
+.hero .greet-ar { font-family: var(--font-quran); font-size: 1.6rem; color: var(--turq); line-height: var(--q-lh); padding-bottom: .2em; justify-self: start; }
 .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; }
 .stat { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-m); padding: .8rem .9rem; display: grid; gap: .1rem; min-width: 0; }
 .stat .num { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
@@ -230,19 +251,21 @@ button.chip[aria-pressed="true"] { background: var(--cobalt); color: var(--cobal
 .cov-bar > span { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, var(--turq), var(--cobalt)); border-radius: 999px; }
 .cov-bar > i { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--card); opacity: .9; }
 .cov-scale { position: relative; height: 1.1rem; font-size: .74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-.cov-scale span { position: absolute; transform: translateX(-50%); }
+.cov-scale span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
 
 /* ---------- course path ---------- */
 .unit { display: grid; gap: .6rem; }
-.unit-head { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
-.unit-head .ar { color: var(--turq); font-size: 1.25rem; }
+.unit-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: .6rem; }
+.unit-head h2 { grid-column: 1 / -1; }
+.unit-head .ar { color: var(--turq); font-size: 1.25rem; margin-inline-start: .3rem; }
 .lessons { display: grid; gap: .5rem; }
 .lesson-row {
-  display: grid; grid-template-columns: 2.6rem 1fr auto; align-items: center; gap: .85rem; padding: .7rem .85rem;
+  display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) auto; grid-template-areas: "star t lar" "star s lar";
+  align-items: center; column-gap: .85rem; row-gap: .1rem; padding: .7rem .85rem;
   background: var(--card); border: 1px solid var(--line); border-radius: var(--r-m); text-decoration: none; color: inherit;
 }
 .lesson-row:hover { border-color: var(--cobalt); }
-.lesson-row .star { width: 2.6rem; height: 2.6rem; display: grid; place-items: center; position: relative; color: var(--line); }
+.lesson-row .star { grid-area: star; width: 2.6rem; height: 2.6rem; display: grid; place-items: center; position: relative; color: var(--line); }
 .lesson-row .star svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .lesson-row .star b { position: relative; font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .lesson-row.done .star { color: var(--gold); }
@@ -250,9 +273,14 @@ button.chip[aria-pressed="true"] { background: var(--cobalt); color: var(--cobal
 .lesson-row.next { border-color: var(--cobalt); box-shadow: 0 0 0 3px var(--cobalt-soft); }
 .lesson-row.next .star { color: var(--cobalt); }
 .lesson-row.next .star b { color: var(--cobalt-ink); }
-.lesson-row .t { font-weight: 700; line-height: 1.25; }
-.lesson-row .s { font-size: .86rem; color: var(--muted); }
-.lesson-row .lar { font-family: var(--font-ar); font-size: 1.15rem; color: var(--turq); direction: rtl; }
+.lesson-row .t { grid-area: t; align-self: end; font-weight: 700; line-height: 1.25; }
+.lesson-row .s { grid-area: s; align-self: start; font-size: .86rem; color: var(--muted); }
+.lesson-row .lar { grid-area: lar; max-width: 15rem; font-family: var(--font-ar); font-size: 1.15rem; line-height: 1.9; color: var(--turq);
+  direction: rtl; text-align: right; }
+@media (max-width: 599px) {
+  .lesson-row { grid-template-columns: 2.6rem minmax(0, 1fr); grid-template-areas: "star t" "star lar" "star s"; }
+  .lesson-row .lar { justify-self: start; max-width: none; text-align: left; }
+}
 
 /* ---------- lesson player ---------- */
 .progress { height: 8px; background: var(--sunk); border-radius: 999px; overflow: hidden; flex: 1; }
@@ -272,10 +300,17 @@ button.chip[aria-pressed="true"] { background: var(--cobalt); color: var(--cobal
 .ex { display: grid; gap: .15rem; padding: .7rem .9rem; border-radius: var(--r-s); background: var(--sunk); }
 .ex .ar { font-size: calc(1.6rem * var(--ar-scale)); }
 .ex .gl { color: var(--muted); font-size: .95rem; }
-.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); border-radius: var(--r-m); background: var(--card); }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); border-radius: var(--r-m);
+  --edge: color-mix(in srgb, var(--ink) 22%, transparent);
+  background:
+    linear-gradient(to right, var(--card) 35%, transparent) left / 1.6rem 100% no-repeat local,
+    linear-gradient(to left, var(--card) 35%, transparent) right / 1.6rem 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, var(--edge), transparent) left / .7rem 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, var(--edge), transparent) right / .7rem 100% no-repeat scroll,
+    var(--card); }
 table { border-collapse: collapse; width: 100%; font-size: .98rem; }
 th, td { padding: .5rem .7rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
-th { font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--sunk); white-space: nowrap; }
+th { font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--sunk); }
 tr:last-child td { border-bottom: 0; }
 td.ar, th.ar { text-align: right; white-space: nowrap; }
 .hl { color: var(--coral); }
@@ -304,29 +339,45 @@ mark.k { background: var(--gold-soft); color: inherit; padding: 0 .15em; border-
 .feedback b { font-family: var(--font-display); font-size: 1.1rem; }
 .feedback.good b { color: var(--leaf); }
 .feedback.bad b { color: var(--coral); }
-.lesson-nav { position: sticky; bottom: calc(var(--tabbar) + env(safe-area-inset-bottom, 0px) + .5rem); display: flex; gap: .6rem; justify-content: flex-end; }
-@media (min-width: 900px) { .lesson-nav { bottom: 1rem; } }
+.lesson-nav { position: sticky; z-index: 5; bottom: calc(var(--tabbar) + env(safe-area-inset-bottom, 0px)); display: flex; gap: .6rem;
+  justify-content: flex-end; padding: .9rem 0 .6rem; background: linear-gradient(to bottom, transparent, var(--paper) .8rem); }
+@media (min-width: 900px) { .lesson-nav { bottom: 0; padding-bottom: 1rem; } }
+/* after an answer the explanation scrolls into view above that band */
+.feedback { scroll-margin-bottom: calc(var(--tabbar) + 5rem + env(safe-area-inset-bottom, 0px)); }
+@media (min-width: 900px) { .feedback { scroll-margin-bottom: 5.5rem; } }
 
 /* ---------- Quran words ---------- */
 .verse { display: grid; gap: .45rem; padding: .9rem 0; border-bottom: 1px solid var(--line); scroll-margin-top: 5.5rem; }
 .verse:last-child { border-bottom: 0; }
 .verse-head { display: flex; align-items: center; gap: .5rem; }
 .verse-head .ref { font-size: .82rem; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
-.verse-words { direction: rtl; display: flex; flex-wrap: wrap; gap: .1rem .35rem; align-items: flex-start; line-height: 1; }
+/* A verse word by word: each word is a column — Arabic (.qt) on top, its
+   meaning (.g) below. The Arabic box has the --q-lh/--q-pad room, so the
+   meanings of one row all start on the same line, clear of every mark. The
+   row gap grows with the Arabic size: waqf signs rise above the word box. */
+.verse-words { direction: rtl; display: flex; flex-wrap: wrap; gap: calc(.35rem * var(--ar-scale)) .5rem; align-items: baseline; }
 .qw {
   appearance: none; border: 0; background: transparent; cursor: pointer; color: var(--ink);
-  font-size: calc(1.85rem * var(--ar-scale)); line-height: 1.95; padding: 0 .12em; border-radius: 8px; direction: rtl;
+  font-size: calc(1.85rem * var(--ar-scale)); line-height: 1; padding: 0 .15em; border-radius: 10px; direction: rtl;
   display: inline-flex; flex-direction: column; align-items: center; text-align: center;
 }
+span.qw { cursor: default; }
+.qw .qt { display: block; line-height: var(--q-lh); padding-bottom: var(--q-pad); white-space: nowrap; }
 .qw:hover { background: var(--sunk); }
+span.qw:hover { background: transparent; }
 .qw.sel { background: var(--cobalt-soft); color: var(--cobalt); }
-.qw .g { font-family: var(--font-ui); font-size: .78rem; line-height: 1.2; color: var(--muted); direction: ltr; max-width: 7.5rem; margin-top: -.15rem; padding-bottom: .35rem; }
+.qw .g { font-family: var(--font-ui); font-size: .78rem; line-height: 1.25; color: var(--muted); direction: ltr; max-width: 7.5rem;
+  padding-bottom: .35rem; overflow-wrap: break-word; hyphens: auto; }
 .show-known .qw.known { color: var(--known); }
 .show-known .qw.learning { color: var(--learning); }
-.qw.hl-target { background: var(--gold-soft); box-shadow: inset 0 -3px 0 var(--gold); }
-.aya-num { font-family: var(--font-quran); color: var(--turq); font-size: calc(1.5rem * var(--ar-scale)); line-height: 2.4; padding: 0 .1em; }
+.qw.hl-target, span.qw.hl-target:hover { background: var(--gold-soft); box-shadow: inset 0 -3px 0 var(--gold); }
+.aya-num { font-family: var(--font-quran); color: var(--turq); font-size: calc(1.5rem * var(--ar-scale)); line-height: var(--q-lh); padding: 0 .1em; }
+.bismillah { font-family: var(--font-quran); color: var(--turq); text-align: center; font-size: calc(1.7rem * var(--ar-scale));
+  line-height: var(--q-lh); padding: .4rem 0 calc(var(--q-pad) * .6); }
 .verse-tr { color: var(--muted); font-size: 1rem; max-width: 65ch; }
-.q-inline { font-family: var(--font-quran); font-size: calc(1.35em * var(--ar-scale)); direction: rtl; unicode-bidi: isolate; line-height: 1.9; }
+.q-inline { font-family: var(--font-quran); font-size: calc(1.35em * var(--ar-scale)); direction: rtl; unicode-bidi: isolate; line-height: 2.3; }
+/* in a narrow table cell a quoted phrase wraps; its lines need the full 0.96em + 1.82em */
+td .q-inline { line-height: 2.8; }
 .q-block { display: grid; gap: .35rem; padding: .8rem 1rem; border-radius: var(--r-m); background: var(--sunk); }
 .q-block .verse-words .qw { font-size: calc(1.7rem * var(--ar-scale)); }
 .q-block .src { font-size: .8rem; color: var(--muted); font-weight: 700; }
@@ -349,7 +400,7 @@ mark.k { background: var(--gold-soft); color: inherit; padding: 0 .15em; border-
 }
 .seg-break { direction: rtl; display: flex; flex-wrap: wrap; gap: .4rem; justify-content: flex-start; }
 .seg-break .sg { display: grid; justify-items: center; gap: .1rem; padding: .35rem .55rem; border-radius: 10px; background: var(--sunk); min-width: 3rem; }
-.seg-break .sg .ar { font-family: var(--font-quran); font-size: calc(1.6rem * var(--ar-scale)); line-height: 1.6; }
+.seg-break .sg .ar { font-family: var(--font-quran); font-size: calc(1.6rem * var(--ar-scale)); line-height: var(--q-lh); padding-bottom: var(--q-pad); }
 .seg-break .sg .r { font-family: var(--font-ui); font-size: .72rem; color: var(--muted); direction: ltr; text-align: center; }
 .seg-break .sg.stem { background: var(--cobalt-soft); }
 .seg-break .sg.stem .ar { color: var(--cobalt); }
@@ -361,11 +412,12 @@ mark.k { background: var(--gold-soft); color: inherit; padding: 0 .15em; border-
 .root-letters { font-family: var(--font-ar); font-size: 1.5rem; letter-spacing: .25em; direction: rtl; color: var(--turq); }
 .cognates { display: flex; flex-wrap: wrap; gap: .35rem; }
 .cognates .chip { background: var(--coral-soft); color: var(--coral); font-weight: 500; }
+.callout .cognates .chip { background: var(--card); }   /* the Turkish callout has the chips' colour */
 
 /* ---------- flashcards ---------- */
 .flash { min-height: 19rem; display: grid; align-content: center; justify-items: center; text-align: center; gap: .6rem; padding: 1.5rem 1.2rem; }
 .flash .ar-big { color: var(--ink); }
-.flash .ar2 { font-family: var(--font-ar); font-size: calc(1.4rem * var(--ar-scale)); color: var(--muted); direction: rtl; }
+.flash .ar2 { font-family: var(--font-ar); font-size: calc(1.4rem * var(--ar-scale)); line-height: 1.9; color: var(--muted); direction: rtl; }
 .flash .meaning { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; }
 .flash .others { font-size: .95rem; color: var(--muted); }
 .grades { display: grid; grid-template-columns: repeat(4, 1fr); gap: .45rem; }
@@ -451,8 +503,10 @@ textarea { width: 100%; min-height: 6rem; resize: vertical; }
 .ring { --p: 0; width: 4.2rem; height: 4.2rem; border-radius: 50%; display: grid; place-items: center;
   background: conic-gradient(var(--turq) calc(var(--p) * 1%), var(--sunk) 0); flex: none; }
 .ring > b { width: 3.3rem; height: 3.3rem; border-radius: 50%; background: var(--card); display: grid; place-items: center; font-size: .9rem; font-variant-numeric: tabular-nums; }
-.kbd { font-size: .75rem; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 .3rem; }
+.kbd { font-size: .75rem; color: inherit; opacity: .8; border: 1px solid currentColor; border-radius: 4px; padding: 0 .3rem; font-weight: 500; }
+@media (hover: none) { .kbd, .keys-hint { display: none; } }
 .footer-note { font-size: .82rem; color: var(--muted); text-align: center; padding: 1rem 0 0; }
+.footer-note .q-solo { display: block; font-size: 1.3rem; }
 details.fold { border: 1px solid var(--line); border-radius: var(--r-m); background: var(--card); }
 details.fold > summary { cursor: pointer; padding: .8rem 1rem; font-weight: 700; list-style: none; display: flex; align-items: center; gap: .6rem; }
 details.fold > summary::-webkit-details-marker { display: none; }

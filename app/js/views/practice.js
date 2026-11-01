@@ -3,7 +3,7 @@ import { icon, star8 } from '../icons.js';
 import { D, loadLemmas, loadSurah, lemma, gloss, roots, surahMeta } from '../data.js';
 import { S, logEvent, commit, wordStatus } from '../store.js';
 import { parseFeat, describeSegment, summarizeWord, FORMS, personLabel } from '../morph.js';
-import { topbar, loadingEl, verseEl } from '../ui.js';
+import { topbar, loadingEl, verseEl, revealFeedback } from '../ui.js';
 
 const MODES = {
   meaning: { title: 'Meaning in context', desc: 'A word from a real verse — what does it mean here?', icon: 'eye' },
@@ -190,9 +190,11 @@ async function drill(root, mode) {
       list.children[q.answer].classList.add('right');
       if (!ok) b.classList.add('wrong');
       const t = (S.settings.lang === 'tr' && c.verse.tr) || (S.settings.lang === 'de' && c.verse.de) || c.verse.en;
-      fb.appendChild(h('div', { class: `feedback ${ok ? 'good' : 'bad'}` }, h('b', {}, ok ? 'Right' : 'Not quite'), h('span', {}, q.explain), h('span', { class: 'small muted' }, t)));
+      const box = h('div', { class: `feedback ${ok ? 'good' : 'bad'}` }, h('b', {}, ok ? 'Right' : 'Not quite'), h('span', {}, q.explain), h('span', { class: 'small muted' }, t));
+      fb.appendChild(box);
       const go = h('button', { class: 'btn', html: `Continue ${icon('next')}`, onclick: () => { i += 1; show(); } });
       fb.appendChild(h('div', { class: 'lesson-nav' }, go));
+      revealFeedback(box);
       go.focus({ preventScroll: true });
     }
   }

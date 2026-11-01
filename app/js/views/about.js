@@ -25,6 +25,7 @@ export function render(root) {
       <li>Course, curated vocabulary, Turkish cognates and German glosses: written for Lisan.</li>
     </ul>
     <p class="small muted">Word-by-word glosses are aids for learning. For the meaning of a verse, rely on the full translations and on scholars.</p>` }));
-  view.appendChild(h('p', { class: 'footer-note', html: '<span lang="ar" class="q-text" style="font-size:1.3rem">رَبِّ زِدْنِي عِلْمًا</span><br>"My Lord, increase me in knowledge." — 20:114' }));
+  view.appendChild(h('p', { class: 'footer-note' }, h('span', { class: 'q-solo', lang: 'ar', dir: 'rtl' }, 'رَبِّ زِدْنِي عِلْمًا'),
+    '"My Lord, increase me in knowledge." — 20:114'));
   root.appendChild(view);
 }

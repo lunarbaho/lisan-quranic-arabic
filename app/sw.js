@@ -1,5 +1,5 @@
 // Lisan service worker: the app works offline after the first visit.
-const VERSION = 'lisan-v1';
+const VERSION = 'lisan-v2';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/app.css', 'icons/icon.svg',
   'js/main.js', 'js/util.js', 'js/icons.js', 'js/data.js', 'js/store.js', 'js/srs.js', 'js/morph.js', 'js/ui.js',

@@ -17,8 +17,8 @@ export const GRAMMAR = [
       ['they (f.)', A('هُنَّ'), A('ـهُنَّ'), A('رَبُّهُنَّ')], ['you (m.)', A('أَنْتَ'), A('ـكَ'), A('رَبُّكَ')],
       ['you (f.)', A('أَنْتِ'), A('ـكِ'), A('رَبُّكِ')], ['you two', A('أَنْتُمَا'), A('ـكُمَا'), A('رَبُّكُمَا')],
       ['you (m. pl.)', A('أَنْتُمْ'), A('ـكُمْ'), A('رَبُّكُمْ')], ['you (f. pl.)', A('أَنْتُنَّ'), A('ـكُنَّ'), A('رَبُّكُنَّ')],
-      ['I', A('أَنَا'), A('ـي · ـنِي (on verbs)'), A('رَبِّي · زِدْنِي')], ['we', A('نَحْنُ'), A('ـنَا'), A('رَبُّنَا')],
-    ]) + tip('Object pronoun standing alone, for emphasis: ' + A('إِيَّاكَ · إِيَّاهُ · إِيَّايَ') + ' "you / him / me alone".'),
+      ['I', A('أَنَا'), A('ـي · ـنِي') + ' (on verbs)', A('رَبِّي · زِدْنِي')], ['we', A('نَحْنُ'), A('ـنَا'), A('رَبُّنَا')],
+    ]) + tip('Object pronoun standing alone, for emphasis: ' + A('إِيَّاكَ') + ' · ' + A('إِيَّاهُ') + ' · ' + A('إِيَّايَ') + ' "you / him / me alone".'),
   },
   {
     id: 'past', title: 'Past tense', ar: 'الْمَاضِي',
@@ -39,7 +39,7 @@ export const GRAMMAR = [
     html: table(['To', 'Command', 'Prohibition'], [
       ['a man', A('اِفْعَلْ'), A('لَا تَفْعَلْ')], ['a woman', A('اِفْعَلِي'), A('لَا تَفْعَلِي')], ['two', A('اِفْعَلَا'), A('لَا تَفْعَلَا')],
       ['men / a group', A('اِفْعَلُوا'), A('لَا تَفْعَلُوا')], ['women', A('اِفْعَلْنَ'), A('لَا تَفْعَلْنَ')],
-    ]) + tip('The helping vowel is ' + A('اُ') + ' when the present has u in the middle (' + A('يَكْتُبُ → اُكْتُبْ') + '), otherwise ' + A('اِ') + '. Form IV commands start with ' + A('أَ') + ': ' + A('أَقِيمُوا') + '.'),
+    ]) + tip('The helping vowel is ' + A('اُ') + ' when the present has u in the middle (' + A('يَكْتُبُ ← اُكْتُبْ') + '), otherwise ' + A('اِ') + '. Form IV commands start with ' + A('أَ') + ': ' + A('أَقِيمُوا') + '.'),
   },
   {
     id: 'forms', title: 'Verb forms I–X', ar: 'أَوْزَانُ الْفِعْل',

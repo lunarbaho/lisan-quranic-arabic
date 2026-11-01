@@ -1,5 +1,5 @@
 // Shared components: verses, the word sheet, quotes, confirmations, audio.
-import { h, clear, arSpan, rootLetters, toast } from './util.js';
+import { h, clear, arSpan, rootLetters, toast, quranWord } from './util.js';
 import { D, loadSurah, loadLemmas, lemma, surahMeta, cardKeyForLemma, rootCognates, findRoot } from './data.js';
 import { S, wordStatus, introduce, card, commit } from './store.js';
 import { describeSegment, summarizeWord } from './morph.js';
@@ -43,7 +43,7 @@ export function wordButton(word, { s, a, w, gloss, onTap, highlight } = {}) {
   const cls = ['qw', st === 'known' ? 'known' : st === 'learning' ? 'learning' : '', highlight ? 'hl-target' : ''].filter(Boolean).join(' ');
   const g = gloss ? (S.settings.lang === 'tr' && word[2] ? word[2] : word[1]) : '';
   const b = h('button', { class: cls, type: 'button', lang: 'ar', 'aria-label': `${word[0]} — ${word[1]}` },
-    h('span', { class: 'qt' }, word[0]), g ? h('span', { class: 'g', lang: S.settings.lang === 'tr' ? 'tr' : 'en' }, g) : null);
+    h('span', { class: 'qt' }, quranWord(word[0])), g ? h('span', { class: 'g', lang: S.settings.lang === 'tr' ? 'tr' : 'en' }, g) : null);
   b.addEventListener('click', () => {
     document.querySelectorAll('.qw.sel').forEach((x) => x.classList.remove('sel'));
     b.classList.add('sel');
@@ -55,6 +55,17 @@ export function wordButton(word, { s, a, w, gloss, onTap, highlight } = {}) {
 
 const AR_DIGITS = '٠١٢٣٤٥٦٧٨٩';
 export const arNum = (n) => String(n).replace(/\d/g, (d) => AR_DIGITS[d]);
+
+/**
+ * Quran words shown as text (example verses, the verse of the day): the same
+ * word boxes as the Reader, without meanings and not tappable.
+ * `cls(i)` may add a class per word (known / learning).
+ */
+export function quranWords(words, { highlight = -1, cls = null, center = false } = {}) {
+  return h('div', { class: 'verse-words', style: center ? { justifyContent: 'center' } : null },
+    words.map((w, i) => h('span', { class: ['qw', i === highlight ? 'hl-target' : '', cls ? cls(i) : ''].filter(Boolean).join(' '), lang: 'ar' },
+      h('span', { class: 'qt' }, quranWord(w)))));
+}
 
 /** A verse: tappable words, optional glosses and translation. */
 export function verseEl(verse, s, { gloss = S.settings.gloss, transl = S.settings.transl, from = 0, to = null, highlightW = -1, head = true, onAsk } = {}) {
@@ -69,7 +80,7 @@ export function verseEl(verse, s, { gloss = S.settings.gloss, transl = S.setting
   }
   const wrap = h('div', { class: 'verse-words' });
   words.forEach((word, i) => wrap.appendChild(wordButton(word, { s, a: verse.a, w: from + i + 1, gloss, highlight: from + i === highlightW })));
-  if (to === null || to >= verse.w.length) wrap.appendChild(h('span', { class: 'aya-num', 'aria-hidden': 'true' }, `﴿${arNum(verse.a)}﴾`));
+  if (to === null || to >= verse.w.length) wrap.appendChild(h('span', { class: 'aya-num', lang: 'ar', 'aria-hidden': 'true' }, `﴿${arNum(verse.a)}﴾`));
   box.appendChild(wrap);
   if (transl) {
     const t = verse[S.settings.lang] || verse.en;
@@ -100,7 +111,7 @@ export async function hydrateQuotes(root) {
       clear(n);
       n.classList.add('q-inline');
       n.setAttribute('lang', 'ar'); n.setAttribute('dir', 'rtl');
-      n.textContent = words.map((w) => w[0]).join(' ');
+      n.textContent = words.map((w) => quranWord(w[0])).join(' ');
       n.title = `${s}:${a}`;
       return;
     }
@@ -152,7 +163,7 @@ export async function openWordSheet({ word, s, a, w }) {
   const ctxGloss = lang === 'tr' && word[2] ? word[2] : word[1];
   const headRow = h('div', { class: 'row nowrap' },
     h('div', { class: 'grow stack-s' },
-      h('div', { class: 'q-text', lang: 'ar', dir: 'rtl', style: { fontSize: 'calc(2.4rem * var(--ar-scale))', lineHeight: '1.7', textAlign: 'right' } }, word[0]),
+      h('div', { class: 'q-text q-solo', lang: 'ar', dir: 'rtl', style: { fontSize: 'calc(2.4rem * var(--ar-scale))', textAlign: 'right' } }, quranWord(word[0])),
       h('div', { class: 'small muted' }, `in this verse: “${ctxGloss}”`)),
     audioAvailable() ? h('button', { class: 'icon-btn', title: 'Hear this word', html: icon('volume'), onclick: () => playUrl(wordAudio(s, a, w)) }) : null);
   content.appendChild(headRow);
@@ -179,7 +190,7 @@ export async function openWordSheet({ word, s, a, w }) {
     if (v && lang !== 'tr') dl.append(h('dt', {}, 'Türkçe'), h('dd', { lang: 'tr' }, v.tr));
     if (v && lang !== 'de') dl.append(h('dt', {}, 'Deutsch'), h('dd', { lang: 'de' }, v.de));
     if (L.root) {
-      const rb = h('a', { href: `#root-${findRoot(L.root)?.idx ?? 0}`, class: 'root-letters', style: { textDecoration: 'none' }, onclick: closeSheet }, rootLetters(L.root));
+      const rb = h('a', { href: `#root-${findRoot(L.root)?.idx ?? 0}`, class: 'root-letters', lang: 'ar', style: { textDecoration: 'none' }, onclick: closeSheet }, rootLetters(L.root));
       dl.append(h('dt', {}, 'Root'), h('dd', {}, rb));
     }
     dl.append(h('dt', {}, 'In the Quran'), h('dd', { class: 'tnum' }, `${L.all.toLocaleString()} times`));
@@ -249,6 +260,12 @@ export function inlineConfirm(container, message, yesLabel, onYes) {
       h('button', { class: 'btn ghost small', onclick: () => box.remove() }, 'Cancel')));
   container.appendChild(box);
   return box;
+}
+
+/** After an answer, bring its explanation into view above the sticky Continue bar. */
+export function revealFeedback(el) {
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  requestAnimationFrame(() => el.scrollIntoView({ block: 'nearest', behavior: smooth ? 'smooth' : 'auto' }));
 }
 
 export function loadingEl(text = 'Loading…') {

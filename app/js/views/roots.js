@@ -56,7 +56,8 @@ function detail(root, idx) {
   const r = roots()[idx];
   if (!r) { location.hash = '#roots'; return; }
   const lang = S.settings.lang;
-  const view = h('div', { class: 'view' }, topbar(`Root ${rootLetters(r.root)}`, { back: '#roots', sub: `${r.count.toLocaleString()} occurrences · ${r.lemmas.length} words` }));
+  const view = h('div', { class: 'view' }, topbar('Root', { back: '#roots', sub: `${r.count.toLocaleString()} occurrences · ${r.lemmas.length} words`,
+    right: h('span', { class: 'root-letters', lang: 'ar' }, rootLetters(r.root)) }));
   view.appendChild(h('div', { class: 'card stack', style: { textAlign: 'center' } },
     h('div', { class: 'root-letters', lang: 'ar', style: { fontSize: '3rem' } }, rootLetters(r.root)),
     h('div', { class: 'meaning', style: { fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: 700 } }, rootMeaning(r))));

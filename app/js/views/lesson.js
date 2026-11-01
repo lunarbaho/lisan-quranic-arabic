@@ -3,7 +3,7 @@ import { icon, star8 } from '../icons.js';
 import { D, loadLemmas, getVerse } from '../data.js';
 import { S, completeLesson, card, coverage } from '../store.js';
 import { LESSONS, lessonById } from '../content/lessons.js';
-import { topbar, hydrateQuotes, verseEl, loadingEl, env, askTeacherAbout, noteHtml } from '../ui.js';
+import { topbar, hydrateQuotes, verseEl, loadingEl, env, askTeacherAbout, noteHtml, revealFeedback } from '../ui.js';
 import { wordCard, runWordQuiz } from '../learnflow.js';
 
 export async function render(root, id) {
@@ -22,7 +22,7 @@ export async function render(root, id) {
   const view = h('div', { class: 'view' });
   root.appendChild(view);
   const bar = h('span', { style: { width: '0%' } });
-  view.appendChild(topbar(`${lesson.n}. ${lesson.title}`, { back: '#learn', sub: lesson.ar, right: env.teacher
+  view.appendChild(topbar(`${lesson.n}. ${lesson.title}`, { back: '#learn', sub: arSpan(lesson.ar), right: env.teacher
     ? h('button', { class: 'icon-btn', title: 'Ask the teacher about this lesson', html: icon('teacher'), onclick: () => askTeacherAbout({ kind: 'lesson', id: lesson.id }) }) : null }));
   view.appendChild(h('div', { class: 'row nowrap' }, h('div', { class: 'progress', role: 'progressbar', 'aria-label': 'Lesson progress' }, bar)));
   const body = h('div', { class: 'lesson-body' });
@@ -80,9 +80,11 @@ export async function render(root, id) {
       if (!st.retry && !st.answered) { quizTotal += 1; if (right) quizRight += 1; }
       st.answered = true;
       if (!right && !st.retried) { st.retried = true; retry.push({ ...st, retry: true, order: null, retried: true }); }
-      fb.appendChild(h('div', { class: `feedback ${right ? 'good' : 'bad'}` }, h('b', {}, right ? 'Correct' : 'Not quite'), h('span', { html: st.why || '' })));
+      const box = h('div', { class: `feedback ${right ? 'good' : 'bad'}` }, h('b', {}, right ? 'Correct' : 'Not quite'), h('span', { html: st.why || '' }));
+      fb.appendChild(box);
       const n = nav(() => { i += 1; show(); });
       fb.appendChild(n.el);
+      revealFeedback(box);
       n.go.focus({ preventScroll: true });
       setKeys(null);
     }

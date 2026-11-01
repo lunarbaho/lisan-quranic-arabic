@@ -4,13 +4,13 @@ import { h, clear, shuffle, arSpan } from './util.js';
 import { D, gloss } from './data.js';
 import { S, introduce, grade, card } from './store.js';
 import { icon } from './icons.js';
-import { noteHtml } from './ui.js';
+import { noteHtml, quranWords, revealFeedback } from './ui.js';
 
 export function wordCard(v, { compact = false } = {}) {
   const lang = S.settings.lang;
   const others = ['en', 'tr', 'de'].filter((l) => l !== lang).map((l) => v[l]).filter(Boolean);
   const box = h('div', { class: 'card stack', style: { textAlign: 'center', justifyItems: 'center' } },
-    h('div', { class: 'q-text', lang: 'ar', dir: 'rtl', style: { fontSize: compact ? 'calc(2rem * var(--ar-scale))' : 'calc(2.6rem * var(--ar-scale))', lineHeight: '1.6' } }, v.ar),
+    h('div', { class: 'q-text q-solo', lang: 'ar', dir: 'rtl', style: { fontSize: compact ? 'calc(2rem * var(--ar-scale))' : 'calc(2.6rem * var(--ar-scale))' } }, v.ar),
     v.ar2 ? h('div', { class: 'ar muted', lang: 'ar' }, v.ar2) : null,
     h('div', { class: 'meaning', style: { fontFamily: 'var(--font-display)', fontSize: '1.35rem', fontWeight: 700 } }, gloss(v, lang)),
     others.length ? h('div', { class: 'small muted' }, others.join(' · ')) : null,
@@ -25,8 +25,7 @@ export function wordCard(v, { compact = false } = {}) {
 
 export function exampleEl(v) {
   const ex = v.ex;
-  const words = h('div', { class: 'verse-words', style: { justifyContent: 'center' } },
-    ex.ar.map((w, i) => h('span', { class: `qw${i === ex.w ? ' hl-target' : ''}`, style: { cursor: 'default' }, lang: 'ar' }, w)));
+  const words = quranWords(ex.ar, { highlight: ex.w, center: true });
   return h('a', { class: 'ctx', href: `#surah-${ex.ref.replace(':', '-')}`, style: { textDecoration: 'none', color: 'inherit' } },
     words, h('div', { class: 't' }, ex[S.settings.lang] || ex.en, ' ', h('b', {}, `(${ex.ref})`)));
 }
@@ -64,7 +63,7 @@ export function runWordQuiz(container, items, onDone, { title = 'Word check' } =
     if (reverse) {
       wrap.appendChild(h('p', { class: 'prompt' }, 'Which Arabic word means ', h('b', {}, `“${gloss(v, lang)}”`), '?'));
     } else {
-      wrap.appendChild(h('div', { style: { textAlign: 'center' } }, h('div', { class: 'q-text', lang: 'ar', dir: 'rtl', style: { fontSize: 'calc(2.4rem * var(--ar-scale))', lineHeight: '1.7' } }, v.ar)));
+      wrap.appendChild(h('div', { style: { textAlign: 'center' } }, h('div', { class: 'q-text q-solo', lang: 'ar', dir: 'rtl', style: { fontSize: 'calc(2.4rem * var(--ar-scale))' } }, v.ar)));
       wrap.appendChild(h('p', { class: 'prompt', style: { textAlign: 'center' } }, 'What does it mean?'));
     }
     const list = h('div', { class: 'options' });
@@ -90,11 +89,13 @@ export function runWordQuiz(container, items, onDone, { title = 'Word check' } =
       if (right && item.tries === 0) { firstTry += 1; grade(`v${v.id}`, 3); }
       else if (right) grade(`v${v.id}`, 3);
       else { grade(`v${v.id}`, 1); item.tries += 1; queue.splice(Math.min(queue.length, 2), 0, item); }
-      clear(fb).appendChild(h('div', { class: `feedback ${right ? 'good' : 'bad'}` },
+      const box = h('div', { class: `feedback ${right ? 'good' : 'bad'}` },
         h('b', {}, right ? 'Right' : 'Not quite'),
-        h('span', {}, arSpan(v.ar), ` = ${gloss(v, lang)}`, v.cog && S.settings.cognates ? ` · Türkçe: ${v.cog}` : '')));
+        h('span', {}, arSpan(v.ar), ` = ${gloss(v, lang)}`, v.cog && S.settings.cognates ? ` · Türkçe: ${v.cog}` : ''));
+      clear(fb).appendChild(box);
       const go = h('button', { class: 'btn', html: `Continue ${icon('next')}`, onclick: next });
       fb.appendChild(h('div', { class: 'lesson-nav' }, go));
+      revealFeedback(box);
       go.focus({ preventScroll: true });   // Enter / Space now continue
     }
   };
