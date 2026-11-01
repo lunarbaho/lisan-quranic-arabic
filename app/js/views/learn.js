@@ -13,8 +13,8 @@ export function render(root) {
     const ls = LESSONS.filter((l) => l.unit === u.n);
     const ud = ls.filter((l) => lessonDone(l.id)).length;
     const sec = h('section', { class: 'unit', 'aria-label': `Unit ${u.n}` },
-      h('div', { class: 'unit-head' }, h('span', { class: 'label' }, `Unit ${u.n}`), h('h2', {}, u.title), h('span', { class: 'ar', lang: 'ar' }, u.ar),
-        h('span', { class: 'chip tnum', style: { marginLeft: 'auto' } }, `${ud}/${ls.length}`)),
+      h('div', { class: 'unit-head' }, h('span', { class: 'label' }, `Unit ${u.n}`), h('span', { class: 'chip tnum' }, `${ud}/${ls.length}`),
+        h('h2', {}, u.title, ' ', h('span', { class: 'ar', lang: 'ar', dir: 'rtl' }, u.ar))),
       h('p', { class: 'small muted' }, u.blurb));
     const list = h('div', { class: 'lessons' });
     for (const l of ls) {
@@ -22,8 +22,9 @@ export function render(root) {
       const isNext = next && next.id === l.id;
       list.appendChild(h('a', { class: `lesson-row${isDone ? ' done' : ''}${isNext ? ' next' : ''}`, href: `#lesson-${l.id}` },
         h('span', { class: 'star', html: `${star8()}<b>${l.n}</b>` }),
-        h('span', { class: 'stack-s', style: { gap: '.1rem' } }, h('span', { class: 't' }, l.title), h('span', { class: 's' }, `${l.mins} min · ${isDone ? 'done' : isNext ? 'up next' : l.goal}`)),
-        h('span', { class: 'lar', lang: 'ar' }, l.ar)));
+        h('span', { class: 't' }, l.title),
+        h('span', { class: 'lar', lang: 'ar', dir: 'rtl' }, l.ar),
+        h('span', { class: 's' }, `${l.mins} min · ${isDone ? 'done' : isNext ? 'up next' : l.goal}`)));
     }
     sec.appendChild(list);
     view.appendChild(sec);

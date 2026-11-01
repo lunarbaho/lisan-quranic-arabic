@@ -42,6 +42,43 @@ export function arSpan(text, cls = 'ar') {
 
 export const ARABIC_RE = /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/;
 
+/** One Quran word for display. Its inner spaces (before a waqf sign, after ۞)
+ *  become no-break spaces, so a sign never wraps onto a line of its own. */
+export const quranWord = (text) => String(text).replace(/ /g, '\u00a0');
+
+const AR_CH = '\\u0600-\\u06ff\\u0750-\\u077f\\u08a0-\\u08ff\\ufb50-\\ufdff\\ufe70-\\ufefc';
+const AR_RUN = new RegExp(`[${AR_CH}](?:[${AR_CH}\\u200c\\u200d\\u00a0 ]*[${AR_CH}])?`, 'g');
+const NOT_HERE = '[lang="ar"], [dir="rtl"], .ar, script, style, textarea, input, select, option, code, pre, svg';
+
+/**
+ * Wrap each run of Arabic that sits inside Latin text in <span class="ar">, so
+ * it is set in the Arabic font at a readable size and is isolated for the
+ * bidi algorithm: "Tell لَا, مَا, لَمْ apart" then shows the words in the order
+ * they were written instead of reversing the list. Text already marked as
+ * Arabic (lang="ar", .ar, Quran words) is left alone.
+ */
+export function isolateArabic(root) {
+  if (!root) return;
+  const texts = [];
+  if (root.nodeType === Node.TEXT_NODE) texts.push(root);
+  else if (root.nodeType === Node.ELEMENT_NODE && !root.closest(NOT_HERE)) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) texts.push(n);
+  }
+  for (const n of texts) {
+    if (!ARABIC_RE.test(n.data) || !n.parentElement || n.parentElement.closest(NOT_HERE)) continue;
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    for (const m of n.data.matchAll(AR_RUN)) {
+      if (m.index > last) frag.append(n.data.slice(last, m.index));
+      frag.append(arSpan(m[0]));
+      last = m.index + m[0].length;
+    }
+    if (last < n.data.length) frag.append(n.data.slice(last));
+    n.replaceWith(frag);
+  }
+}
+
 export function shuffle(arr) {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {

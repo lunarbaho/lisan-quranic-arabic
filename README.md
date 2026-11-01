@@ -60,7 +60,7 @@ tools/
   build_data.py           builds app/data from the sources + the curated vocabulary
   vocab/*.txt             the curated vocabulary (meanings, Turkish cognates, notes)
   build_artifact.py       packages the app as a single claude.ai page
-tests/                    Playwright smoke, learner-flow and artifact tests
+tests/                    Playwright smoke, learner-flow, layout-quality and artifact tests
 ```
 
 ### Rebuilding the data
@@ -78,7 +78,10 @@ The vocabulary lives in `tools/vocab/*.txt`, one word per line. Each line names 
 python3 -m http.server 8000 -d app &
 node tests/smoke.mjs http://localhost:8000/   # every screen, phone + desktop, no console errors
 node tests/flow.mjs  http://localhost:8000/   # lesson → new words → review → Quran word sheet
+node tests/layout.mjs http://localhost:8000/  # no text overlaps, is cut off or scrolls sideways
 ```
+
+`layout.mjs` is the quality check for typography. It opens every screen, every lesson step, the drills, flashcards and the word sheet on five device profiles: phone, small phone, tablet and desktop; English, Türkçe and Deutsch; Arabic size M to XL, with and without word meanings; light and dark. On each screen it measures the real ink of every word. For Arabic it uses the glyph outlines, because harakat and waqf signs in the Quran font reach far outside the CSS line box. It fails if any two pieces of text touch, if text is clipped, or if a page scrolls sideways. A full run takes about 10 minutes. Add `--quick` for a shorter pass (about 5 minutes), or `--only phone` to check a single profile.
 
 ## Sources and licenses
 

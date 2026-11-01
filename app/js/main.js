@@ -1,5 +1,5 @@
 // Lisan — app bootstrap, navigation and routing.
-import { h, clear } from './util.js';
+import { h, clear, isolateArabic } from './util.js';
 import { icon, logo } from './icons.js';
 import { loadCore, loadLemmas } from './data.js';
 import { S, onChange, dueKeys, connectRemote } from './store.js';
@@ -140,6 +140,11 @@ async function boot() {
     return;
   }
   buildShell(root);
+  // Arabic inside Latin text, wherever a view or lesson puts it, gets the Arabic font and its own direction
+  isolateArabic(document.body);
+  new MutationObserver((records) => {
+    for (const r of records) for (const n of r.addedNodes) isolateArabic(n);
+  }).observe(document.body, { childList: true, subtree: true });
   onChange(() => { applyTheme(); paintNav(); });
   window.addEventListener('hashchange', render);
   await render();

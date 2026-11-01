@@ -38,7 +38,8 @@ def main(out):
     title = re.search(r'<title>.*?</title>', html).group(0)
     head = block(html, 'head').replace('<link rel="stylesheet" href="css/app.css">', f'<style>\n{css}\n</style>')
     body = block(html, 'body').replace('<script type="module" src="js/main.js"></script>', f'<script type="module">{js}</script>')
-    page = f'{title}\n<meta name="claude:viewport-fit-sides" content="cover">\n{head}\n{body}\n'
+    # the charset must come first: the bundle and the content are full of Arabic
+    page = f'<meta charset="utf-8">\n{title}\n<meta name="claude:viewport-fit-sides" content="cover">\n{head}\n{body}\n'
     open(os.path.join(out, 'index.html'), 'w', encoding='utf-8').write(page)
     os.remove(bundle)
     data_out = os.path.join(out, 'data')

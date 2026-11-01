@@ -3,7 +3,7 @@ import { icon, star8 } from '../icons.js';
 import { D, gloss, lemma, loadLemmas, loadSurah, cardKeyForLemma } from '../data.js';
 import { S, dueKeys, unseenKeys, grade, card } from '../store.js';
 import { preview } from '../srs.js';
-import { topbar, audioAvailable, playUrl, wordAudio, noteHtml } from '../ui.js';
+import { topbar, audioAvailable, playUrl, wordAudio, noteHtml, quranWords } from '../ui.js';
 import { exampleEl } from '../learnflow.js';
 
 /** Data needed to show one card, for curated (v…) or Reader-added (l…) words. */
@@ -51,11 +51,12 @@ export async function render(root) {
     stage.appendChild(h('div', { class: 'row nowrap' }, h('div', { class: 'progress' }, h('span', { style: { width: `${(done / (done + queue.length + 1)) * 100}%` } })),
       h('span', { class: 'small muted tnum' }, `${queue.length + 1} left`)));
     const face = h('div', { class: 'card raised flash' },
-      h('div', { class: 'ar-big q-text', lang: 'ar', dir: 'rtl' }, info.ar),
+      h('div', { class: 'ar-big q-text q-solo', lang: 'ar', dir: 'rtl' }, info.ar),
       info.ar2 ? h('div', { class: 'ar2', lang: 'ar' }, info.ar2) : null);
+    let ctxBtn = null, ctxBox = null;
     if (info.ex) {
-      const ctxBtn = h('button', { class: 'btn quiet small', html: `${icon('eye')} Show in a verse` });
-      ctxBtn.addEventListener('click', () => { ctxBtn.replaceWith(exampleNoTranslation(info)); });
+      ctxBtn = h('button', { class: 'btn quiet small', html: `${icon('eye')} Show in a verse` });
+      ctxBtn.addEventListener('click', () => { ctxBox = exampleNoTranslation(info); ctxBtn.replaceWith(ctxBox); ctxBtn = null; });
       face.appendChild(ctxBtn);
     }
     stage.appendChild(face);
@@ -64,6 +65,9 @@ export async function render(root) {
     reveal.focus({ preventScroll: true });
     const doReveal = () => {
       reveal.remove();
+      // the back shows the verse with its translation, so drop the front's hint or bare verse
+      ctxBtn?.remove();
+      ctxBox?.remove();
       face.appendChild(h('hr', { class: 'divider', style: { width: '100%' } }));
       if (info.v) {
         const v = info.v;
@@ -85,10 +89,10 @@ export async function render(root) {
       const pv = preview(c || { st: 0, s: 0, d: 0, reps: 0, lapses: 0, last: 0, due: 0 });
       const grades = h('div', { class: 'grades', role: 'group', 'aria-label': 'How well did you know it?' });
       [[1, 'Again'], [2, 'Hard'], [3, 'Good'], [4, 'Easy']].forEach(([g, label]) => {
-        grades.appendChild(h('button', { class: `grade g${g}`, onclick: () => rate(g) }, label, h('small', {}, `${fmtInterval(pv[g])} · ${g}`)));
+        grades.appendChild(h('button', { class: `grade g${g}`, onclick: () => rate(g) }, label, h('small', {}, fmtInterval(pv[g]), h('span', { class: 'keys-hint' }, ` · ${g}`))));
       });
       stage.appendChild(grades);
-      stage.appendChild(h('p', { class: 'tiny muted', style: { textAlign: 'center' } }, 'Again = did not know · Hard = slow · Good = knew it · Easy = instant. Keys 1–4.'));
+      stage.appendChild(h('p', { class: 'tiny muted', style: { textAlign: 'center' } }, 'Again = did not know · Hard = slow · Good = knew it · Easy = instant.', h('span', { class: 'keys-hint' }, ' Keys 1–4.')));
       setKeys((e) => { const g = +e.key; if (g >= 1 && g <= 4) rate(g); });
     };
     reveal.addEventListener('click', doReveal);
@@ -105,9 +109,7 @@ export async function render(root) {
 
   function exampleNoTranslation(info) {
     const ex = info.ex;
-    return h('div', { class: 'ctx' }, h('div', { class: 'verse-words', style: { justifyContent: 'center' } },
-      ex.ar.map((w, i) => h('span', { class: `qw${i === ex.w ? ' hl-target' : ''}`, style: { cursor: 'default' }, lang: 'ar' }, w))),
-    h('div', { class: 't' }, `(${ex.ref})`));
+    return h('div', { class: 'ctx' }, quranWords(ex.ar, { highlight: ex.w, center: true }), h('div', { class: 't' }, `(${ex.ref})`));
   }
 
   function finish() {

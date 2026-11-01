@@ -51,7 +51,7 @@ export async function render(root, arg) {
     const y = window.scrollY;
     clear(body);
     body.classList.toggle('show-known', !!S.settings.known);
-    if (s !== 1 && s !== 9) body.appendChild(h('div', { class: 'q-text', lang: 'ar', dir: 'rtl', style: { textAlign: 'center', fontSize: 'calc(1.7rem * var(--ar-scale))', padding: '.8rem 0 .2rem', color: 'var(--turq)' } }, 'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ'));
+    if (s !== 1 && s !== 9) body.appendChild(h('div', { class: 'bismillah', lang: 'ar', dir: 'rtl' }, 'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ'));
     const CHUNK = 30;
     let idx = 0;
     const step = () => {

@@ -5,7 +5,8 @@
   "scripts": {
     "start": "python3 -m http.server 8000 -d app",
     "data": "python3 tools/fetch_sources.py && python3 tools/build_data.py",
-    "test": "node tests/smoke.mjs http://localhost:8000/ && node tests/flow.mjs http://localhost:8000/",
-    "artifact": "python3 tools/build_artifact.py build/artifact"
+    "test": "node tests/smoke.mjs http://localhost:8000/ && node tests/flow.mjs http://localhost:8000/ && node tests/layout.mjs http://localhost:8000/",
+    "artifact": "python3 tools/build_artifact.py build/artifact",
+    "test:layout": "node tests/layout.mjs http://localhost:8000/ --quick"
   }
 }
