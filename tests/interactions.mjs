@@ -204,6 +204,22 @@ for (const k of ['1', '2', '3', '4']) await page.keyboard.press(k);
 await page.waitForTimeout(600);
 check(await page.evaluate(() => JSON.stringify(JSON.parse(localStorage.getItem('lisan.v1')).cards)) === deck, 'number keys on another screen do not grade the abandoned word check');
 
+// ---------------- the Reader keeps its place ----------------
+await go('#surah-2', '#v2-45');
+await page.waitForTimeout(500);
+await page.evaluate(() => document.getElementById('v2-40').scrollIntoView({ block: 'start' }));
+await page.waitForTimeout(1200);
+check(await page.evaluate(() => location.hash) === '#surah-2-40', 'the address follows the reading position');
+await go('#root-3', '.list-item');
+await page.goBack();
+await page.waitForSelector('#v2-40');
+await page.waitForTimeout(1500);
+const topVerse = await page.evaluate(() => {
+  const line = document.querySelector('.topbar').getBoundingClientRect().bottom + 30;
+  return [...document.querySelectorAll('.verse')].find((v) => v.getBoundingClientRect().bottom > line)?.id;
+});
+check(topVerse === 'v2-40', `Back from a word's root returns to the same verse (${topVerse})`);
+
 // ---------------- prepare a surah: learn its words ----------------
 await go('#surah-67', '.learn-surah');
 const offer = await page.innerText('.learn-surah');

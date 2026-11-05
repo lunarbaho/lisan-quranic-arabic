@@ -124,22 +124,21 @@ export async function render(root, arg) {
     landing.el.scrollIntoView({ block: 'start' });
     landing.y = window.scrollY;
   }
-  paintVerses(false);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(realign);
-  persistReader(s, target || 1);
-
   // ---- remember the reading position ----
   // The address follows it too (without a new history entry), so coming Back
   // from a word's root page, or reloading, opens the surah at the same verse.
+  // Only the surah on screen may do this (a slow load of one the learner already left may not).
+  const here = () => { const m = /^#surah-(\d+)/.exec(location.hash); return !!m && +m[1] === s; };
   const remember = (a) => {
-    if (!alive || !a) return;
+    if (!alive || !a || !here()) return;
     if (a !== S.reader.a || S.reader.s !== s) persistReader(s, a);
-    const m = /^#surah-(\d+)/.exec(location.hash);
-    if (m && +m[1] === s) {
-      const want = a > 1 ? `#surah-${s}-${a}` : `#surah-${s}`;
-      if (location.hash !== want) { try { history.replaceState(history.state, '', want); } catch { /* rate-limited: next time */ } }
-    }
+    const want = a > 1 ? `#surah-${s}-${a}` : `#surah-${s}`;
+    if (location.hash !== want) { try { history.replaceState(history.state, '', want); } catch { /* rate-limited: next time */ } }
   };
+
+  paintVerses(false);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(realign);
+  if (here()) persistReader(s, target || 1);
   const onScroll = debounce(() => {
     if (!alive) return;
     if (audioState().status !== 'idle' && audioState().s === s) return;   // the recited verse is the position
