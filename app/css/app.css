@@ -24,6 +24,7 @@
   --shadow: 0 1px 2px rgb(19 33 58 / .06), 0 6px 20px rgb(19 33 58 / .06);
   --known: #2c7a4b;
   --learning: #9a7420;
+  --toast-act: #8fe3d9;   /* on the dark toast */
 
   --font-ui: "Alegreya Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-display: "Alegreya", Georgia, "Times New Roman", serif;
@@ -46,7 +47,7 @@
     --paper: #0c1420; --card: #131e2e; --sunk: #0f1927; --ink: #e6edf5; --muted: #9db0c4; --line: #23344a;
     --cobalt: #86aef7; --cobalt-ink: #0b1626; --cobalt-soft: #1a2c48; --turq: #52cfc4; --turq-soft: #12302f;
     --coral: #f2917a; --coral-soft: #3a1f1a; --gold: #e2bb62; --gold-soft: #33290f; --leaf: #73d29b; --leaf-soft: #13301f;
-    --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25); --known: #73d29b; --learning: #e2bb62;
+    --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25); --known: #73d29b; --learning: #e2bb62; --toast-act: #0a6560;
     color-scheme: dark;
   }
 }
@@ -54,7 +55,7 @@
   --paper: #0c1420; --card: #131e2e; --sunk: #0f1927; --ink: #e6edf5; --muted: #9db0c4; --line: #23344a;
   --cobalt: #86aef7; --cobalt-ink: #0b1626; --cobalt-soft: #1a2c48; --turq: #52cfc4; --turq-soft: #12302f;
   --coral: #f2917a; --coral-soft: #3a1f1a; --gold: #e2bb62; --gold-soft: #33290f; --leaf: #73d29b; --leaf-soft: #13301f;
-  --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25); --known: #73d29b; --learning: #e2bb62;
+  --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .25); --known: #73d29b; --learning: #e2bb62; --toast-act: #0a6560;
   color-scheme: dark;
 }
 
@@ -216,8 +217,16 @@ button { font: inherit; color: inherit; }
 .chip.gold { background: var(--gold-soft); color: var(--gold); }
 .chip.leaf { background: var(--leaf-soft); color: var(--leaf); }
 .chip.coral { background: var(--coral-soft); color: var(--coral); }
+.chip svg { width: 1.05em; height: 1.05em; flex: none; }
 button.chip { border: 0; cursor: pointer; }
-button.chip[aria-pressed="true"] { background: var(--cobalt); color: var(--cobalt-ink); }
+button.chip:hover { filter: brightness(.97); }
+.toggles button.chip { min-height: 2rem; }
+.toggles button.chip[aria-pressed="true"] { background: var(--cobalt); color: var(--cobalt-ink); }
+/* add / remove a word, in list rows and in the word sheet */
+.deck { display: inline-flex; align-items: center; gap: .4rem; flex-wrap: wrap; justify-content: flex-end; }
+.deck .chip { min-height: 2rem; padding-inline: .75rem; }
+.deck-full { justify-content: flex-start; }
+.deck-full .chip { white-space: normal; text-align: left; }
 .seg { display: inline-flex; background: var(--sunk); border-radius: 999px; padding: 3px; gap: 2px; max-width: 100%;
   overflow-x: auto; scrollbar-width: none; justify-self: start; }
 .seg::-webkit-scrollbar { display: none; }
@@ -349,6 +358,16 @@ mark.k { background: var(--gold-soft); color: inherit; padding: 0 .15em; border-
 /* ---------- Quran words ---------- */
 .verse { display: grid; gap: .45rem; padding: .9rem 0; border-bottom: 1px solid var(--line); scroll-margin-top: 5.5rem; }
 .verse:last-child { border-bottom: 0; }
+/* the verse being recited (and, paused, where it will go on) */
+.verse, .bismillah { transition: background-color .25s ease; border-radius: var(--r-s); }
+.verse.playing, .bismillah.playing { background: var(--gold-soft); margin-inline: -.6rem; padding-inline: .6rem; border-bottom-color: transparent; }
+.verse.playing.paused, .bismillah.playing.paused { background: color-mix(in srgb, var(--gold-soft) 55%, transparent); }
+/* arriving at a verse from a link: a short glow shows where you are */
+.verse.arrived { animation: arrive 2.4s ease-out 1; }
+@keyframes arrive { 0%, 35% { background: var(--cobalt-soft); } 100% { background: transparent; } }
+.verse-play.on { color: var(--gold); background: var(--card); }
+.verse-play.busy svg, .player-main.busy svg { animation: pulse 1.1s infinite ease-in-out; }
+.word-audio.sounding { color: var(--turq); background: var(--turq-soft); }
 .verse-head { display: flex; align-items: center; gap: .5rem; }
 .verse-head .ref { font-size: .82rem; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
 /* A verse word by word: each word is a column — Arabic (.qt) on top, its
@@ -381,6 +400,31 @@ td .q-inline { line-height: 2.8; }
 .q-block { display: grid; gap: .35rem; padding: .8rem 1rem; border-radius: var(--r-m); background: var(--sunk); }
 .q-block .verse-words .qw { font-size: calc(1.7rem * var(--ar-scale)); }
 .q-block .src { font-size: .8rem; color: var(--muted); font-weight: 700; }
+
+/* ---------- recitation player (reader) ---------- */
+.audio-row select { min-height: 2.3rem; }
+.player {
+  position: sticky; z-index: 15; bottom: calc(var(--tabbar) + env(safe-area-inset-bottom, 0px) + .5rem);
+  display: flex; align-items: center; gap: .4rem; padding: .4rem .5rem; border-radius: var(--r-m);
+  background: color-mix(in srgb, var(--card) 94%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line); box-shadow: var(--shadow);
+}
+@media (min-width: 900px) { .player { bottom: 1rem; } }
+.player-ctl { display: flex; align-items: center; gap: .1rem; flex: none; }
+.player .icon-btn { width: 2.4rem; height: 2.4rem; }
+.player .icon-btn[disabled] { opacity: .35; cursor: default; }
+.player-main { width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 0; display: grid; place-items: center; cursor: pointer;
+  background: var(--cobalt); color: var(--cobalt-ink); flex: none; }
+.player-main svg { width: 22px; height: 22px; }
+.player-info { flex: 1; min-width: 0; display: grid; line-height: 1.25; }
+.player-info b { font-size: .98rem; }
+.player-sub { font-size: .78rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.player-mode { appearance: none; border: 0; cursor: pointer; display: inline-flex; align-items: center; gap: .3rem; flex: none;
+  padding: .35rem .65rem; border-radius: 999px; background: var(--sunk); color: var(--muted); font-weight: 700; font-size: .82rem; min-height: 2.2rem; }
+.player-mode svg { width: 18px; height: 18px; }
+.player-mode.on { background: var(--gold-soft); color: var(--gold); }
+@media (max-width: 420px) { .player-mode span { display: none; } .player-mode { padding: .35rem .5rem; } }
+@media (max-width: 350px) { .player { gap: .15rem; padding-inline: .3rem; } .player .icon-btn { width: 2.15rem; } .player-sub { display: none; } }
 
 /* ---------- word sheet ---------- */
 .scrim { position: fixed; inset: 0; background: rgb(8 14 24 / .45); z-index: 40; opacity: 0; transition: opacity .18s ease; }
@@ -487,10 +531,15 @@ textarea { width: 100%; min-height: 6rem; resize: vertical; }
 
 /* ---------- misc ---------- */
 .toast { position: fixed; left: 50%; bottom: calc(var(--tabbar) + 1rem + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(1rem);
-  background: var(--ink); color: var(--paper); padding: .6rem 1rem; border-radius: 999px; z-index: 60; opacity: 0; transition: opacity .2s, transform .2s;
-  font-weight: 700; font-size: .95rem; max-width: calc(100% - 32px); text-align: center; }
-.toast.show { opacity: 1; transform: translateX(-50%); }
-@media (min-width: 900px) { .toast { bottom: 1.5rem; } }
+  background: var(--ink); color: var(--paper); padding: .65rem 1.1rem; border-radius: 16px; z-index: 60; opacity: 0; transition: opacity .2s, transform .2s, visibility 0s .2s;
+  font-weight: 700; font-size: .95rem; max-width: calc(100% - 32px); width: max-content; text-align: center;
+  display: flex; align-items: center; gap: .8rem; visibility: hidden; pointer-events: none; }
+.toast.show { opacity: 1; transform: translateX(-50%); visibility: visible; pointer-events: auto; transition: opacity .2s, transform .2s; }
+.toast-act { appearance: none; border: 0; background: transparent; color: var(--toast-act); font: inherit; font-weight: 700; cursor: pointer;
+  padding: .3rem .4rem; margin: -.3rem -.4rem -.3rem 0; border-radius: 8px; text-transform: uppercase; letter-spacing: .04em; font-size: .85rem; }
+.toast-act:hover { background: color-mix(in srgb, var(--paper) 14%, transparent); }
+body.has-player .toast { bottom: calc(var(--tabbar) + 5.2rem + env(safe-area-inset-bottom, 0px)); }
+@media (min-width: 900px) { .toast { bottom: 1.5rem; } body.has-player .toast { bottom: 5.6rem; } }
 .confirm { display: grid; gap: .6rem; padding: .9rem 1rem; border-radius: var(--r-m); background: var(--coral-soft); }
 .empty { text-align: center; padding: 2rem 1rem; display: grid; gap: .6rem; justify-items: center; color: var(--muted); }
 .empty svg { width: 3rem; height: 3rem; color: var(--turq); }

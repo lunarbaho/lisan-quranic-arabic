@@ -1,4 +1,4 @@
-import { h, clear, pct } from '../util.js';
+import { h, clear, pct, screenKeys } from '../util.js';
 import { icon, star8 } from '../icons.js';
 import { loadLemmas } from '../data.js';
 import { S, nextNewVocab, newWordsLeftToday, coverage } from '../store.js';
@@ -24,8 +24,8 @@ export async function render(root) {
   }
   const covBefore = coverage().known;
   let i = 0;
-  let keys = null;
-  const setKeys = (fn) => { if (keys) document.removeEventListener('keydown', keys); keys = fn; if (fn) document.addEventListener('keydown', fn); };
+  const setKeys = screenKeys(stage);
+  let stopQuiz = null;
 
   function show() {
     clear(stage);
@@ -44,19 +44,28 @@ export async function render(root) {
 
   function quiz() {
     setKeys(null);
-    runWordQuiz(stage, batch, ({ correct, total }) => {
+    stopQuiz = runWordQuiz(stage, batch, ({ correct, total }) => {
       clear(stage);
       const covAfter = coverage().known;
       stage.appendChild(h('div', { class: 'done-burst' }, h('span', { html: star8() }), h('h2', {}, `${total} new words`),
         h('p', { class: 'muted' }, `${correct} of ${total} right on the first try. They will come back for review tomorrow.`),
         h('p', {}, `Quran coverage ${pct(covBefore, 1)} → `, h('b', {}, pct(covAfter, 1))),
         h('div', { class: 'row', style: { justifyContent: 'center' } },
-          newWordsLeftToday() > 0 ? h('a', { class: 'btn', href: '#words', onclick: (e) => { e.preventDefault(); render(clear(root)); } }, 'Ten more') : null,
+          newWordsLeftToday() > 0 ? h('button', { class: 'btn', type: 'button', onclick: () => { clear(root); restart(root); } }, `${Math.min(BATCH, newWordsLeftToday())} more`) : null,
           h('a', { class: newWordsLeftToday() > 0 ? 'btn ghost' : 'btn', href: '#home' }, 'Home'))));
     }, { title: 'New words' });
   }
 
   show();
   void S;
-  return () => setKeys(null);
+  return () => { setKeys(null); if (stopQuiz) stopQuiz(); };
+}
+
+// "N more" starts a fresh batch in place; the router only knows the first
+// render's cleanup, so each batch hands its own over before the next starts
+let cleanupBatch = null;
+async function restart(root) {
+  if (cleanupBatch) cleanupBatch();
+  cleanupBatch = await render(root);
+  window.scrollTo({ top: 0 });
 }

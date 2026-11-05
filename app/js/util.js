@@ -79,6 +79,31 @@ export function isolateArabic(root) {
   }
 }
 
+/**
+ * Keyboard shortcuts for one screen. Returns set(fn): set(fn) makes fn the
+ * screen's key handler, set(null) removes it. The handler stays quiet while a
+ * field has focus, with modifier keys held, while a sheet is open over the
+ * screen, and for good once `scope` has left the page — so a screen that was
+ * left half-way can never answer for the next one.
+ */
+export function screenKeys(scope) {
+  let fn = null;
+  const handler = (e) => {
+    if (!fn) return;
+    if (!scope.isConnected) { fn = null; document.removeEventListener('keydown', handler); return; }
+    if (e.ctrlKey || e.metaKey || e.altKey || e.isComposing) return;
+    const t = e.target;
+    if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    if (document.querySelector('.sheet.open')) return;
+    fn(e);
+  };
+  return (next) => {
+    fn = next || null;
+    if (fn) document.addEventListener('keydown', handler);
+    else document.removeEventListener('keydown', handler);
+  };
+}
+
 export function shuffle(arr) {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -129,10 +154,24 @@ export function bare(s) {
   return (s || '').replace(DIAC, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/[ؤ]/g, 'و').replace(/[ئ]/g, 'ي').replace(/ء/g, '');
 }
 
-export function toast(msg, ms = 2200) {
+/**
+ * A short message at the bottom of the screen.
+ * toast('Saved')  ·  toast('Saved', 4000)  ·  toast('Removed', { action: 'Undo', onAction })
+ */
+export function toast(msg, opts = {}) {
+  if (typeof opts === 'number') opts = { ms: opts };
+  const { action = '', onAction = null } = opts;
+  const ms = opts.ms || (action ? 5000 : 2400);
   let el = document.querySelector('.toast');
   if (!el) { el = h('div', { class: 'toast', role: 'status', 'aria-live': 'polite' }); document.body.appendChild(el); }
-  el.textContent = msg;
+  clear(el).append(h('span', {}, msg));
+  if (action && onAction) {
+    el.append(h('button', { class: 'toast-act', type: 'button', onclick: () => {
+      clearTimeout(el._t);
+      el.classList.remove('show');
+      onAction();
+    } }, action));
+  }
   requestAnimationFrame(() => el.classList.add('show'));
   clearTimeout(el._t);
   el._t = setTimeout(() => el.classList.remove('show'), ms);

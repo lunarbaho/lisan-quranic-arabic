@@ -83,9 +83,9 @@ export default [
       { teach: `
         <h2>Phrase or sentence?</h2>
         ${table(['Arabic', 'Meaning', 'Why'], [
-          [A('هٰذَا الْكِتَابُ'), 'this book', 'the next noun has الـ → one phrase'],
+          [A('هٰذَا الْكِتَابُ'), 'this book …', 'the next noun has الـ → usually one phrase, and the sentence goes on'],
           [A('هٰذَا كِتَابٌ'), 'this is a book', 'no الـ → a full sentence'],
-          [A('ذٰلِكَ الْفَوْزُ الْعَظِيمُ'), 'that is the great triumph', 'phrase used as a sentence'],
+          [A('ذٰلِكَ الْفَوْزُ الْعَظِيمُ'), 'that is the great triumph', 'nothing follows → a sentence: "that is …"'],
         ])}
         <p>${A('كَذٰلِكَ')} = ${A('كَـ')} + ${A('ذٰلِكَ')} "like that, thus" — over 100 times in the Quran.</p>
         ${Q('2:2')}
@@ -110,7 +110,7 @@ export default [
           [A('مَنْ'), 'whoever, the one who (people)', A('مَنْ يَعْمَلْ') + ' whoever does'],
           [A('مَا'), 'what, that which (things)', A('مَا تَعْبُدُونَ') + ' what you worship'],
         ])}
-        ${key(A('الَّذِينَ آمَنُوا') + ' "those who believe(d)" appears about 250 times. Make it instant.')}` },
+        ${key(A('الَّذِينَ آمَنُوا') + ' "those who believe(d)" appears more than 200 times. Make it instant.')}` },
       { teach: `
         <h2>Combinations</h2>
         <p>${A('مِنْ')} + ${A('مَا')} → ${A('مِمَّا')} "from what": ${Q('2:3', '6-8')} "and spend from what We provided them". ${A('عَنْ')} + ${A('مَا')} → ${A('عَمَّا')}; ${A('بِـ')} + ${A('مَا')} → ${A('بِمَا')} "for what": ${A('بِمَا كَانُوا يَعْمَلُونَ')} "for what they used to do".</p>

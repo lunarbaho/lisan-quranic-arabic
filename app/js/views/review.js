@@ -1,9 +1,10 @@
-import { h, clear, fmtInterval, arSpan } from '../util.js';
+import { h, clear, fmtInterval, screenKeys } from '../util.js';
 import { icon, star8 } from '../icons.js';
-import { D, gloss, lemma, loadLemmas, loadSurah, cardKeyForLemma } from '../data.js';
-import { S, dueKeys, unseenKeys, grade, card } from '../store.js';
+import { D, gloss, lemma, loadLemmas } from '../data.js';
+import { S, dueKeys, unseenKeys, grade, ungrade, card, today } from '../store.js';
 import { preview } from '../srs.js';
-import { topbar, audioAvailable, playUrl, wordAudio, noteHtml, quranWords } from '../ui.js';
+import { topbar, audioAvailable, noteHtml, quranWords } from '../ui.js';
+import { playWord } from '../audio.js';
 import { exampleEl } from '../learnflow.js';
 
 /** Data needed to show one card, for curated (v…) or Reader-added (l…) words. */
@@ -38,8 +39,22 @@ export async function render(root) {
     return;
   }
 
-  let keys = null;
-  const setKeys = (fn) => { if (keys) document.removeEventListener('keydown', keys); keys = fn; if (fn) document.addEventListener('keydown', fn); };
+  const setKeys = screenKeys(stage);
+  let last = null;      // the previous answer, so a mis-tap can be taken back
+
+  /** Undo the previous answer and show that card again (Z on a keyboard). */
+  function undo(currentKey) {
+    if (!last) return;
+    const { key, before, log, again: wasAgain } = last;
+    last = null;
+    ungrade(key, before, log);
+    if (wasAgain) { const j = queue.lastIndexOf(key); if (j >= 0) queue.splice(j, 1); again -= 1; }
+    if (currentKey) queue.unshift(currentKey);
+    queue.unshift(key);
+    done -= 1;
+    next();
+  }
+  const undoKey = (e, currentKey) => { if ((e.key === 'z' || e.key === 'Z') && last) { e.preventDefault(); undo(currentKey); return true; } return false; };
 
   function next() {
     clear(stage);
@@ -49,7 +64,9 @@ export async function render(root) {
     if (!info) { next(); return; }
     const c = card(key);
     stage.appendChild(h('div', { class: 'row nowrap' }, h('div', { class: 'progress' }, h('span', { style: { width: `${(done / (done + queue.length + 1)) * 100}%` } })),
-      h('span', { class: 'small muted tnum' }, `${queue.length + 1} left`)));
+      h('span', { class: 'small muted tnum' }, `${queue.length + 1} left`),
+      h('button', { class: 'icon-btn', type: 'button', id: 'review-undo', 'aria-label': 'Undo last answer', title: 'Undo last answer (Z)', html: icon('undo'), disabled: !last,
+        onclick: () => undo(key) })));
     const face = h('div', { class: 'card raised flash' },
       h('div', { class: 'ar-big q-text q-solo', lang: 'ar', dir: 'rtl' }, info.ar),
       info.ar2 ? h('div', { class: 'ar2', lang: 'ar' }, info.ar2) : null);
@@ -84,7 +101,7 @@ export async function render(root) {
       if (info.ex && audioAvailable()) {
         const ex = info.ex;
         const [s, a] = ex.ref.split(':').map(Number);
-        face.appendChild(h('button', { class: 'btn quiet small', html: `${icon('volume')} Hear the word`, onclick: () => playUrl(wordAudio(s, a, ex.w + 1)) }));
+        face.appendChild(h('button', { class: 'btn quiet small word-audio', type: 'button', html: `${icon('volume')} Hear the word`, onclick: (e) => playWord(s, a, ex.w + 1, e.currentTarget) }));
       }
       const pv = preview(c || { st: 0, s: 0, d: 0, reps: 0, lapses: 0, last: 0, due: 0 });
       const grades = h('div', { class: 'grades', role: 'group', 'aria-label': 'How well did you know it?' });
@@ -93,16 +110,19 @@ export async function render(root) {
       });
       stage.appendChild(grades);
       stage.appendChild(h('p', { class: 'tiny muted', style: { textAlign: 'center' } }, 'Again = did not know · Hard = slow · Good = knew it · Easy = instant.', h('span', { class: 'keys-hint' }, ' Keys 1–4.')));
-      setKeys((e) => { const g = +e.key; if (g >= 1 && g <= 4) rate(g); });
+      setKeys((e) => { if (undoKey(e, key)) return; const g = +e.key; if (g >= 1 && g <= 4) rate(g); });
     };
     reveal.addEventListener('click', doReveal);
-    setKeys((e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); doReveal(); } });
+    setKeys((e) => { if (undoKey(e, key)) return; if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); doReveal(); } });
 
     function rate(g) {
       setKeys(null);
+      const before = card(key) ? { ...card(key) } : null;
+      const log = { ...today() };
       const res = grade(key, g);
       done += 1;
       if (res.again) { again += 1; queue.splice(Math.min(queue.length, 3 + Math.floor(Math.random() * 3)), 0, key); }
+      last = { key, before, log, again: res.again };
       next();
     }
   }
@@ -113,13 +133,13 @@ export async function render(root) {
   }
 
   function finish() {
-    setKeys(null);
+    setKeys((e) => { undoKey(e, null); });
     stage.appendChild(h('div', { class: 'done-burst' }, h('span', { html: star8() }), h('h2', {}, 'Review complete'),
       h('p', { class: 'muted' }, `${done} answers · ${again ? `${again} words will come back soon` : 'every word remembered'}.`),
-      h('div', { class: 'row', style: { justifyContent: 'center' } }, h('a', { class: 'btn', href: '#words' }, 'Learn new words'), h('a', { class: 'btn ghost', href: '#home' }, 'Home'))));
+      h('div', { class: 'row', style: { justifyContent: 'center' } }, h('a', { class: 'btn', href: '#words' }, 'Learn new words'), h('a', { class: 'btn ghost', href: '#home' }, 'Home')),
+      last ? h('button', { class: 'btn ghost small', type: 'button', html: `${icon('undo')} Undo last answer`, onclick: () => undo(null) }) : null));
   }
 
   next();
-  void arSpan; void loadSurah; void cardKeyForLemma;
   return () => setKeys(null);
 }

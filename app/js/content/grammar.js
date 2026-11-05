@@ -89,7 +89,7 @@ export const GRAMMAR = [
       [A('فَاعِل'), 'doer', A('عَالِم · كَافِر · صَابِر'), 'âlim, kâfir'],
       [A('مَفْعُول'), 'done-to', A('مَعْلُوم · مَغْضُوب · مَكْتُوب'), 'malum, mektup'],
       [A('فَعِيل'), 'lasting quality', A('رَحِيم · عَلِيم · كَبِير'), 'Rahim, Alim, kebir'],
-      [A('فَعُول'), 'intense, repeated', A('غَفُور · شَكُور · رَسُول'), 'Gafur, resul'],
+      [A('فَعُول'), 'intense, repeated', A('غَفُور · شَكُور · وَدُود'), 'Gafur, Şekûr, Vedud'],
       [A('فَعَّال'), 'very much, habitually', A('تَوَّاب · غَفَّار · جَبَّار'), 'Tevvab, Gaffar'],
       [A('فَعْلَان'), 'full of', A('رَحْمٰن · غَضْبَان'), 'Rahman'],
       [A('أَفْعَل'), 'more, most', A('أَكْبَر · أَعْلَم · أَحْسَن'), 'ekber, a\'lem, ahsen'],

@@ -1,4 +1,4 @@
-import { h, clear, shuffle, sample, pick, arSpan, rootLetters } from '../util.js';
+import { h, clear, shuffle, sample, arSpan, rootLetters, screenKeys } from '../util.js';
 import { icon, star8 } from '../icons.js';
 import { D, loadLemmas, loadSurah, lemma, gloss, roots, surahMeta } from '../data.js';
 import { S, logEvent, commit, wordStatus } from '../store.js';
@@ -138,11 +138,24 @@ async function drill(root, mode) {
   await loadLemmas();
   let cands = [];
   const tried = new Set();
-  for (let k = 0; k < 6 && cands.length < ROUND * 3; k++) {
-    const s = pick(POOL.filter((x) => !tried.has(x)));
-    tried.add(s);
-    const data = await loadSurah(s);
-    for (const v of data.v) cands.push(...candidates(mode, s, v));
+  let loaded = 0;
+  // a few surahs at a time, in parallel, until there is enough to choose from
+  for (let k = 0; k < 3 && cands.length < ROUND * 3; k++) {
+    const batch = sample(POOL.filter((x) => !tried.has(x)), 3);
+    batch.forEach((x) => tried.add(x));
+    const datas = await Promise.all(batch.map((x) => loadSurah(x).catch(() => null)));
+    datas.forEach((data, j) => {
+      if (!data) return;
+      loaded += 1;
+      for (const v of data.v) cands.push(...candidates(mode, batch[j], v));
+    });
+  }
+  if (!view.isConnected) return;
+  if (!loaded) {
+    clear(stage).appendChild(h('div', { class: 'empty' }, h('h2', {}, 'Could not load the verses'),
+      h('p', {}, 'Drills use real verses. Check your connection and try again — surahs you have opened before work offline.'),
+      h('button', { class: 'btn', type: 'button', onclick: () => { clear(root); drill(root, mode); } }, 'Try again')));
+    return;
   }
   if (mode === 'meaning' && cands.length < ROUND) {
     clear(stage).appendChild(h('div', { class: 'empty' }, h('h2', {}, 'Learn a few words first'), h('p', {}, 'This drill uses words from your deck.'), h('a', { class: 'btn', href: '#words' }, 'Learn new words')));
@@ -150,8 +163,7 @@ async function drill(root, mode) {
   }
   const qs = sample(cands, ROUND).map((c) => ({ c, q: makeQuestion(mode, c) })).filter((x) => x.q);
   let i = 0, right = 0;
-  let keys = null;
-  const setKeys = (fn) => { if (keys) document.removeEventListener('keydown', keys); keys = fn; if (fn) document.addEventListener('keydown', fn); };
+  const setKeys = screenKeys(view);
 
   function show() {
     clear(stage);
@@ -160,7 +172,7 @@ async function drill(root, mode) {
       logEvent('p', qs.length); commit();
       stage.appendChild(h('div', { class: 'done-burst' }, h('span', { html: star8() }), h('h2', {}, `${right} / ${qs.length}`),
         h('p', { class: 'muted' }, right >= qs.length * 0.8 ? 'Excellent — your eye for patterns is getting sharp.' : 'Every round trains your eye. Try another.'),
-        h('div', { class: 'row', style: { justifyContent: 'center' } }, h('button', { class: 'btn', onclick: () => { clear(root); drill(root, mode); } }, 'Another round'),
+        h('div', { class: 'row', style: { justifyContent: 'center' } }, h('button', { class: 'btn', type: 'button', onclick: () => { clear(root); window.scrollTo({ top: 0 }); drill(root, mode); } }, 'Another round'),
           h('a', { class: 'btn ghost', href: '#practice' }, 'Other drills'))));
       return;
     }

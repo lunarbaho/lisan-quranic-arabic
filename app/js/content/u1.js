@@ -75,7 +75,7 @@ export default [
         <p><b>A noun</b> can take ${A('الـ')} "the" (${A('الْكِتَابُ')}), can end in tanwīn (${A('كِتَابٌ')}), and can come after a preposition (${A('فِي الْأَرْضِ')} "in the earth").</p>
         <p><b>A verb</b> never takes ${A('الـ')} or tanwīn. Past verbs have fixed endings (${A('قَالَ · قَالُوا · قُلْتُ')}); present verbs start with one of the letters ${A('أ ن ي ت')} (${A('يَقُولُ · نَعْبُدُ')}).</p>
         <p><b>A particle</b> is everything else: short, unchanging words.</p>
-        ${tip('Look at 1:2 below: الْحَمْدُ لِلّٰهِ رَبِّ الْعَالَمِينَ has four nouns, one particle (لِـ) — and no verb at all. Arabic sentences do not need one.')}
+        ${tip('Look at 1:2 below: الْحَمْدُ لِلّٰهِ رَبِّ الْعَالَمِينَ has four nouns and the particle لِـ (plus the article الـ) — but no verb at all. Arabic sentences do not need one.')}
         ${Q('1:2')}` },
       { quiz: 'Which one is a verb?', o: ['يَعْلَمُ', 'عِلْمٌ', 'عَلِيمٌ', 'الْعَالَمِينَ'], a: 0, ar: true,
         why: 'يَعْلَمُ starts with ي — a present-tense prefix — and has no ال or tanwīn. The others are nouns.' },
@@ -113,7 +113,7 @@ export default [
           [A('هُدًى'), 'a guidance', A('الْهُدَى'), 'the guidance'],
         ])}
         ${tr('Turkish grammar uses the Arabic terms: <i>marife</i> (definite) and <i>nekre</i> (indefinite).')}
-        <p>Names are definite by themselves: ${A('اللّٰه')}, ${A('مُوسَى')}, ${A('مَكَّة')} never take tanwīn or ${A('الـ')}.</p>` },
+        <p>Names are definite by themselves: ${A('اللّٰه')}, ${A('مُوسَى')}, ${A('مَكَّة')} never take tanwīn or ${A('الـ')}. Some names do carry tanwīn — ${A('مُحَمَّدٌ رَسُولُ اللّٰهِ')} (48:29), ${A('نُوحًا')} (3:33) — but there it does not mean "a": a name stays definite.</p>` },
       { teach: `
         <h2>What you see in the Uthmani script</h2>
         <p>The mushaf writes the article as ${A('ٱلْـ')} with a small sign on the alif (<i>alif waṣla</i>): the a- is only pronounced at the start of speech. In ${A('بِسْمِ ٱللَّهِ')} you say <i>bismi-llāh</i>.</p>
@@ -155,7 +155,7 @@ export default [
         ${Q('103:1')}
         <p>Here ${A('وَ')} swears an oath: "By time!" — the most famous opening oath in the Quran.</p>` },
       { quiz: `Split ${A('وَلِلّٰهِ')}:`, o: ['and + for + Allah', 'and + the + Allah', 'so + for + Allah', 'like + for + Allah'], a: 0, why: 'وَ "and" + لِـ "for" + اللّٰه.' },
-      { quiz: `In ${A('فَسَبِّحْ بِحَمْدِ رَبِّكَ')} (110:3), what does ${A('فَـ')} add?`, o: ['"so / then"', '"and not"', '"like"', '"the"'], a: 0, why: 'فَـ links a result: "so glorify the praise of your Lord".' },
+      { quiz: `In ${A('فَسَبِّحْ بِحَمْدِ رَبِّكَ')} (110:3), what does ${A('فَـ')} add?`, o: ['"so / then"', '"and not"', '"like"', '"the"'], a: 0, why: 'فَـ links a result: "so glorify (Him) with the praise of your Lord".' },
       { quiz: `${A('بِالْحَقِّ')} means…`, o: ['with the truth', 'the truth', 'for the truth', 'like the truth'], a: 0, why: 'بِـ "with" + الْحَقّ "the truth".' },
       { verse: '103:1', note: 'Tap the word to see it split into three parts: وَ + الْ + عَصْر.' },
       { words: true },
@@ -171,7 +171,7 @@ export default [
         <p>Feminine nouns usually show it:</p>
         ${table(['Sign', 'Examples'], [
           ['ending ' + A('ـة') + ' (tāʾ marbūṭa)', A('رَحْمَة · جَنَّة · آيَة · نِعْمَة · كَلِمَة')],
-          ['ending ' + A('ـَى') + ' or ' + A('ـَاء'), A('دُنْيَا · أُنْثَى · بُشْرَى')],
+          ['ending ' + A('ـَى') + ' or ' + A('ـَاء'), A('دُنْيَا · أُنْثَى · بُشْرَى · بَيْضَاء')],
           ['female by nature', A('أُمّ · امْرَأَة · بِنْت')],
           ['feminine by usage (learn them)', A('نَفْس · أَرْض · شَمْس · نَار · رِيح · دَار')],
         ])}
@@ -185,7 +185,7 @@ export default [
       { quiz: '"a believing woman"', o: ['مُؤْمِنَةٌ', 'مُؤْمِنٌ', 'مُؤْمِنُونَ', 'إِيمَانٌ'], a: 0, ar: true, why: 'مُؤْمِن + ة.' },
       { quiz: `Why is it ${A('ذَائِقَةُ')} (with ة) in ${A('كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ')}?`, o: ['نَفْس is feminine', 'الْمَوْت is feminine', 'It is plural', 'It is a verb'], a: 0,
         why: 'The describing word agrees with نَفْس, which is feminine.' },
-      { verse: '89:27', note: 'Spoken to the soul at death: every word is feminine — ' + A('أَيَّتُهَا') + ', ' + A('النَّفْسُ') + ', ' + A('الْمُطْمَئِنَّةُ') + '.' },
+      { verse: '89:27', note: 'Spoken to the soul, so everything agrees with the feminine ' + A('نَفْس') + ': even the call is ' + A('أَيَّتُهَا') + ' (not ' + A('أَيُّهَا') + '), and ' + A('الْمُطْمَئِنَّةُ') + ' "at rest" ends in ' + A('ـة') + '.' },
       { verse: '89:28', note: 'The command ' + A('ارْجِعِي') + ' and the ' + A('ـكِ') + ' in ' + A('رَبِّكِ') + ' are feminine because they address the soul.' },
       { words: true },
     ],
@@ -257,7 +257,7 @@ export default [
       { quiz: `${A('الصِّرَاطَ الْمُسْتَقِيمَ')} in 1:6 ends in -a. Why?`, o: ['It is the object of "guide us"', 'It follows a preposition', 'It is the subject', 'It is plural'], a: 0,
         why: 'اهْدِنَا "guide us" — the path is what we ask to be guided to: an object, so -a.' },
       { verse: '1:6' },
-      { verse: '1:7', note: A('غَيْرِ') + ' and ' + A('الضَّالِّينَ') + ' end in -i: they describe ' + A('الَّذِينَ') + ', which follows the -i chain of ' + A('صِرَاطَ الَّذِينَ') + '.' },
+      { verse: '1:7', note: A('غَيْرِ') + ' ends in -i because it describes ' + A('الَّذِينَ') + ', the second noun of ' + A('صِرَاطَ الَّذِينَ') + ' (genitive in place). ' + A('الْمَغْضُوبِ') + ' is the second noun after ' + A('غَيْرِ') + ', and ' + A('وَلَا') + ' joins ' + A('الضَّالِّينَ') + ' to it — so both are genitive too.' },
       { words: true },
     ],
   },
@@ -288,7 +288,7 @@ export default [
       { quiz: `${A('تَجْرِي مِنْ تَحْتِهَا الْأَنْهَارُ')} — rivers flow ___ it.`, o: ['beneath', 'above', 'around', 'behind'], a: 0, why: 'تَحْتَ = under, beneath.' },
       { quiz: `${A('مِنْ دُونِ اللّٰهِ')} means…`, o: ['besides Allah', 'after Allah', 'with Allah', 'from Allah'], a: 0, why: 'دُونَ = other than, besides.' },
       { quiz: 'Turkish <i>fevkalade</i> comes from…', o: ['فَوْقَ above', 'فِي in', 'فَضْل bounty', 'فَتْح opening'], a: 0, ar: false, why: 'فَوْقَ الْعَادَة "above the usual".' },
-      { verse: '2:21', note: A('مِنْ قَبْلِكُمْ') + ' "before you": preposition + place noun + pronoun.' },
+      { verse: '2:21', note: A('مِنْ قَبْلِكُمْ') + ' "before you": preposition + time word + pronoun.' },
       { words: true },
     ],
   },

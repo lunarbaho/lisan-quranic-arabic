@@ -86,14 +86,18 @@ export function cardKeyForLemma(lemmaId) {
 }
 
 /** Turkish words from the same root, gathered from the curated vocabulary. */
+let cognateIndex = null;
 export function rootCognates(root) {
   if (!root) return [];
-  const seen = new Set();
-  for (const v of D.vocab) {
-    if (v.r !== root || !v.cog) continue;
-    for (const c of v.cog.split(',').map((x) => x.trim()).filter(Boolean)) seen.add(c);
+  if (!cognateIndex) {
+    cognateIndex = new Map();
+    for (const v of D.vocab) {
+      if (!v.r || !v.cog) continue;
+      if (!cognateIndex.has(v.r)) cognateIndex.set(v.r, new Set());
+      for (const c of v.cog.split(',').map((x) => x.trim()).filter(Boolean)) cognateIndex.get(v.r).add(c);
+    }
   }
-  return [...seen];
+  return [...(cognateIndex.get(root) || [])];
 }
 
 let rootIndex = null;

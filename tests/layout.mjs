@@ -232,6 +232,17 @@ async function clickAndSettle(page, handle, ms = 0) {
   await settle(page);
 }
 
+/** Silence as a WAV file: recitation requests are answered with it, so the player can be checked offline. */
+function silentWav(seconds, rate = 8000) {
+  const n = Math.round(seconds * rate);
+  const buf = Buffer.alloc(44 + n * 2);
+  buf.write('RIFF', 0); buf.writeUInt32LE(36 + n * 2, 4); buf.write('WAVE', 8);
+  buf.write('fmt ', 12); buf.writeUInt32LE(16, 16); buf.writeUInt16LE(1, 20); buf.writeUInt16LE(1, 22);
+  buf.writeUInt32LE(rate, 24); buf.writeUInt32LE(rate * 2, 28); buf.writeUInt16LE(2, 32); buf.writeUInt16LE(16, 34);
+  buf.write('data', 36); buf.writeUInt32LE(n * 2, 40);
+  return buf;
+}
+
 function learnerState(settings) {
   const now = Date.now();
   const cards = {};
@@ -291,6 +302,24 @@ const PARTS = {
       await page.keyboard.press('Escape');
       await page.waitForTimeout(260);
     }
+  },
+  async player(page, cfg) {
+    const clip = silentWav(30);
+    await page.context().route(/everyayah\.com|audio\.qurancdn\.com/, (r) => r.fulfill({ status: 200, body: clip,
+      headers: { 'Content-Type': 'audio/wav', 'Access-Control-Allow-Origin': '*' } }));
+    await go(page, '#surah-2-255');
+    await page.click('#v2-255 .verse-play');
+    await page.waitForSelector('.player:not([hidden])');
+    await page.waitForTimeout(350);
+    await check(page, cfg, 'reader, verse playing');
+    await page.click('.player-mode');                                  // shows the mode toast too
+    await page.click('.player-main');
+    await page.waitForTimeout(300);
+    await check(page, cfg, 'reader, paused with toast');
+    await page.click('.player .icon-btn[aria-label="Stop recitation"]');
+    await go(page, '#root-12');
+    const add = await page.$('.list-item .deck button.cobalt');
+    if (add) { await add.click(); await page.waitForTimeout(300); await check(page, cfg, 'root word added, undo toast'); }
   },
   async review(page, cfg) {
     await go(page, '#review');

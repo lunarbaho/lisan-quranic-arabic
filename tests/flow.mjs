@@ -19,9 +19,11 @@ await page.click('text=Türkçe');
 await page.click('text=Start lesson 1');
 await page.waitForSelector('.lesson-body');
 
-// walk through the lesson: answer quizzes (first option), continue otherwise
+// walk through the lesson: answer quizzes (first option), continue otherwise.
+// The first option is right about one time in four, and a missed word comes
+// back until it is answered right, so leave plenty of room.
 let guard = 0;
-while (guard++ < 120) {
+while (guard++ < 600) {
   if (await page.$('.done-burst')) break;
   const opt = await page.$('.options .opt:not([disabled])');
   if (opt) { await opt.click(); await page.waitForTimeout(120); continue; }
@@ -41,7 +43,7 @@ check(st.settings.lang === 'tr', 'meaning language set to Turkish');
 await page.evaluate(() => { location.hash = '#words'; });
 await page.waitForSelector('.lesson-nav .btn');
 guard = 0;
-while (guard++ < 120) {
+while (guard++ < 600) {
   if (await page.$('.done-burst')) break;
   const opt = await page.$('.options .opt:not([disabled])');
   if (opt) { await opt.click(); await page.waitForTimeout(100); continue; }

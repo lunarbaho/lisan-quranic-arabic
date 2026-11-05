@@ -96,7 +96,12 @@ export function currentRoute() {
   return { name: m[1], arg: m[2] || '' };
 }
 
+// a new version of the app was installed while this page was open: it is
+// loaded at the next change of screen, never in the middle of one
+let updateReady = false;
+
 async function render() {
+  if (updateReady) { location.reload(); return; }
   const seq = ++renderSeq;
   const route = currentRoute();
   closeSheet();
@@ -104,9 +109,12 @@ async function render() {
   if (cleanup) { try { cleanup(); } catch { /* view already gone */ } cleanup = null; }
   paintNav();
   try {
-    const mod = await VIEWS[route.name]();
+    let mod;
+    try { mod = await VIEWS[route.name](); }
+    catch (e) { if (reloadForUpdate()) return; throw e; }
     if (seq !== renderSeq) return;
     clear(main);
+    window.scrollTo({ top: 0 });          // a view may then scroll where it needs to (e.g. a verse)
     const ret = await mod.render(main, route.arg, route.name);
     if (seq !== renderSeq) { if (typeof ret === 'function') ret(); return; }
     cleanup = typeof ret === 'function' ? ret : null;
@@ -116,11 +124,24 @@ async function render() {
     clear(main).appendChild(h('div', { class: 'view' }, h('div', { class: 'card stack' },
       h('h2', {}, 'This page could not be opened'),
       h('p', { class: 'muted' }, String(e.message || e)),
-      h('p', {}, 'Check your connection, then reload. Your progress is saved.'),
-      h('a', { class: 'btn', href: '#home' }, 'Go to Home'))));
+      h('p', {}, navigator.onLine === false ? 'You are offline. Pages you have opened before work offline; this one needs a connection first.' : 'Reload the app to try again. Your progress is saved.'),
+      h('div', { class: 'row' },
+        h('button', { class: 'btn', type: 'button', onclick: () => location.reload() }, 'Reload'),
+        h('a', { class: 'btn ghost', href: '#home' }, 'Go to Home')))));
   }
-  if (!['lesson', 'review', 'words'].includes(route.name)) window.scrollTo({ top: 0 });
   main.focus({ preventScroll: true });
+}
+
+/** A screen's code failed to load. Usually the app was just updated: reload once. */
+function reloadForUpdate() {
+  if (navigator.onLine === false) return false;
+  try {
+    const last = +sessionStorage.getItem('lisan.reloadedAt') || 0;
+    if (Date.now() - last < 30000) return false;      // already tried: show the error instead
+    sessionStorage.setItem('lisan.reloadedAt', String(Date.now()));
+  } catch { return false; }
+  location.reload();
+  return true;
 }
 
 export function rerender() { render(); }
@@ -147,6 +168,10 @@ async function boot() {
   }).observe(document.body, { childList: true, subtree: true });
   onChange(() => { applyTheme(); paintNav(); });
   window.addEventListener('hashchange', render);
+  if ('serviceWorker' in navigator) {
+    const controlled = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', () => { if (controlled) updateReady = true; });
+  }
   await render();
   loadLemmas().then(() => { if (currentRoute().name === 'home') paintNav(); }).catch(() => {});
   // optional claude.ai runtime: synced progress + AI teacher

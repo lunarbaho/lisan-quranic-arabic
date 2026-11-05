@@ -30,7 +30,7 @@ export default [
       { quiz: '"they believed"', o: ['آمَنُوا', 'آمَنَ', 'آمَنْتُمْ', 'آمَنَّا'], a: 0, ar: true, why: '-ū (written ـُوا) = they.' },
       { quiz: `${A('قَالَتْ')} means…`, o: ['she said', 'you said', 'I said', 'they said'], a: 0, why: '-at = she.' },
       { quiz: `${A('عَلَّمَ الْإِنْسَانَ مَا لَمْ يَعْلَمْ')} — who taught?`, o: ['He (Allah)', 'man', 'they', 'I'], a: 0, why: 'عَلَّمَ has no ending: "he". The object is الْإِنْسَانَ.' },
-      { verse: '96:1' }, { verse: '96:2' }, { verse: '96:3' }, { verse: '96:4' }, { verse: '96:5', note: 'The first revelation: three past verbs — ' + A('خَلَقَ') + ' and ' + A('عَلَّمَ') + ' (twice each).' },
+      { verse: '96:1' }, { verse: '96:2' }, { verse: '96:3' }, { verse: '96:4' }, { verse: '96:5', note: 'The first revelation: two past verbs, each used twice — ' + A('خَلَقَ') + ' and ' + A('عَلَّمَ') + '. (' + A('لَمْ يَعْلَمْ') + ' "he did not know" also speaks of the past — Lesson 27.)' },
       { words: true },
     ],
   },
@@ -61,7 +61,7 @@ export default [
       { quiz: '"they know"', o: ['يَعْلَمُونَ', 'تَعْلَمُونَ', 'نَعْلَمُ', 'أَعْلَمُ'], a: 0, ar: true, why: 'يَـ … ـُونَ = they.' },
       { quiz: `${A('لَا أَعْبُدُ مَا تَعْبُدُونَ')} (109:2)`, o: ['I do not worship what you worship.', 'We do not worship what they worship.', 'Do not worship what you worship!', 'He does not worship what I worship.'], a: 0,
         why: 'أَعْبُدُ (I) and تَعْبُدُونَ (you, pl.).' },
-      { verse: '109:1' }, { verse: '109:2' }, { verse: '109:3' }, { verse: '109:4' }, { verse: '109:5' }, { verse: '109:6', note: 'Every verb here is present tense except ' + A('عَبَدْتُمْ') + ' (past). ' + A('عَابِدٌ') + ' is a participle (Lesson 23).' },
+      { verse: '109:1' }, { verse: '109:2' }, { verse: '109:3' }, { verse: '109:4' }, { verse: '109:5' }, { verse: '109:6', note: 'Apart from the command ' + A('قُلْ') + ' and the past ' + A('عَبَدْتُمْ') + ', every verb in the surah is present tense. ' + A('عَابِدٌ') + ' and ' + A('عَابِدُونَ') + ' are participles (Lesson 23).' },
       { words: true },
     ],
   },
@@ -75,7 +75,7 @@ export default [
         <p>Take the "you" present, drop the prefix, end the word with sukūn, and add a helping ${A('اُ')} or ${A('اِ')} if it now starts with two consonants:</p>
         ${table(['Present', 'Command', 'Meaning'], [
           [A('تَقْرَأُ'), A('اِقْرَأْ'), 'read! (96:1)'], [A('تَعْبُدُونَ'), A('اُعْبُدُوا'), 'worship! (pl.)'],
-          [A('تَذْكُرُ'), A('اُذْكُرْ'), 'remember!'], [A('تَقُولُ'), A('قُلْ'), 'say! (332 times)'], [A('تَأْكُلُونَ'), A('كُلُوا'), 'eat! (pl.)'],
+          [A('تَذْكُرُ'), A('اُذْكُرْ'), 'remember!'], [A('تَقُولُ'), A('قُلْ'), 'say! (over 300 times)'], [A('تَأْكُلُونَ'), A('كُلُوا'), 'eat! (pl.)'],
         ])}
         <p>Endings: ${A('اِفْعَلْ')} (to a man), ${A('اِفْعَلِي')} (to a woman), ${A('اِفْعَلُوا')} (to a group). Form IV commands begin with ${A('أَ')}: ${A('أَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ')}.</p>
         ${tr('Turkish grammar calls it <i>emir</i>; a prohibition is <i>nehiy</i> (' + A('نَهْي') + ').')}` },
@@ -109,13 +109,13 @@ export default [
       { teach: `
         <h2>Two rules</h2>
         <ol>
-          <li>When the subject is a noun <b>after</b> the verb, the verb stays <b>singular</b>, even for a plural subject: ${A('قَالَ الْمَلَأُ')} "the chiefs said". When the subject is only a pronoun, it is part of the verb: ${A('قَالُوا')} "they said".</li>
+          <li>When the subject is a noun <b>after</b> the verb, the verb stays <b>singular</b>, even for a plural subject: ${A('قَالَ الْحَوَارِيُّونَ')} "the disciples said" (3:52). When the subject is only a pronoun, it is part of the verb: ${A('قَالُوا')} "they said".</li>
           <li>Object pronouns attach to the verb: ${A('خَلَقَكُمْ')} "He created you"; ${Q('97:1', '2')} "We sent it down".</li>
         </ol>
         ${key('Word order can change for emphasis; the case endings keep the roles clear.')}` },
       { quiz: `In ${A('خَلَقَ اللّٰهُ السَّمٰوَاتِ')}, the subject is…`, o: ['اللّٰهُ', 'خَلَقَ', 'السَّمٰوَاتِ', 'There is none'], a: 0, ar: true, why: 'It ends in -u and does the action.' },
       { quiz: `${A('أَنْزَلْنَاهُ')} means…`, o: ['We sent it down', 'He sent us down', 'They sent him down', 'We were sent down'], a: 0, why: 'أَنْزَلْ + نَا (we) + هُ (it).' },
-      { quiz: `Why ${A('قَالَ')} (singular) in ${A('قَالَ الْمَلَأُ')}?`, o: ['A verb before its noun subject stays singular', 'الْمَلَأ is one person', 'It is a mistake', 'قَالَ is a noun here'], a: 0, why: 'Verb-first sentences use a singular verb.' },
+      { quiz: `Why ${A('قَالَ')} (singular) in ${A('قَالَ الْحَوَارِيُّونَ')}?`, o: ['A verb before its noun subject stays singular', 'الْحَوَارِيُّونَ is one person', 'It is a mistake', 'قَالَ is a noun here'], a: 0, why: 'Verb-first sentences use a singular verb, even for the plural الْحَوَارِيُّونَ. Without a noun after it, it would be قَالُوا.' },
       { verse: '110:1' }, { verse: '110:2' }, { verse: '110:3' },
       { words: true },
     ],
@@ -175,7 +175,7 @@ export default [
       { quiz: `${A('إِنَّ اللّٰهَ مَعَ الصَّابِرِينَ')}`, o: ['Indeed, Allah is with the patient.', 'If Allah is with the patient…', 'That Allah is with the patient', 'Allah was with the patient.'], a: 0, why: 'إِنَّ "indeed" + topic اللّٰهَ + comment مَعَ الصَّابِرِينَ.' },
       { quiz: `${A('لَعَلَّكُمْ تَتَّقُونَ')}`, o: ['so that you may be mindful of Allah', 'indeed you are mindful', 'you were mindful', 'do not be mindful'], a: 0, why: 'لَعَلَّ "so that, perhaps".' },
       { quiz: '"if Allah wills" uses…', o: ['إِنْ', 'إِنَّ', 'أَنَّ', 'أَنْ'], a: 0, ar: true, why: 'إِنْ شَاءَ اللّٰهُ.' },
-      { verse: '2:183', note: 'Two sisters in one verse: ' + A('كَمَا') + ' and ' + A('لَعَلَّكُمْ') + '. ' + A('كُتِبَ') + ' is passive (Lesson 26).' },
+      { verse: '2:183', note: A('لَعَلَّكُمْ تَتَّقُونَ') + ' "so that you may become mindful" — a sister of ' + A('إِنَّ') + ' with a pronoun. (' + A('كَمَا') + ' is not one: it is ' + A('كَـ') + ' + ' + A('مَا') + ' "just as".) ' + A('كُتِبَ') + ' is passive (Lesson 26).' },
       { words: true },
     ],
   },
@@ -259,7 +259,7 @@ export default [
       { teach: `
         <h2>Places and comparisons</h2>
         <p><b>Place / time:</b> ${A('مَفْعَل')} or ${A('مَفْعِل')} — ${A('مَسْجِد')} place of prostration (mescit), ${A('مَكْتَب')} (mektep), ${A('مَجْلِس')} (meclis), ${A('مَرْجِع')} place of return (merci), ${A('مَصِير')}.</p>
-        <p><b>Elative</b> "more, most": ${A('أَفْعَل')} — ${A('أَكْبَر')} greater (Allâhu ekber), ${A('أَعْلَم')} knows best (vallâhu a\'lem), ${A('أَحْسَن')} best, ${A('أَكْثَر')} most (ekseriyet), ${A('أَقْرَب')} nearer (akraba), ${A('أَشَدّ')} stronger. Feminine ${A('فُعْلَى')}: ${A('الْحُسْنَى · الْكُبْرَى · الدُّنْيَا')} — <i>dünya</i> is literally "the nearer (life)".</p>
+        <p><b>Elative</b> "more, most": ${A('أَفْعَل')} — ${A('أَكْبَر')} greater (Allâhu ekber), ${A('أَعْلَم')} knows best (vallâhu a\'lem), ${A('أَحْسَن')} best, ${A('أَكْثَر')} most (ekseriyet), ${A('أَقْرَب')} nearer (same root as <i>akraba</i>), ${A('أَشَدّ')} stronger. Feminine ${A('فُعْلَى')}: ${A('الْحُسْنَى · الْكُبْرَى · الدُّنْيَا')} — <i>dünya</i> is literally "the nearer (life)".</p>
         ${Q('95:4')}
         <p>${A('أَحْسَنِ تَقْوِيمٍ')} = elative + Form II maṣdar: "the best of forms" — Turkish <i>ahsen-i takvîm</i>.</p>` },
       { quiz: `${A('مَسْجِد')} literally means…`, o: ['place of prostration', 'one who prostrates', 'prostration', 'he prostrated'], a: 0, why: 'مَفْعِل = place.' },
@@ -316,7 +316,7 @@ export default [
           ['', A('خَلَقَ'), A('خُلِقَ'), 'was created'],
           ['Form IV past', A('أَنْزَلَ'), A('أُنْزِلَ'), 'was sent down'],
           ['present (u – a)', A('يَكْتُبُ'), A('يُكْتَبُ'), 'is written'],
-          ['', A('يُرْجِعُ'), A('يُرْجَعُونَ'), 'they are returned'],
+          ['', A('يَخْلُقُونَ'), A('يُخْلَقُونَ'), 'they are created (25:3 has both)'],
         ])}
         ${tr('Turkish grammar calls it <i>meçhul</i> "unknown" — the Arabic ' + A('مَجْهُول') + '. In the Quran the hidden doer is usually Allah, or the doer does not matter.')}` },
       { teach: `

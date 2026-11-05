@@ -1,8 +1,7 @@
 import { h, clear, rootLetters, bare } from '../util.js';
 import { D, loadLemmas, roots, lemma, rootCognates, gloss, cardKeyForLemma } from '../data.js';
-import { S, wordStatus, introduce, card } from '../store.js';
-import { topbar, loadingEl } from '../ui.js';
-import { icon } from '../icons.js';
+import { S, wordStatus } from '../store.js';
+import { topbar, loadingEl, deckControl } from '../ui.js';
 
 export async function render(root, arg, name) {
   root.appendChild(loadingEl('Loading the roots…'));
@@ -12,10 +11,16 @@ export async function render(root, arg, name) {
   return list(root);
 }
 
+const meanings = new Map();
 function rootMeaning(r) {
   // the most frequent curated word of the root gives a quick sense of its idea
-  for (const id of r.lemmas) { const L = lemma(id); if (L.vocab >= 0) return gloss(D.vocab[L.vocab], S.settings.lang); }
-  return lemma(r.lemmas[0]).en;
+  const k = `${S.settings.lang}|${r.root}`;
+  if (!meanings.has(k)) {
+    let m = '';
+    for (const id of r.lemmas) { const L = lemma(id); if (L.vocab >= 0) { m = gloss(D.vocab[L.vocab], S.settings.lang); break; } }
+    meanings.set(k, m || lemma(r.lemmas[0]).en);
+  }
+  return meanings.get(k);
 }
 
 function list(root) {
@@ -71,10 +76,7 @@ function detail(root, idx) {
   for (const id of r.lemmas) {
     const L = lemma(id);
     const v = L.vocab >= 0 ? D.vocab[L.vocab] : null;
-    const key = cardKeyForLemma(id);
-    const st = wordStatus(id);
-    const add = card(key) ? h('span', { class: `chip ${st === 'known' ? 'leaf' : 'gold'}` }, st === 'known' ? 'known' : 'learning')
-      : h('button', { class: 'chip cobalt', type: 'button', html: `${icon('plus')} add`, onclick: (e) => { e.stopPropagation(); introduce([key]); e.currentTarget.replaceWith(h('span', { class: 'chip gold' }, 'added')); } });
+    const add = deckControl(cardKeyForLemma(id));
     listEl.appendChild(h('div', { class: 'list-item', style: { cursor: 'default' } },
       h('div', { class: 'stack-s', style: { gap: '.05rem' } }, h('span', {}, v ? gloss(v, lang) : ((lang === 'tr' && L.tr) || L.en)),
         h('span', { class: 'tiny muted tnum' }, `${L.all}× · ${{ N: 'noun', V: 'verb', P: 'particle' }[L.cls]}${v && v.ar2 ? ` · ${v.ar2}` : ''}`)),

@@ -1,10 +1,26 @@
-import { h, clear, arSpan, pct } from '../util.js';
+import { h, clear, arSpan, pct, screenKeys, safeStorage } from '../util.js';
 import { icon, star8 } from '../icons.js';
 import { D, loadLemmas, getVerse } from '../data.js';
 import { S, completeLesson, card, coverage } from '../store.js';
 import { LESSONS, lessonById } from '../content/lessons.js';
-import { topbar, hydrateQuotes, verseEl, loadingEl, env, askTeacherAbout, noteHtml, revealFeedback } from '../ui.js';
+import { topbar, hydrateQuotes, verseEl, loadingEl, env, askTeacherAbout, noteHtml, revealFeedback, stopAudio } from '../ui.js';
 import { wordCard, runWordQuiz } from '../learnflow.js';
+
+// Where each lesson was left, so a detour (a word's root, another tab) does not
+// send the learner back to step 1. Kept in this browser for two weeks.
+const POS_KEY = 'lisan.lessonPos';
+const store = safeStorage();
+function positions() {
+  try { return JSON.parse(store?.getItem(POS_KEY) || '{}') || {}; } catch { return {}; }
+}
+function savePosition(id, i) {
+  if (!store) return;
+  const all = positions();
+  const cutoff = Date.now() - 14 * 86400000;
+  for (const [k, v] of Object.entries(all)) if (!v || v.t < cutoff) delete all[k];
+  if (i > 0) all[id] = { i, t: Date.now() }; else delete all[id];
+  try { store.setItem(POS_KEY, JSON.stringify(all)); } catch { /* storage full or blocked */ }
+}
 
 export async function render(root, id) {
   const lesson = lessonById(id);
@@ -19,17 +35,28 @@ export async function render(root, id) {
   let i = 0, quizRight = 0, quizTotal = 0;
   const covBefore = coverage().known;
 
+  const saved = positions()[lesson.id];
+  const resumeAt = saved && saved.i > 0 ? Math.min(saved.i, steps.length - 1) : 0;   // retries at the end are not kept
+  i = resumeAt;
+
   const view = h('div', { class: 'view' });
   root.appendChild(view);
   const bar = h('span', { style: { width: '0%' } });
   view.appendChild(topbar(`${lesson.n}. ${lesson.title}`, { back: '#learn', sub: arSpan(lesson.ar), right: env.teacher
     ? h('button', { class: 'icon-btn', title: 'Ask the teacher about this lesson', html: icon('teacher'), onclick: () => askTeacherAbout({ kind: 'lesson', id: lesson.id }) }) : null }));
   view.appendChild(h('div', { class: 'row nowrap' }, h('div', { class: 'progress', role: 'progressbar', 'aria-label': 'Lesson progress' }, bar)));
+  let resumeNote = null;
+  if (resumeAt) {
+    resumeNote = h('div', { class: 'row resume-note' }, h('span', { class: 'small muted grow' }, `Picked up where you left off — step ${resumeAt + 1} of ${steps.length}.`),
+      h('button', { class: 'btn small ghost', type: 'button', onclick: () => { i = 0; show(); } }, 'Start over'));
+    view.appendChild(resumeNote);
+  }
   const body = h('div', { class: 'lesson-body' });
   view.appendChild(body);
 
-  let keyHandler = null;
-  const setKeys = (fn) => { if (keyHandler) document.removeEventListener('keydown', keyHandler); keyHandler = fn; if (fn) document.addEventListener('keydown', fn); };
+  const setKeys = screenKeys(view);
+  let stepNo = 0;           // async steps check it, so a late verse never lands on a newer step
+  let stopQuiz = null;
 
   function nav(onNext, { label = 'Continue', disabled = false } = {}) {
     const back = i > 0 ? h('button', { class: 'btn ghost', html: icon('back'), 'aria-label': 'Previous step', onclick: () => { i -= 1; show(); } }) : null;
@@ -38,6 +65,11 @@ export async function render(root, id) {
   }
 
   function show() {
+    stepNo += 1;
+    setKeys(null);
+    stopAudio();
+    if (resumeNote && i !== resumeAt) { resumeNote.remove(); resumeNote = null; }
+    if (i < steps.length) savePosition(lesson.id, i);
     window.scrollTo({ top: 0 });
     clear(body);
     const all = steps.length + retry.length;
@@ -49,9 +81,9 @@ export async function render(root, id) {
       hydrateQuotes(body);
       const n = nav(() => { i += 1; show(); });
       body.appendChild(n.el);
-      setKeys((e) => { if (e.key === 'Enter' && document.activeElement?.tagName !== 'BUTTON') n.go.click(); });
+      setKeys((e) => { if (e.key === 'Enter' && !['BUTTON', 'A'].includes(document.activeElement?.tagName)) n.go.click(); });
     } else if (st.quiz) quiz(st);
-    else if (st.verse) verse(st);
+    else if (st.verse) verse(st, stepNo);
     else if (st.words) wordsStep();
   }
 
@@ -90,11 +122,12 @@ export async function render(root, id) {
     }
   }
 
-  async function verse(st) {
+  async function verse(st, no) {
     const holder = h('div', { class: 'stack' }, loadingEl('Loading the verse…'));
     body.appendChild(holder);
     const s = Number(st.verse.split(':')[0]);
     const v = await getVerse(st.verse).catch(() => null);
+    if (no !== stepNo) return;
     clear(holder);
     if (v) {
       holder.appendChild(h('div', { class: 'label' }, `${D.surahs[s - 1].name} ${st.verse}`));
@@ -104,7 +137,7 @@ export async function render(root, id) {
     } else holder.appendChild(h('p', { class: 'muted' }, `Verse ${st.verse} could not be loaded (offline?).`));
     const n = nav(() => { i += 1; show(); });
     body.appendChild(n.el);
-    setKeys((e) => { if (e.key === 'Enter' && document.activeElement?.tagName !== 'BUTTON') n.go.click(); });
+    setKeys((e) => { if (e.key === 'Enter' && !['BUTTON', 'A'].includes(document.activeElement?.tagName)) n.go.click(); });
   }
 
   function wordsStep() {
@@ -133,11 +166,12 @@ export async function render(root, id) {
       body.appendChild(h('h2', {}, 'Word check'));
       const holder = h('div', { class: 'stack' });
       body.appendChild(holder);
-      runWordQuiz(holder, fresh, () => done(fresh.length), { title: `Word check · ${lesson.title}` });
+      stopQuiz = runWordQuiz(holder, fresh, () => done(fresh.length), { title: `Word check · ${lesson.title}` });
     } else done(0);
   }
 
   function done(added) {
+    savePosition(lesson.id, 0);
     clear(body);
     bar.style.width = '100%';
     const score = quizTotal ? quizRight / quizTotal : 1;
@@ -157,7 +191,7 @@ export async function render(root, id) {
   }
 
   show();
-  return () => setKeys(null);
+  return () => { setKeys(null); if (stopQuiz) stopQuiz(); };
 }
 
 function shuffleIdx(n) {

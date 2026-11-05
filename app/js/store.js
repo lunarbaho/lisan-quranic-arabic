@@ -17,6 +17,7 @@ function fresh() {
       known: true, teacherLang: 'en', onboarded: false, updatedAt: 0 },
     lessons: {},
     cards: {},
+    removed: {},        // card key → when it was taken out of the deck (so syncs do not resurrect it)
     log: {},
     reader: { s: 1, a: 1, updatedAt: 0 },
     createdAt: Date.now(),
@@ -93,9 +94,17 @@ export function introduce(keys) {
   let added = 0;
   for (const k of keys) {
     if (!S.cards[k]) { S.cards[k] = newCard(); added += 1; }
+    if (S.removed) delete S.removed[k];
   }
   if (added) { logEvent('n', added); commit(); }
   return added;
+}
+
+/** Take back the last grade(): the card and today's counts as they were before it. */
+export function ungrade(key, before, logBefore) {
+  if (before) S.cards[key] = before; else delete S.cards[key];
+  Object.assign(today(), logBefore);
+  commit();
 }
 
 export function grade(key, g) {
@@ -108,7 +117,35 @@ export function grade(key, g) {
   return res;
 }
 
-export function removeCard(key) { delete S.cards[key]; commit(); }
+// a card that was never reviewed still carries its creation time in `due`
+const addedToday = (c) => !c.reps && dayKey(new Date(c.due)) === dayKey();
+
+/**
+ * Take a word out of the deck. Returns the card so it can be restored.
+ * A word added today and never reviewed no longer counts toward today's goal.
+ */
+export function removeCard(key) {
+  const c = S.cards[key];
+  if (!c) return null;
+  delete S.cards[key];
+  if (addedToday(c)) { const t = today(); t.n = Math.max(0, t.n - 1); }
+  // remember the removal so a sync or an old backup does not bring the word back
+  S.removed = S.removed || {};
+  S.removed[key] = Date.now();
+  const cutoff = Date.now() - 180 * 86400000;
+  for (const [k, t] of Object.entries(S.removed)) if (t < cutoff) delete S.removed[k];
+  commit();
+  return c;
+}
+
+/** Undo removeCard(). */
+export function restoreCard(key, c) {
+  if (!c || S.cards[key]) return;
+  S.cards[key] = c;
+  if (S.removed) delete S.removed[key];
+  if (addedToday(c)) logEvent('n');
+  commit();
+}
 
 export function dueKeys(now = Date.now()) {
   return Object.entries(S.cards)
@@ -205,9 +242,19 @@ function mergeInto(a, b) {
     Object.assign(a, structuredClone(b));
     return;
   }
+  // removals: a word taken out of the deck on one device stays out, unless it was
+  // reviewed or added again after that
+  const removed = a.removed || (a.removed = {});
+  for (const [k, t] of Object.entries(b.removed || {})) if (t > (removed[k] || 0)) removed[k] = t;
+  const touched = (c) => Math.max(c.last || 0, c.reps ? 0 : c.due || 0);
   for (const [k, cb] of Object.entries(b.cards || {})) {
+    if ((removed[k] || 0) > touched(cb)) continue;
     const ca = a.cards[k];
     if (!ca || (cb.last || 0) > (ca.last || 0) || ((cb.last || 0) === (ca.last || 0) && cb.reps > ca.reps)) a.cards[k] = cb;
+  }
+  for (const [k, ca] of Object.entries(a.cards)) {
+    if ((removed[k] || 0) > touched(ca)) delete a.cards[k];
+    else delete removed[k];
   }
   for (const [k, lb] of Object.entries(b.lessons || {})) {
     const la = a.lessons[k];

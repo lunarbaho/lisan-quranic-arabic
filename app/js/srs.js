@@ -40,10 +40,19 @@ function forgetS(d, s, r) {
   return Math.min(s, W[11] * Math.pow(d, -W[12]) * (Math.pow(s + 1, W[13]) - 1) * Math.exp(W[14] * (1 - r)));
 }
 
-function fuzz(days) {
+// Intervals are spread a little so words learned together do not stay together.
+// The spread comes from the card itself, not from chance, so the interval a
+// grade button shows is exactly the one the card then gets.
+function fuzz(days, seed) {
   if (days < 2.5) return days;
   const f = days < 7 ? 0.15 : days < 20 ? 0.1 : 0.05;
-  return days * (1 - f + Math.random() * 2 * f);
+  return days * (1 - f + seed * 2 * f);
+}
+function seedOf(card) {
+  let x = (Math.floor((card.last || 0) / 1000) ^ Math.imul(card.reps + 1, 0x9e3779b1)) >>> 0;
+  x = Math.imul(x ^ (x >>> 16), 0x45d9f3b) >>> 0;
+  x = Math.imul(x ^ (x >>> 16), 0x45d9f3b) >>> 0;
+  return ((x ^ (x >>> 16)) >>> 0) / 4294967296;
 }
 
 export function newCard(now = Date.now()) {
@@ -85,7 +94,7 @@ export function schedule(card, g, now = Date.now()) {
     } else {
       c.s = recallS(c.d, c.s, r, g);
       c.d = nextD(c.d, g);
-      days = clamp(fuzz(intervalFor(c.s)), 1, MAX_INTERVAL);
+      days = clamp(fuzz(intervalFor(c.s), seedOf(card)), 1, MAX_INTERVAL);
     }
   }
   c.reps += 1;
@@ -101,8 +110,6 @@ export function preview(card, now = Date.now()) {
     const r = schedule(card, g, now);
     out[g] = r.days;
   }
-  // keep the buttons monotonic (fuzz could otherwise swap Good/Easy)
-  if (out[4] < out[3]) out[4] = out[3];
   return out;
 }
 

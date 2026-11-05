@@ -1,9 +1,10 @@
 // Shared components: verses, the word sheet, quotes, confirmations, audio.
-import { h, clear, arSpan, rootLetters, toast, quranWord } from './util.js';
+import { h, clear, arSpan, rootLetters, toast, quranWord, dayKey } from './util.js';
 import { D, loadSurah, loadLemmas, lemma, surahMeta, cardKeyForLemma, rootCognates, findRoot } from './data.js';
-import { S, wordStatus, introduce, card, commit } from './store.js';
+import { S, wordStatus, introduce, card, commit, removeCard, restoreCard, lemmaIdsForKey } from './store.js';
 import { describeSegment, summarizeWord } from './morph.js';
 import { icon } from './icons.js';
+import { audioAvailable, toggleVerse, playWord, stopAll, onAudio, audioState, isCurrent, RECITERS, verseAudio, wordAudio } from './audio.js';
 
 export const env = {
   artifact: !!(window.claude && typeof window.claude.use === 'function'),
@@ -11,28 +12,47 @@ export const env = {
 };
 
 // ---------------- audio ----------------
-const RECITERS = {
-  alafasy: ['Mishary Alafasy', 'Alafasy_128kbps'],
-  husary: ['Mahmoud Khalil al-Husary', 'Husary_128kbps'],
-  minshawi: ['Muhammad al-Minshawi', 'Minshawy_Murattal_128kbps'],
-  basit: ['Abdul Basit (murattal)', 'Abdul_Basit_Murattal_192kbps'],
-};
+// The player itself lives in audio.js; these names stay for the views.
 export const reciters = RECITERS;
-let player = null;
-export function audioAvailable() { return !env.artifact; }
+export const stopAudio = stopAll;
+export { audioAvailable, verseAudio, wordAudio };
 
-export function playUrl(url, onEnd) {
-  if (!audioAvailable()) { toast('Audio plays when the app is opened from its own website.'); return null; }
-  if (player) { player.pause(); player.onended = null; }
-  player = new Audio(url);
-  player.onended = () => onEnd && onEnd();
-  player.play().catch(() => toast('Could not play audio (offline?)'));
-  return player;
+/** Play / pause button of one verse; its look follows the player. */
+function verseButton(s, a) {
+  const b = h('button', { class: 'icon-btn verse-play', type: 'button', dataset: { ref: `${s}:${a}` } });
+  b.addEventListener('click', () => toggleVerse(s, a));
+  paintVerseButton(b);
+  return b;
 }
-export function stopAudio() { if (player) { player.pause(); player.onended = null; player = null; } }
-const pad3 = (n) => String(n).padStart(3, '0');
-export const wordAudio = (s, a, w) => `https://audio.qurancdn.com/wbw/${pad3(s)}_${pad3(a)}_${pad3(w)}.mp3`;
-export const verseAudio = (s, a) => `https://everyayah.com/data/${(RECITERS[S.settings.reciter] || RECITERS.alafasy)[1]}/${pad3(s)}${pad3(a)}.mp3`;
+function paintVerseButton(b) {
+  const [s, a] = b.dataset.ref.split(':').map(Number);
+  const cur = isCurrent(s, a);
+  const status = audioState().status;
+  const playing = cur && status !== 'paused';
+  const look = cur ? status : 'idle';
+  if (b.dataset.look === look) return;          // a long surah has hundreds of these
+  b.dataset.look = look;
+  b.innerHTML = icon(playing ? 'pause' : 'play');
+  b.classList.toggle('on', cur);
+  b.classList.toggle('busy', cur && status === 'loading');
+  const label = playing ? `Pause verse ${a}` : cur ? `Resume verse ${a}` : `Play verse ${a}`;
+  b.setAttribute('aria-label', label);
+  b.title = label;
+}
+/** Mark the verse (or basmala) being recited, wherever it is on the page. */
+function syncAudio(st) {
+  const key = st.status === 'idle' ? '' : `${st.s}:${st.a}`;
+  for (const x of document.querySelectorAll('[data-play].playing')) if (x.dataset.play !== key) x.classList.remove('playing', 'paused');
+  if (key) for (const x of document.querySelectorAll(`[data-play="${key}"]`)) { x.classList.add('playing'); x.classList.toggle('paused', st.status === 'paused'); }
+  document.querySelectorAll('.verse-play').forEach(paintVerseButton);
+}
+onAudio(syncAudio);
+/** Give an element created while its verse plays the right marks from the start. */
+export function markPlaying(node, s, a) {
+  node.dataset.play = `${s}:${a}`;
+  if (isCurrent(s, a)) { node.classList.add('playing'); node.classList.toggle('paused', audioState().status === 'paused'); }
+  return node;
+}
 
 // ---------------- verse rendering ----------------
 function stemLemma(word) { const seg = word[4][word[3]] || word[4][0]; return seg ? seg[2] : -1; }
@@ -42,7 +62,7 @@ export function wordButton(word, { s, a, w, gloss, onTap, highlight } = {}) {
   const st = wordStatus(lid);
   const cls = ['qw', st === 'known' ? 'known' : st === 'learning' ? 'learning' : '', highlight ? 'hl-target' : ''].filter(Boolean).join(' ');
   const g = gloss ? (S.settings.lang === 'tr' && word[2] ? word[2] : word[1]) : '';
-  const b = h('button', { class: cls, type: 'button', lang: 'ar', 'aria-label': `${word[0]} — ${word[1]}` },
+  const b = h('button', { class: cls, type: 'button', lang: 'ar', 'aria-label': `${word[0]} — ${word[1]}`, dataset: lid >= 0 ? { l: String(lid) } : null },
     h('span', { class: 'qt' }, quranWord(word[0])), g ? h('span', { class: 'g', lang: S.settings.lang === 'tr' ? 'tr' : 'en' }, g) : null);
   b.addEventListener('click', () => {
     document.querySelectorAll('.qw.sel').forEach((x) => x.classList.remove('sel'));
@@ -70,11 +90,12 @@ export function quranWords(words, { highlight = -1, cls = null, center = false }
 /** A verse: tappable words, optional glosses and translation. */
 export function verseEl(verse, s, { gloss = S.settings.gloss, transl = S.settings.transl, from = 0, to = null, highlightW = -1, head = true, onAsk } = {}) {
   const words = verse.w.slice(from, to ?? verse.w.length);
+  const whole = from === 0 && (to === null || to >= verse.w.length);
   const box = h('div', { class: 'verse', id: `v${s}-${verse.a}` });
+  if (whole) markPlaying(box, s, verse.a);
   if (head) {
-    const playBtn = audioAvailable() ? h('button', { class: 'icon-btn', title: 'Play recitation', html: icon('play'),
-      onclick: () => playUrl(verseAudio(s, verse.a)) }) : null;
-    const askBtn = env.teacher ? h('button', { class: 'icon-btn', title: 'Ask the teacher about this verse', html: icon('teacher'),
+    const playBtn = audioAvailable() ? verseButton(s, verse.a) : null;
+    const askBtn = env.teacher ? h('button', { class: 'icon-btn', title: 'Ask the teacher about this verse', 'aria-label': 'Ask the teacher about this verse', html: icon('teacher'),
       onclick: () => (onAsk ? onAsk(verse) : askTeacherAbout({ kind: 'verse', s, a: verse.a })) }) : null;
     box.appendChild(h('div', { class: 'verse-head' }, h('span', { class: 'ref' }, `${s}:${verse.a}`), h('span', { class: 'grow' }), playBtn, askBtn));
   }
@@ -127,16 +148,19 @@ export async function hydrateQuotes(root) {
 let sheetEls = null;
 export function closeSheet() {
   if (!sheetEls) return;
-  const { scrim, sheet } = sheetEls;
+  const { scrim, sheet, opener } = sheetEls;
   scrim.classList.remove('open'); sheet.classList.remove('open');
   document.querySelectorAll('.qw.sel').forEach((x) => x.classList.remove('sel'));
   setTimeout(() => { scrim.remove(); sheet.remove(); }, 220);
   sheetEls = null;
   document.removeEventListener('keydown', escClose);
+  // back to where the reader was: the word or button that opened the sheet
+  if (opener && opener.isConnected && sheet.contains(document.activeElement)) opener.focus({ preventScroll: true });
 }
 function escClose(e) { if (e.key === 'Escape') closeSheet(); }
 
 export function openSheet(content, label = 'Details') {
+  const opener = sheetEls ? sheetEls.opener : document.activeElement;
   closeSheet();
   const scrim = h('div', { class: 'scrim', onclick: closeSheet });
   const sheet = h('aside', { class: 'sheet', role: 'dialog', 'aria-label': label, 'aria-modal': 'true' },
@@ -146,13 +170,13 @@ export function openSheet(content, label = 'Details') {
     content);
   document.body.append(scrim, sheet);
   requestAnimationFrame(() => { scrim.classList.add('open'); sheet.classList.add('open'); });
-  sheetEls = { scrim, sheet };
+  sheetEls = { scrim, sheet, opener };
   document.addEventListener('keydown', escClose);
   sheet.querySelector('.icon-btn')?.focus({ preventScroll: true });
 }
 
 export async function openWordSheet({ word, s, a, w }) {
-  await loadLemmas();
+  try { await loadLemmas(); } catch { toast('Could not load the word details (offline?)'); return; }
   const segs = word[4];
   const lid = stemLemma(word);
   const L = lemma(lid);
@@ -165,8 +189,19 @@ export async function openWordSheet({ word, s, a, w }) {
     h('div', { class: 'grow stack-s' },
       h('div', { class: 'q-text q-solo', lang: 'ar', dir: 'rtl', style: { fontSize: 'calc(2.4rem * var(--ar-scale))', textAlign: 'right' } }, quranWord(word[0])),
       h('div', { class: 'small muted' }, `in this verse: “${ctxGloss}”`)),
-    audioAvailable() ? h('button', { class: 'icon-btn', title: 'Hear this word', html: icon('volume'), onclick: () => playUrl(wordAudio(s, a, w)) }) : null);
+    audioAvailable() ? h('button', { class: 'icon-btn word-audio', type: 'button', title: 'Hear this word', 'aria-label': 'Hear this word', html: icon('volume'),
+      onclick: (e) => playWord(s, a, w, e.currentTarget) }) : null);
   content.appendChild(headRow);
+
+  // add / remove right under the word, where the thumb is
+  if (L) {
+    const key = cardKeyForLemma(lid);
+    const actions = h('div', { class: 'row' }, deckControl(key, { variant: 'full' }));
+    if (env.teacher) actions.append(h('button', { class: 'btn small ghost', type: 'button', html: `${icon('teacher')} Ask the teacher`, onclick: () => {
+      closeSheet(); askTeacherAbout({ kind: 'word', s, a, w });
+    } }));
+    content.appendChild(actions);
+  }
 
   // morphology breakdown
   const brk = h('div', { class: 'seg-break' });
@@ -190,7 +225,10 @@ export async function openWordSheet({ word, s, a, w }) {
     if (v && lang !== 'tr') dl.append(h('dt', {}, 'Türkçe'), h('dd', { lang: 'tr' }, v.tr));
     if (v && lang !== 'de') dl.append(h('dt', {}, 'Deutsch'), h('dd', { lang: 'de' }, v.de));
     if (L.root) {
-      const rb = h('a', { href: `#root-${findRoot(L.root)?.idx ?? 0}`, class: 'root-letters', lang: 'ar', style: { textDecoration: 'none' }, onclick: closeSheet }, rootLetters(L.root));
+      const r = findRoot(L.root);
+      const rb = r
+        ? h('a', { href: `#root-${r.idx}`, class: 'root-letters', lang: 'ar', style: { textDecoration: 'none' }, title: 'All words from this root', onclick: closeSheet }, rootLetters(L.root))
+        : h('span', { class: 'root-letters', lang: 'ar' }, rootLetters(L.root));
       dl.append(h('dt', {}, 'Root'), h('dd', {}, rb));
     }
     dl.append(h('dt', {}, 'In the Quran'), h('dd', { class: 'tnum' }, `${L.all.toLocaleString()} times`));
@@ -201,29 +239,83 @@ export async function openWordSheet({ word, s, a, w }) {
         h('div', { class: 'cognates' }, cog.map((c) => h('span', { class: 'chip', lang: 'tr' }, c)))));
     }
     if (v && v.note) content.appendChild(h('div', { class: 'callout' }, h('span', { class: 'label' }, 'Note'), h('p', { html: noteHtml(v.note) })));
-
-    const key = cardKeyForLemma(lid);
-    const c = card(key);
-    const status = h('div', { class: 'row' });
-    const paint = () => {
-      clear(status);
-      const cc = card(key);
-      if (cc && cc.st !== 0) status.append(h('span', { class: 'chip leaf', html: `${icon('check')} In your review deck` }));
-      else if (cc) status.append(h('span', { class: 'chip gold' }, 'Waiting for its first review'));
-      else status.append(h('button', { class: 'btn small', html: `${icon('plus')} Add to my words`, onclick: () => {
-        introduce([key]);
-        toast('Added — it will appear in your next review.');
-        paint();
-      } }));
-      if (env.teacher) status.append(h('button', { class: 'btn small ghost', html: `${icon('teacher')} Ask the teacher`, onclick: () => {
-        closeSheet(); askTeacherAbout({ kind: 'word', s, a, w });
-      } }));
-    };
-    paint();
-    content.appendChild(status);
-    void c;
   }
   openSheet(content, `${surahMeta(s).name} ${s}:${a} · word ${w}`);
+}
+
+// ---------------- adding words to the deck ----------------
+/** Quran words on the page that belong to this card get their known / learning colour again. */
+function recolorWords(key) {
+  for (const l of lemmaIdsForKey(key)) {
+    const st = wordStatus(l);
+    for (const b of document.querySelectorAll(`.qw[data-l="${l}"]`)) {
+      b.classList.toggle('known', st === 'known');
+      b.classList.toggle('learning', st === 'learning');
+    }
+  }
+}
+
+/**
+ * Add a word to the review deck, or take it out again, right where it is shown.
+ * A word added a moment ago is removed with one tap (nothing is lost); a word
+ * with review history asks first. Every change can be undone from the toast.
+ * variant 'chip' fits list rows, 'full' the word sheet.
+ */
+export function deckControl(key, { variant = 'chip', onChange = null } = {}) {
+  const box = h('span', { class: `deck deck-${variant}` });
+  let revert = 0;
+  const changed = () => { paint(); recolorWords(key); if (onChange) onChange(); };
+  const add = () => {
+    introduce([key]);
+    changed();
+    toast('Added to your words — it comes up in Review.', { action: 'Undo', onAction: () => { removeCard(key); changed(); } });
+  };
+  const remove = () => {
+    const old = removeCard(key);
+    changed();
+    if (old) toast('Removed from your words.', { action: 'Undo', onAction: () => { restoreCard(key, old); changed(); } });
+  };
+  const askRemove = () => {
+    clearTimeout(revert);
+    clear(box);
+    const keep = h('button', { class: variant === 'chip' ? 'chip' : 'btn small ghost', type: 'button', onclick: paint }, 'Keep');
+    if (variant === 'full') box.append(h('span', { class: 'small' }, 'Remove it and its review history?'));
+    box.append(h('button', { class: variant === 'chip' ? 'chip coral' : 'btn small coral', type: 'button', onclick: remove }, 'Remove'), keep);
+    keep.focus({ preventScroll: true });
+    revert = setTimeout(() => { if (box.isConnected) paint(); }, 6000);
+  };
+  function paint() {
+    clearTimeout(revert);
+    clear(box);
+    const c = card(key);
+    if (!c) {
+      box.append(h('button', { class: variant === 'chip' ? 'chip cobalt deck-btn' : 'btn small', type: 'button', 'aria-pressed': 'false',
+        title: 'Add to my words', html: `${icon('plus')}<span>${variant === 'chip' ? 'Add' : 'Add to my words'}</span>`, onclick: add }));
+      return;
+    }
+    const fresh = !c.reps;
+    const known = c.st === 2;
+    const label = fresh ? 'Added' : known ? 'Known' : 'Learning';
+    if (variant === 'chip') {
+      box.append(h('button', { class: `chip ${fresh ? 'gold' : known ? 'leaf' : 'gold'} deck-btn`, type: 'button', 'aria-pressed': 'true',
+        title: fresh ? 'In your words — tap to undo' : 'In your review deck — tap to remove', 'aria-label': `${label} — ${fresh ? 'tap to undo' : 'tap to remove'}`,
+        html: `${icon('check')}<span>${label}</span>`, onclick: fresh ? remove : askRemove }));
+      return;
+    }
+    const when = fresh ? 'comes up in your next review' : `next review ${fmtWhen(c.due)}`;
+    box.append(h('span', { class: `chip ${fresh ? 'gold' : 'leaf'}`, html: `${icon('check')}<span>${fresh ? 'Added' : 'In your review deck'} · ${when}</span>` }),
+      h('button', { class: 'btn small ghost', type: 'button', html: fresh ? `${icon('undo')} Undo` : 'Remove', onclick: fresh ? remove : askRemove }));
+  }
+  paint();
+  return box;
+}
+
+function fmtWhen(due) {
+  const d = (due - Date.now()) / 86400000;
+  if (d <= 0) return 'now';
+  if (dayKey(new Date(due)) === dayKey()) return 'today';
+  if (d < 2 && dayKey(new Date(due)) === dayKey(new Date(Date.now() + 86400000))) return 'tomorrow';
+  return `in ${Math.round(d)} days`;
 }
 
 /** Render a note string, wrapping Arabic runs so they display right-to-left. */

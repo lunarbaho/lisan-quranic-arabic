@@ -1,6 +1,6 @@
 // Shared "learn these words" flow: word cards, then a quiz that grades
 // each word into the spaced-repetition schedule.
-import { h, clear, shuffle, arSpan } from './util.js';
+import { h, clear, shuffle, arSpan, screenKeys } from './util.js';
 import { D, gloss } from './data.js';
 import { S, introduce, grade, card } from './store.js';
 import { icon } from './icons.js';
@@ -30,11 +30,21 @@ export function exampleEl(v) {
     words, h('div', { class: 't' }, ex[S.settings.lang] || ex.en, ' ', h('b', {}, `(${ex.ref})`)));
 }
 
+/** Wrong options of the same part of speech and similar frequency; no two read alike. */
 function distractors(v, n = 3) {
   const lang = S.settings.lang;
-  const same = D.vocab.filter((x) => x.id !== v.id && x.p === v.p && gloss(x, lang) !== gloss(v, lang));
+  const same = D.vocab.filter((x) => x.id !== v.id && x.p === v.p);
   const near = same.filter((x) => Math.abs(x.rank - v.rank) < 400);
-  return shuffle(near.length >= n ? near : same).slice(0, n);
+  const seenG = new Set([gloss(v, lang)]), seenA = new Set([v.ar]);
+  const out = [];
+  for (const x of [...shuffle(near), ...shuffle(same)]) {
+    if (out.length >= n) break;
+    const g = gloss(x, lang);
+    if (seenG.has(g) || seenA.has(x.ar)) continue;
+    seenG.add(g); seenA.add(x.ar);
+    out.push(x);
+  }
+  return out;
 }
 
 /**
@@ -47,10 +57,11 @@ export function runWordQuiz(container, items, onDone, { title = 'Word check' } =
   const total = items.length;
   let firstTry = 0;
   introduce(items.map((v) => `v${v.id}`));
+  const setKeys = screenKeys(container);
 
   const next = () => {
     clear(container);
-    if (!queue.length) { onDone({ correct: firstTry, total }); return; }
+    if (!queue.length) { setKeys(null); onDone({ correct: firstTry, total }); return; }
     const item = queue.shift();
     const { v } = item;
     const reverse = item.tries === 0 && Math.random() < 0.25 && card(`v${v.id}`)?.reps > 0;
@@ -76,11 +87,10 @@ export function runWordQuiz(container, items, onDone, { title = 'Word check' } =
     });
     wrap.append(list, fb);
     container.appendChild(wrap);
-    const keyHandler = (e) => { const k = +e.key; if (k >= 1 && k <= opts.length) list.children[k - 1]?.click(); };
-    document.addEventListener('keydown', keyHandler);
+    setKeys((e) => { const k = +e.key; if (k >= 1 && k <= opts.length) list.children[k - 1]?.click(); });
 
     function answer(o, b) {
-      document.removeEventListener('keydown', keyHandler);
+      setKeys(null);
       [...list.children].forEach((x) => { x.disabled = true; });
       const right = o.id === v.id;
       const rightBtn = list.children[opts.indexOf(v)];
@@ -100,4 +110,5 @@ export function runWordQuiz(container, items, onDone, { title = 'Word check' } =
     }
   };
   next();
+  return () => setKeys(null);
 }
