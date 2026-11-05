@@ -20,7 +20,7 @@ export function render(root) {
       <li>Morphology (roots, lemmas, grammar of every word): <a href="https://corpus.quran.com" target="_blank" rel="noopener">Quranic Arabic Corpus</a> v0.4 by Kais Dukes (GNU GPL), with the corrections of <a href="https://github.com/mustafa0x/quran-morphology" target="_blank" rel="noopener">mustafa0x/quran-morphology</a>.</li>
       <li>Uthmani text, word-by-word English and Turkish, recitation of single words: <a href="https://quran.com" target="_blank" rel="noopener">Quran.com</a> API.</li>
       <li>Translations: Saheeh International (English), Diyanet İşleri Başkanlığı (Türkçe), Frank Bubenheim &amp; Nadeem Elyas (Deutsch) — via Quran.com.</li>
-      <li>Verse recitations: <a href="https://everyayah.com" target="_blank" rel="noopener">EveryAyah.com</a>.</li>
+      <li>Verse recitations: <a href="https://everyayah.com" target="_blank" rel="noopener">EveryAyah.com</a>; word timings for following the recitation: <a href="https://quran.com" target="_blank" rel="noopener">Quran.com</a> API.</li>
       <li>Fonts: Amiri Quran (Khaled Hosny), Scheherazade New (SIL), Alegreya (Huerta Tipográfica) — SIL Open Font License.</li>
       <li>Course, curated vocabulary, Turkish cognates and German glosses: written for Lisan.</li>
     </ul>

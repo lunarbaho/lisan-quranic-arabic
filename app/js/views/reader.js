@@ -4,7 +4,7 @@ import { D, loadSurah, loadLemmas, surahMeta } from '../data.js';
 import { S, setSetting, knownLemmas } from '../store.js';
 import { topbar, verseEl, loadingEl, persistReader, markPlaying } from '../ui.js';
 import { surahNewWords } from '../learnflow.js';
-import { audioAvailable, RECITERS, MODES, reciter, hasBasmala, onAudio, audioState, toggleSurah, togglePause,
+import { audioAvailable, RECITERS, MODES, reciter, hasBasmala, onAudio, onWord, audioState, toggleSurah, togglePause,
   stop, next, prev, setMode, reciterChanged } from '../audio.js';
 
 const smooth = () => !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -200,9 +200,23 @@ export async function render(root, arg) {
   const off = onAudio(paintAudio);
   paintAudio(audioState());
 
+  // in a long verse, keep the word being recited on screen — while the learner is following
+  const offWord = onWord((s2, a, pos) => {
+    if (!alive || s2 !== s || !pos) return;
+    const w = body.querySelector(`[data-play="${s}:${a}"] .qw[data-w="${pos}"]`);
+    if (!w) return;
+    const r = w.getBoundingClientRect();
+    const top = view.querySelector('.topbar')?.getBoundingClientRect().bottom || 60;
+    if (r.top >= top && r.bottom <= bottomEdge()) return;
+    const verseBox = w.closest('.verse');
+    if (!verseBox || !inView(verseBox)) return;
+    w.scrollIntoView({ block: 'center', behavior: smooth() ? 'smooth' : 'auto' });
+  });
+
   return () => {
     alive = false;
     off();
+    offWord();
     window.removeEventListener('scroll', onScroll);
     document.body.classList.remove('has-player');
   };

@@ -307,6 +307,12 @@ const PARTS = {
     const clip = silentWav(30);
     await page.context().route(/everyayah\.com|audio\.qurancdn\.com/, (r) => r.fulfill({ status: 200, body: clip,
       headers: { 'Content-Type': 'audio/wav', 'Access-Control-Allow-Origin': '*' } }));
+    // word timings: the second word of every verse is being recited (its ring is checked too)
+    await page.context().route(/api\.quran\.com\/api\/v4\/verses\/by_chapter\/\d+/, (r) => {
+      const s = +/by_chapter\/(\d+)/.exec(r.request().url())[1];
+      const verses = Array.from({ length: 300 }, (_, i) => ({ verse_key: `${s}:${i + 1}`, audio: { segments: [[0, 1, 0, 100], [1, 2, 100, 30000]] } }));
+      r.fulfill({ status: 200, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ verses, pagination: {} }) });
+    });
     await go(page, '#surah-2-255');
     await page.click('#v2-255 .verse-play');
     await page.waitForSelector('.player:not([hidden])');

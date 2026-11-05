@@ -12,11 +12,12 @@ import { toast } from './util.js';
 import { S, setSetting } from './store.js';
 import { surahMeta } from './data.js';
 
+// [name, EveryAyah folder, Quran.com recitation id (word timings of the same recordings)]
 export const RECITERS = {
-  alafasy: ['Mishary Alafasy', 'Alafasy_128kbps'],
-  husary: ['Mahmoud Khalil al-Husary', 'Husary_128kbps'],
-  minshawi: ['Muhammad al-Minshawi', 'Minshawy_Murattal_128kbps'],
-  basit: ['Abdul Basit (murattal)', 'Abdul_Basit_Murattal_192kbps'],
+  alafasy: ['Mishary Alafasy', 'Alafasy_128kbps', 7],
+  husary: ['Mahmoud Khalil al-Husary', 'Husary_128kbps', 6],
+  minshawi: ['Muhammad al-Minshawi', 'Minshawy_Murattal_128kbps', 9],
+  basit: ['Abdul Basit (murattal)', 'Abdul_Basit_Murattal_192kbps', 2],
 };
 
 // inside a claude.ai artifact the page may not load media from other sites
@@ -82,6 +83,7 @@ function player() {
     if (state.status === 'idle') return;
     set({ status: 'playing' });
     prefetchNext();
+    follow();
   });
   el.addEventListener('waiting', () => { if (state.status === 'playing') set({ status: 'loading' }); });
   // paused by the system (another app took the audio, headphones unplugged)
@@ -96,6 +98,7 @@ function player() {
 
 function onEnded() {
   if (state.status === 'idle') return;
+  emitWord(0);
   if (state.mode === 'repeat') { el.currentTime = 0; start(); return; }
   if (state.mode === 'continue' && state.a < state.last) { load(state.s, state.a + 1); return; }
   stop();
@@ -140,9 +143,80 @@ function load(s, a, { network = false } = {}) {
   stale = false;
   switching = true;
   set({ s, a, status: 'loading' });
+  loadTimings(s, a);
   p.src = src;
   start();
 }
+
+// ---------------- following the words ----------------
+// Quran.com publishes when each word starts and ends in these same recordings
+// (checked: the files are identical, or the same recording). While a verse
+// plays, the word being recited is announced to onWord() listeners.
+const timingCache = new Map();   // "id/s" → Promise<Map(verse → [[word, from ms, to ms], …]) | null>
+let segs = null;                 // timings of the verse playing now
+let wordPos = 0;                 // the word being recited, 1-based; 0 = none
+let raf = 0;
+const wordListeners = new Set();
+export function onWord(fn) { wordListeners.add(fn); return () => wordListeners.delete(fn); }
+export const currentWord = () => wordPos;
+
+function emitWord(pos) {
+  if (pos === wordPos) return;
+  wordPos = pos;
+  for (const fn of [...wordListeners]) {
+    try { fn(state.s, state.a, pos); } catch (e) { console.error(e); }
+  }
+}
+
+function surahTimings(s) {
+  const id = reciter()[2];
+  if (!id || S.settings.followWords === false) return Promise.resolve(null);
+  const k = `${id}/${s}`;
+  if (!timingCache.has(k)) {
+    timingCache.set(k, (async () => {
+      const out = new Map();
+      for (let page = 1; page <= 10; page++) {
+        const r = await fetch(`https://api.quran.com/api/v4/verses/by_chapter/${s}?audio=${id}&per_page=50&page=${page}&words=false`, { credentials: 'omit' });
+        if (!r.ok) throw new Error(String(r.status));
+        const d = await r.json();
+        for (const v of d.verses || []) {
+          const a = +String(v.verse_key || '').split(':')[1];
+          const list = ((v.audio && v.audio.segments) || []).filter((x) => Array.isArray(x) && x.length >= 4).map((x) => [x[1], x[2], x[3]]);
+          if (a && list.length) out.set(a, list);
+        }
+        if (!d.pagination || !d.pagination.next_page) break;
+      }
+      return out;
+    })().catch(() => { timingCache.delete(k); return null; }));
+  }
+  return timingCache.get(k);
+}
+
+function loadTimings(s, a) {
+  segs = null;
+  emitWord(0);
+  if (a === 0) return;                         // the basmala line is not split into words
+  surahTimings(s).then((map) => {
+    if (!map || state.s !== s || state.a !== a) return;
+    segs = map.get(a) || null;
+    follow();
+  });
+}
+
+function track() {
+  raf = 0;
+  if (state.status !== 'playing' || !segs || !el) return;
+  const t = el.currentTime * 1000;
+  let pos = 0;
+  for (const [w, from, to] of segs) {
+    if (t < from) break;
+    pos = w;                                   // between two words the last one stays lit
+    if (t < to) break;
+  }
+  if (pos) emitWord(pos);
+  raf = requestAnimationFrame(track);
+}
+function follow() { if (!raf && segs && state.status === 'playing') raf = requestAnimationFrame(track); }
 
 // ---------------- prefetch: the next verse is ready when this one ends ----------------
 function dropAhead() {
@@ -231,6 +305,8 @@ export function stop() {
   if (current.blob) URL.revokeObjectURL(current.blob);
   current = { key: '', blob: '' };
   stale = false;
+  segs = null;
+  emitWord(0);
   if (state.status !== 'idle') set({ status: 'idle', s: 0, a: 0, last: 0, mode: 'once' });
 }
 
@@ -242,9 +318,9 @@ export function next() {
 export function prev() {
   if (!isActive()) return;
   // a few seconds in, "back" restarts the verse — like any music player
-  if (el && el.currentTime > 3 && state.status !== 'loading') { el.currentTime = 0; if (state.status === 'paused') resume(); return; }
+  if (el && el.currentTime > 3 && state.status !== 'loading') { el.currentTime = 0; emitWord(0); if (state.status === 'paused') resume(); return; }
   if (state.a > 1) load(state.s, state.a - 1);
-  else if (el) { el.currentTime = 0; if (state.status === 'paused') resume(); }
+  else if (el) { el.currentTime = 0; emitWord(0); if (state.status === 'paused') resume(); }
 }
 
 /** Change how the current session goes on; remembered for the next verse you tap. */

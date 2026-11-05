@@ -367,6 +367,10 @@ mark.k { background: var(--gold-soft); color: inherit; padding: 0 .15em; border-
 .verse.arrived { animation: arrive 2.4s ease-out 1; }
 @keyframes arrive { 0%, 35% { background: var(--cobalt-soft); } 100% { background: transparent; } }
 .verse-play.on { color: var(--gold); background: var(--card); }
+/* the word being recited: a ring that moves with the voice */
+.qw { transition: background-color .12s ease, box-shadow .12s ease; }
+.qw.reciting { background: var(--card); box-shadow: inset 0 0 0 2px var(--gold); }
+.verse.paused .qw.reciting { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--gold) 45%, transparent); }
 .verse-play.busy svg, .player-main.busy svg { animation: pulse 1.1s infinite ease-in-out; }
 .word-audio.sounding { color: var(--turq); background: var(--turq-soft); }
 .verse-head { display: flex; align-items: center; gap: .5rem; }

@@ -14,7 +14,7 @@ function fresh() {
   return {
     v: 1,
     settings: { lang: 'en', cognates: true, dailyNew: 15, theme: 'auto', arScale: 1, gloss: true, transl: true,
-      known: true, teacherLang: 'en', onboarded: false, reciter: 'alafasy', playMode: 'once', updatedAt: 0 },
+      known: true, teacherLang: 'en', onboarded: false, reciter: 'alafasy', playMode: 'once', followWords: true, updatedAt: 0 },
     lessons: {},
     cards: {},
     removed: {},        // card key → when it was taken out of the deck (so syncs do not resurrect it)

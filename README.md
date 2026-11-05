@@ -11,7 +11,7 @@
 - **Grammar that is actually in the Quran.** 34 short lessons in 7 units take you from roots and case endings to the ten verb forms, weak verbs and conditionals. Every example comes from real verses, which are pulled from the data so the text is always exact. The course ends with al-Fātiḥa, Āyat al-Kursī and the last surahs, word by word.
 - **Spaced repetition.** Flashcards are scheduled with the FSRS-4.5 memory model, so each word comes back just before you would forget it.
 - **The whole Quran, word by word.** All 114 surahs with word-by-word English and Turkish glosses and full translations: Saheeh International, Diyanet (Türkçe) and Bubenheim & Elyas (Deutsch). Tap any word to see its parts, root, form, case and Turkish cousins, and add it to your words (or take it out again) right there. Words you know turn green, so you can watch the Quran fill in.
-- **Listen while you read.** Play a whole surah (it starts with the basmala) or a single verse, pause and resume where you were, stop, skip, or repeat one verse until it sticks. The verse being recited is highlighted and followed on screen, and phones show the controls on the lock screen.
+- **Listen while you read.** Play a whole surah (it starts with the basmala) or a single verse, pause and resume where you were, stop, skip, or repeat one verse until it sticks. The verse being recited is highlighted and followed on screen, a ring moves from word to word with the reciter's voice (meaning underneath), the way you like to listen is remembered, and phones show the controls on the lock screen.
 - **Endless practice from real verses.** Drills on meaning in context, roots, who is speaking, tense, attached pronouns, verb forms and case.
 
 ## Daily routine (20–30 minutes)
@@ -19,7 +19,7 @@
 1. **Review** your due cards (Home shows the number).
 2. **One lesson** from the Course, until all 34 are done.
 3. **New words**: 15 a day by default. At that pace you know all core words in about 7 weeks.
-4. **Read** a little in the Quran tab, with known-word colors on. Each surah shows how much of it you already know.
+4. **Read** a little in the Quran tab, with known-word colors on. Each surah shows how much of it you already know, and *Learn its new core words* teaches that surah's words first — the ones it uses most — so you can prepare a surah before reading it.
 
 ## Open the app
 
@@ -101,7 +101,7 @@ node tests/artifact.mjs http://localhost:8766/
 
 - **Morphology** (root, lemma and grammar of every word): [Quranic Arabic Corpus](https://corpus.quran.com) v0.4 by Kais Dukes, GNU GPL, with the corrections of [mustafa0x/quran-morphology](https://github.com/mustafa0x/quran-morphology).
 - **Uthmani text, word-by-word glosses (EN/TR), translations** (Saheeh International; Diyanet İşleri Başkanlığı; Frank Bubenheim & Nadeem Elyas): via the [Quran.com](https://quran.com) API.
-- **Recitation**: [EveryAyah.com](https://everyayah.com) (verses) and Quran.com (single words).
+- **Recitation**: [EveryAyah.com](https://everyayah.com) (verses) and Quran.com (single words). Word timings for following the recitation word by word: the [Quran.com API](https://api-docs.quran.com) (same recordings).
 - **Fonts**: Amiri Quran, Scheherazade New and Alegreya, all under the SIL Open Font License, loaded from Google Fonts.
 - **Course, curated vocabulary, Turkish cognates and German glosses**: written for Lisan.
 

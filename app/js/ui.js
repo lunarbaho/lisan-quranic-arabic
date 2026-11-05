@@ -4,7 +4,7 @@ import { D, loadSurah, loadLemmas, lemma, surahMeta, cardKeyForLemma, rootCognat
 import { S, wordStatus, introduce, card, commit, removeCard, restoreCard, lemmaIdsForKey } from './store.js';
 import { describeSegment, summarizeWord } from './morph.js';
 import { icon } from './icons.js';
-import { audioAvailable, toggleVerse, playWord, stopAll, onAudio, audioState, isCurrent, RECITERS, verseAudio, wordAudio } from './audio.js';
+import { audioAvailable, toggleVerse, playWord, stopAll, onAudio, onWord, currentWord, audioState, isCurrent, RECITERS, verseAudio, wordAudio } from './audio.js';
 
 export const env = {
   artifact: !!(window.claude && typeof window.claude.use === 'function'),
@@ -50,6 +50,11 @@ function syncAudio(st) {
   document.querySelectorAll('.verse-play').forEach(paintVerseButton);
 }
 onAudio(syncAudio);
+/** The word being recited gets a ring, in the Reader and in lessons alike. */
+onWord((s, a, pos) => {
+  for (const x of document.querySelectorAll('.qw.reciting')) x.classList.remove('reciting');
+  if (pos) for (const x of document.querySelectorAll(`[data-play="${s}:${a}"] .qw[data-w="${pos}"]`)) x.classList.add('reciting');
+});
 /** Give an element created while its verse plays the right marks from the start. */
 export function markPlaying(node, s, a) {
   node.dataset.play = `${s}:${a}`;
@@ -63,9 +68,10 @@ function stemLemma(word) { const seg = word[4][word[3]] || word[4][0]; return se
 export function wordButton(word, { s, a, w, gloss, onTap, highlight } = {}) {
   const lid = stemLemma(word);
   const st = wordStatus(lid);
-  const cls = ['qw', st === 'known' ? 'known' : st === 'learning' ? 'learning' : '', highlight ? 'hl-target' : ''].filter(Boolean).join(' ');
+  const reciting = isCurrent(s, a) && currentWord() === w;
+  const cls = ['qw', st === 'known' ? 'known' : st === 'learning' ? 'learning' : '', highlight ? 'hl-target' : '', reciting ? 'reciting' : ''].filter(Boolean).join(' ');
   const g = gloss ? (S.settings.lang === 'tr' && word[2] ? word[2] : word[1]) : '';
-  const b = h('button', { class: cls, type: 'button', lang: 'ar', 'aria-label': `${word[0]} — ${word[1]}`, dataset: lid >= 0 ? { l: String(lid) } : null },
+  const b = h('button', { class: cls, type: 'button', lang: 'ar', 'aria-label': `${word[0]} — ${word[1]}`, dataset: { w: String(w), ...(lid >= 0 ? { l: String(lid) } : {}) } },
     h('span', { class: 'qt' }, quranWord(word[0])), g ? h('span', { class: 'g', lang: S.settings.lang === 'tr' ? 'tr' : 'en' }, g) : null);
   b.addEventListener('click', () => {
     document.querySelectorAll('.qw.sel').forEach((x) => x.classList.remove('sel'));

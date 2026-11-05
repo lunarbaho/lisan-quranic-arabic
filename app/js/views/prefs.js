@@ -44,7 +44,8 @@ export function render(root) {
     view.appendChild(h('section', { class: 'card', 'aria-label': 'Recitation' },
       pref('Reciter', 'Verse recitations from EveryAyah.', sel),
       pref('When you tap a verse', 'Play surah always goes on to the end. You can also switch this in the player while listening.',
-        seg('pref-playmode', Object.entries(MODES).map(([k, m]) => [k, m.label]), S.settings.playMode || 'once', (v) => setSetting('playMode', v)))));
+        seg('pref-playmode', Object.entries(MODES).map(([k, m]) => [k, m.label]), S.settings.playMode || 'once', (v) => setSetting('playMode', v))),
+      pref('Follow the words', 'A ring moves from word to word with the recitation (word timings from Quran.com).', toggle('pref-follow', 'followWords', 'Follow the words'))));
   }
 
   const backup = h('section', { class: 'card stack', 'aria-label': 'Your data' }, h('h2', {}, 'Your progress'));

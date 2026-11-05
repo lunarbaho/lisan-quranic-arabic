@@ -34,6 +34,13 @@ await ctx.route(/everyayah\.com|audio\.qurancdn\.com/, (route) => {
   route.fulfill({ status: 200, body: clip, headers: { 'Content-Type': 'audio/wav', 'Access-Control-Allow-Origin': '*' } });
 });
 
+// word timings: every verse gets three words across the 0.7 s clip
+await ctx.route(/api\.quran\.com\/api\/v4\/verses\/by_chapter\/\d+/, (route) => {
+  const s = +/by_chapter\/(\d+)/.exec(route.request().url())[1];
+  const verses = Array.from({ length: 300 }, (_, i) => ({ verse_key: `${s}:${i + 1}`, audio: { url: '', segments: [[0, 1, 0, 230], [1, 2, 230, 460], [2, 3, 460, 690]] } }));
+  route.fulfill({ status: 200, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ verses, pagination: { next_page: null } }) });
+});
+
 const audio = () => page.evaluate(() => ({
   marked: [...document.querySelectorAll('.playing[data-play]')].map((x) => x.dataset.play + (x.classList.contains('paused') ? ' paused' : '')),
   head: document.querySelector('#play-surah')?.textContent.trim(),
@@ -78,6 +85,14 @@ await page.click('#v112-3 .verse-play');
 await page.waitForFunction(() => !document.querySelector('.playing[data-play]'), null, { timeout: 5000 });
 a = await audio();
 check(!a.bar && a.head === 'Play surah', 'a single verse ends by itself and clears its highlight');
+
+// the word being recited is marked, and the mark goes when the recitation stops
+await page.click('#v112-1 .verse-play');
+await page.waitForSelector('#v112-1 .qw.reciting', { timeout: 5000 }).catch(() => {});
+const lit = await page.evaluate(() => [...document.querySelectorAll('.qw.reciting')].map((x) => x.closest('.verse').id + ' word ' + x.dataset.w));
+check(lit.length === 1 && lit[0].startsWith('v112-1 '), `the word being recited is marked (${lit.join()})`);
+await page.click('.player .icon-btn[aria-label="Stop recitation"]');
+check(!(await page.$('.qw.reciting')), 'the word mark goes when the recitation stops');
 
 // repeat mode loops the verse; next / previous move inside the surah
 await page.click('#v112-2 .verse-play');
