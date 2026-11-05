@@ -3,6 +3,7 @@ import { icon } from '../icons.js';
 import { D, loadSurah, loadLemmas, surahMeta } from '../data.js';
 import { S, setSetting, knownLemmas } from '../store.js';
 import { topbar, verseEl, loadingEl, persistReader, markPlaying } from '../ui.js';
+import { surahNewWords } from '../learnflow.js';
 import { audioAvailable, RECITERS, MODES, reciter, hasBasmala, onAudio, audioState, toggleSurah, togglePause,
   stop, next, prev, setMode, reciterChanged } from '../audio.js';
 
@@ -74,6 +75,11 @@ export async function render(root, arg) {
   let k = 0, n = 0;
   for (const v of data.v) for (const w of v.w) { n += 1; const seg = w[4][w[3]] || w[4][0]; if (seg && known.has(seg[2])) k += 1; }
   stats.textContent = `You know ${k} of its ${n} words (${pct(n ? k / n : 0)}). Tap any word for meaning, root and grammar.`;
+  // prepare the surah: its core words you have not learned yet, most frequent here first
+  surahNewWords(s).then((fresh) => {
+    if (!alive || !fresh.length) return;
+    stats.after(h('a', { class: 'btn small ghost learn-surah', href: `#words-surah-${s}`, html: `${icon('sparkle')} Learn its ${fresh.length} new core word${fresh.length === 1 ? '' : 's'}` }));
+  }).catch(() => {});
 
   // ---- verses, rendered in chunks so long surahs open fast ----
   let paintGen = 0;
@@ -88,7 +94,7 @@ export async function render(root, arg) {
     let idx = 0;
     const add = (upTo) => {
       const frag = document.createDocumentFragment();
-      for (; idx < Math.min(data.v.length, upTo); idx++) frag.appendChild(verseEl(data.v[idx], s, { gloss: S.settings.gloss, transl: S.settings.transl }));
+      for (; idx < Math.min(data.v.length, upTo); idx++) frag.appendChild(verseEl(data.v[idx], s, { gloss: S.settings.gloss, transl: S.settings.transl, playMode: 'remember' }));
       body.appendChild(frag);
     };
     const step = () => {

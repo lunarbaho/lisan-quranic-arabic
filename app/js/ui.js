@@ -17,10 +17,13 @@ export const reciters = RECITERS;
 export const stopAudio = stopAll;
 export { audioAvailable, verseAudio, wordAudio };
 
-/** Play / pause button of one verse; its look follows the player. */
-function verseButton(s, a) {
+/**
+ * Play / pause button of one verse; its look follows the player.
+ * mode 'remember' starts the way the learner last chose in the player.
+ */
+function verseButton(s, a, mode) {
   const b = h('button', { class: 'icon-btn verse-play', type: 'button', dataset: { ref: `${s}:${a}` } });
-  b.addEventListener('click', () => toggleVerse(s, a));
+  b.addEventListener('click', () => toggleVerse(s, a, { mode: mode === 'remember' ? S.settings.playMode : mode }));
   paintVerseButton(b);
   return b;
 }
@@ -88,13 +91,13 @@ export function quranWords(words, { highlight = -1, cls = null, center = false }
 }
 
 /** A verse: tappable words, optional glosses and translation. */
-export function verseEl(verse, s, { gloss = S.settings.gloss, transl = S.settings.transl, from = 0, to = null, highlightW = -1, head = true, onAsk } = {}) {
+export function verseEl(verse, s, { gloss = S.settings.gloss, transl = S.settings.transl, from = 0, to = null, highlightW = -1, head = true, onAsk, playMode = 'once' } = {}) {
   const words = verse.w.slice(from, to ?? verse.w.length);
   const whole = from === 0 && (to === null || to >= verse.w.length);
   const box = h('div', { class: 'verse', id: `v${s}-${verse.a}` });
   if (whole) markPlaying(box, s, verse.a);
   if (head) {
-    const playBtn = audioAvailable() ? verseButton(s, verse.a) : null;
+    const playBtn = audioAvailable() ? verseButton(s, verse.a, playMode) : null;
     const askBtn = env.teacher ? h('button', { class: 'icon-btn', title: 'Ask the teacher about this verse', 'aria-label': 'Ask the teacher about this verse', html: icon('teacher'),
       onclick: () => (onAsk ? onAsk(verse) : askTeacherAbout({ kind: 'verse', s, a: verse.a })) }) : null;
     box.appendChild(h('div', { class: 'verse-head' }, h('span', { class: 'ref' }, `${s}:${verse.a}`), h('span', { class: 'grow' }), playBtn, askBtn));

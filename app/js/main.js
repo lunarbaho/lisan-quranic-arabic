@@ -41,6 +41,7 @@ const VIEWS = {
 };
 // which nav item is highlighted for a route
 const SECTION = { lesson: 'learn', words: 'home', surah: 'quran', root: 'roots' };
+const sectionOf = (route) => (route.name === 'words' && route.arg.startsWith('surah-') ? 'quran' : SECTION[route.name] || route.name);
 
 let main, rail, tabbar, cleanup = null, renderSeq = 0;
 
@@ -68,7 +69,7 @@ function buildShell(root) {
 
 function paintNav() {
   const route = currentRoute();
-  const section = SECTION[route.name] || route.name;
+  const section = sectionOf(route);
   const due = dueKeys().length;
   rail.querySelectorAll('a.nav, .rail-foot').forEach((x) => x.remove());
   for (const n of navItems((x) => !x.tab)) {

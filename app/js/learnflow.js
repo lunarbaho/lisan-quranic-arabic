@@ -1,10 +1,24 @@
 // Shared "learn these words" flow: word cards, then a quiz that grades
 // each word into the spaced-repetition schedule.
 import { h, clear, shuffle, arSpan, screenKeys } from './util.js';
-import { D, gloss } from './data.js';
+import { D, gloss, loadSurahLemmas } from './data.js';
 import { S, introduce, grade, card } from './store.js';
 import { icon } from './icons.js';
 import { noteHtml, quranWords, revealFeedback } from './ui.js';
+
+/**
+ * The core words of a surah that are not in the deck yet, the most frequent in
+ * that surah first — learn these and the surah reads with few unknown words.
+ */
+export async function surahNewWords(s) {
+  const flat = (await loadSurahLemmas())[s] || [];
+  const count = new Map();
+  for (let i = 0; i < flat.length; i += 2) {
+    const v = D.vocabByLemma.get(flat[i]);
+    if (v && !card(`v${v.id}`)) count.set(v, (count.get(v) || 0) + flat[i + 1]);
+  }
+  return [...count.entries()].sort((x, y) => y[1] - x[1] || x[0].rank - y[0].rank).map(([v]) => v);
+}
 
 export function wordCard(v, { compact = false } = {}) {
   const lang = S.settings.lang;

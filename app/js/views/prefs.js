@@ -1,6 +1,7 @@
 import { h, toast } from '../util.js';
 import { S, setSetting, exportState, importState, resetAll, sync } from '../store.js';
 import { topbar, inlineConfirm, env } from '../ui.js';
+import { audioAvailable, RECITERS, MODES, reciterChanged } from '../audio.js';
 
 function seg(id, options, current, onPick) {
   const el = h('div', { class: 'seg', role: 'group', id });
@@ -35,6 +36,16 @@ export function render(root) {
     pref('Verse translation', null, toggle('pref-transl', 'transl', 'Translation')),
     pref('Color the words I know', 'Green = known, gold = still learning.', toggle('pref-known', 'known', 'Known-word colors')),
     pref('Theme', null, seg('pref-theme', [['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']], S.settings.theme, (v) => setSetting('theme', v)))));
+
+  if (audioAvailable()) {
+    const sel = h('select', { id: 'pref-reciter', 'aria-label': 'Reciter' },
+      Object.entries(RECITERS).map(([k, [name]]) => h('option', { value: k, selected: (S.settings.reciter || 'alafasy') === k }, name)));
+    sel.addEventListener('change', () => { setSetting('reciter', sel.value); reciterChanged(); });
+    view.appendChild(h('section', { class: 'card', 'aria-label': 'Recitation' },
+      pref('Reciter', 'Verse recitations from EveryAyah.', sel),
+      pref('When you tap a verse', 'Play surah always goes on to the end. You can also switch this in the player while listening.',
+        seg('pref-playmode', Object.entries(MODES).map(([k, m]) => [k, m.label]), S.settings.playMode || 'once', (v) => setSetting('playMode', v)))));
+  }
 
   const backup = h('section', { class: 'card stack', 'aria-label': 'Your data' }, h('h2', {}, 'Your progress'));
   backup.appendChild(h('p', { class: 'small muted' }, sync.status === 'synced'

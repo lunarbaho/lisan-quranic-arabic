@@ -90,6 +90,10 @@ await page.click('.player .icon-btn[aria-label="Next verse"]');
 await page.waitForTimeout(200);
 check((await audio()).marked[0] === '112:3', 'Next verse moves on');
 await page.click('.player .icon-btn[aria-label="Stop recitation"]');
+await page.click('#v112-4 .verse-play');
+await page.waitForSelector('.player:not([hidden])');
+check((await page.getAttribute('.player-mode', 'aria-label')).startsWith('Playback: Repeat'), 'the next verse tapped starts in the mode chosen last (Repeat)');
+await page.click('.player .icon-btn[aria-label="Stop recitation"]');
 
 // a word clip pauses the verse instead of silently killing it
 await page.click('#v112-1 .verse-play');
@@ -102,7 +106,23 @@ check((await audio()).marked[0] === '112:1 paused', 'hearing a word pauses the v
 await page.keyboard.press('Escape');
 await page.waitForTimeout(300);
 
+// a lesson shows one verse, so its play button plays just that verse, whatever the Reader remembers
+await go('#lesson-welcome', '.lesson-body');
+for (let k = 0; k < 12 && !(await page.$('.lesson-body .verse-play')); k++) {
+  const opt = await page.$('.options .opt:not([disabled])');
+  if (opt) { await opt.click(); await page.waitForTimeout(150); continue; }
+  await page.click('.lesson-nav .btn:last-child');
+  await page.waitForTimeout(250);
+}
+await page.click('.lesson-body .verse-play');
+await page.waitForFunction(() => document.querySelector('.lesson-body .verse.playing'), null, { timeout: 5000 });
+await page.waitForFunction(() => !document.querySelector('.playing[data-play]'), null, { timeout: 5000 }).catch(() => {});
+check(!(await page.$('.playing[data-play]')), 'a lesson verse plays once and stops');
+
 // leaving the reader stops everything
+await go('#surah-112', '#v112-1 .verse-play');
+await page.click('#v112-1 .verse-play');
+await page.waitForSelector('.player:not([hidden])');
 await go('#home', '.stats');
 await go('#surah-112', '#v112-1');
 a = await audio();
@@ -168,6 +188,13 @@ await go('#quran', '.surah-row');
 for (const k of ['1', '2', '3', '4']) await page.keyboard.press(k);
 await page.waitForTimeout(600);
 check(await page.evaluate(() => JSON.stringify(JSON.parse(localStorage.getItem('lisan.v1')).cards)) === deck, 'number keys on another screen do not grade the abandoned word check');
+
+// ---------------- prepare a surah: learn its words ----------------
+await go('#surah-67', '.learn-surah');
+const offer = await page.innerText('.learn-surah');
+await page.click('.learn-surah');
+await page.waitForSelector('.lesson-nav .btn');
+check(/Words of Al-Mulk/.test(await page.innerText('.topbar h1')) && /\d+ core words? of this surah/.test(await page.innerText('.topbar .sub')), `the Reader offers the surah's own words (${offer})`);
 
 // ---------------- lessons resume after a detour ----------------
 await go('#lesson-kinds', '.lesson-nav .btn');

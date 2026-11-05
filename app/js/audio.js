@@ -9,7 +9,7 @@
 // Views never touch <audio>: they call these functions and subscribe with
 // onAudio() to show which verse is playing.
 import { toast } from './util.js';
-import { S } from './store.js';
+import { S, setSetting } from './store.js';
 import { surahMeta } from './data.js';
 
 export const RECITERS = {
@@ -185,12 +185,16 @@ export function playVerse(s, a, { mode = 'once' } = {}) {
   load(s, first);
 }
 
-/** The play button of one verse: play it, or pause / resume it when it is the current one. */
-export function toggleVerse(s, a) {
+/**
+ * The play button of one verse: play it, or pause / resume it when it is the
+ * current one. `mode` is how a new session starts (the Reader passes the
+ * learner's choice; a lesson, showing one verse, plays just that verse).
+ */
+export function toggleVerse(s, a, { mode = 'once' } = {}) {
   if (isCurrent(s, a)) { if (state.status === 'paused') resume(); else pause(); return; }
   // inside a running session of this surah, jump there and keep its mode
   if (isActive() && state.s === s) { stopWord(); load(s, a); return; }
-  playVerse(s, a, { mode: 'once' });
+  playVerse(s, a, { mode: MODES[mode] ? mode : 'once' });
 }
 
 /** The surah's play button: start from the top, or pause / resume what is playing in it. */
@@ -243,8 +247,10 @@ export function prev() {
   else if (el) { el.currentTime = 0; if (state.status === 'paused') resume(); }
 }
 
+/** Change how the current session goes on; remembered for the next verse you tap. */
 export function setMode(mode) {
   if (!MODES[mode] || mode === state.mode) return;
+  if (S.settings.playMode !== mode) setSetting('playMode', mode);
   set({ mode });
   if (mode === 'continue' && state.status === 'playing') prefetchNext();
   else if (mode !== 'continue') dropAhead();
